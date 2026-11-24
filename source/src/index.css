@@ -1,0 +1,120 @@
+:root { --bg:#f6f4ef; --card:#fff; --ink:#14213d; --muted:#6b7280; --accent:#1f6feb; --accent-ink:#fff; --route:#1f6feb; --ok:#15803d; --warn:#b45309;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --zone:#e7ecf3; --zone-stroke:#c9d3e0; --wall:#9aa5b4; --line:#e5e7eb; --chip:#eef2f7;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; --display: 'Space Grotesk', 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0f1420; --card:#171e2c; --ink:#e8edf5; --muted:#9aa4b2; --accent:#4d8dff; --route:#4d8dff;
+  --zone:#1f2a3c; --zone-stroke:#2c3a52; --wall:#4a5870; --line:#263248; --chip:#222c3e; --ok:#4ade80; --warn:#fbbf24; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg:#0f1420; --card:#171e2c; --ink:#e8edf5; --muted:#9aa4b2; --accent:#4d8dff; --route:#4d8dff; --zone:#1f2a3c; --zone-stroke:#2c3a52; --wall:#4a5870; --line:#263248; --chip:#222c3e; --ok:#4ade80; --warn:#fbbf24; color-scheme: dark; }
+* { box-sizing: border-box; } body { margin:0; background: var(--bg); color: var(--ink); }
+button { font: inherit; color: inherit; cursor: pointer; }
+.app { max-width: 480px; margin: 0 auto; min-height: 100dvh; display: flex; flex-direction: column; }
+header { display:flex; justify-content: space-between; align-items:center; padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.brand { font-family: var(--display); background:none; border:0; font-weight: 700; font-size: 22px; letter-spacing: -0.5px; color: var(--accent); padding:0 }
+.lang button { border:1px solid var(--line); background: var(--card); padding: 4px 10px; font-size: 13px; }
+.lang button:first-child { border-radius: 8px 0 0 8px } .lang button:last-child { border-radius: 0 8px 8px 0 }
+.lang .on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent) }
+main { padding-block: 0 24px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display:flex; flex-direction: column; gap: 12px; flex: 1 }
+h1 { font-family: var(--display); text-wrap: balance; font-size: 26px; line-height: 1.2; margin: 12px 0 8px; } h2 { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 0 } h3 { font-size: 15px; margin: 0 0 8px }
+.field { display:flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--muted) }
+.field input, .field select { font-size: 18px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink) }
+.primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 14px; padding: 14px; font-size: 17px; font-weight: 600 }
+.primary.sticky { position: sticky; bottom: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.18) }
+.err { color: var(--warn); margin: 0; font-size: 14px }
+.flights { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px }
+.flights button { width: 100%; display: grid; grid-template-columns: 90px 1fr auto; text-align: left; gap: 8px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card) }
+.flights em { color: var(--muted); font-style: normal; font-size: 14px }
+.note { font-size: 12px; color: var(--muted); line-height: 1.4 }
+.back { background: none; border: 0; color: var(--accent); padding: 0; align-self: flex-start; font-size: 15px }
+.card { background: var(--card); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--line) }
+.flight { display:flex; flex-direction: column; gap: 4px; font-size: 14px } .flight .big { font-size: 22px; font-weight: 700 }
+.ok { color: var(--ok); font-weight: 600 } .warn { color: var(--warn); font-weight: 600 }
+.summary { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: 14px } .summary li { display:flex; justify-content: space-between; gap: 8px }
+.hint { font-size: 12px; color: var(--muted); margin: 8px 0 0 }
+.chips { display:flex; flex-wrap: wrap; gap: 8px } .chips button { border: 1px solid var(--line); background: var(--chip); border-radius: 999px; padding: 8px 14px; font-size: 14px }
+.chips .on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent) }
+.mapwrap { position: relative; height: 300px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--bg) }
+.mapwrap.full { height: auto; flex: 1; min-height: 340px }
+.map, .map svg { width: 100%; height: 100%; display:block; touch-action: none }
+.zones { fill: var(--zone); stroke: var(--zone-stroke) } .walls { fill: var(--wall) }
+.poi circle { fill: var(--card); stroke: var(--zone-stroke) } .poi text, .marker text { text-anchor: middle; fill: var(--muted); font-weight: 700 }
+.route { fill: none; stroke-linecap: round; stroke-linejoin: round } .route.active { stroke: var(--route) } .route.casing { stroke: var(--card) } .route.other { stroke: var(--route); opacity: .25 }
+.marker circle { stroke: var(--card); stroke-width: 1 } .marker text { fill: #fff }
+.marker.start circle { fill: #374151 } .marker.security circle { fill: #dc2626 } .marker.stop circle { fill: #ea580c } .marker.gate circle { fill: #15803d }
+.marker .mlabel { fill: var(--ink); paint-order: stroke; stroke: var(--card); stroke-width: .8 }
+.dot circle { fill: var(--accent); stroke: #fff; stroke-width: 1 } .dot .halo { fill: var(--accent); opacity: .2; stroke: none }
+.zoom { position: absolute; right: 8px; top: 8px; display:flex; flex-direction: column; gap: 4px } .zoom button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); font-size: 18px }
+.levels { position: absolute; left: 8px; bottom: 8px; display:flex; gap: 4px } .levels button { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 6px 10px; font-size: 13px }
+.levels .on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent) }
+.nav { padding-bottom: 12px } .navtop { display:flex; align-items:center; justify-content: space-between; gap: 8px; font-size: 15px }
+.navtop .lvl { background: var(--chip); border-radius: 8px; padding: 4px 8px; font-size: 13px }
+.stepcard { background: var(--card); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--line); border-left: 6px solid var(--accent) }
+.stepcard.security { border-left-color: #dc2626 } .stepcard.stop { border-left-color: #ea580c } .stepcard.gate { border-left-color: #15803d } .stepcard.lift { border-left-color: #7c3aed }
+.stepn { font-size: 12px; color: var(--muted) } .steptext { font-size: 20px; font-weight: 700; margin: 2px 0 } .stepsub { color: var(--muted); font-size: 14px }
+.stepbtns { display:grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 8px; margin-top: 12px } .stepbtns button { border: 1px solid var(--line); background: var(--chip); border-radius: 10px; padding: 10px 6px; font-size: 14px }
+.stepbtns button:disabled { opacity: .4 }
+
+.trip { padding-bottom: 12px } .trip .card:last-of-type { margin-bottom: 8px }
+.steptext, .flight .big { font-family: var(--display) }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+
+/* ───────── Motion (Emil Kowalski's animate guidance: transform/opacity, strong curves, <300ms UI) ───────── */
+
+/* Press feedback: every tappable control answers the finger. */
+.primary, .flights button, .chips button, .stepbtns button, .zoom button, .levels button, .lang button, .back, .brand {
+  transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+.primary:active, .flights button:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active { transform: scale(0.97) }
+.back:active, .brand:active { opacity: .6 }
+.primary.sticky:active { transform: scale(0.98) }
+@media (hover: hover) and (pointer: fine) {
+  .flights button:hover, .chips button:not(.on):hover, .levels button:not(.on):hover, .zoom button:hover, .stepbtns button:not(:disabled):hover { border-color: var(--accent) }
+  .primary:hover { background: color-mix(in srgb, var(--accent) 88%, #000) }
+}
+.field input, .field select { transition: border-color 150ms ease }
+.field input:focus, .field select:focus { border-color: var(--accent) }
+
+/* Screen transitions: forward comes in from the right, back from the left. */
+.screen { animation: screenIn 280ms var(--ease-out) both }
+.screen[data-dir="back"] { animation-name: screenInBack }
+@keyframes screenIn { from { opacity: 0; transform: translateX(16px) } }
+@keyframes screenInBack { from { opacity: 0; transform: translateX(-16px) } }
+
+/* Home: demo flights settle in just after the screen. */
+.home .flights li { animation: riseIn 300ms var(--ease-out) both }
+.home .flights li:nth-child(1) { animation-delay: 80ms } .home .flights li:nth-child(2) { animation-delay: 120ms }
+.home .flights li:nth-child(3) { animation-delay: 150ms } .home .flights li:nth-child(4) { animation-delay: 175ms }
+.home .flights li:nth-child(n+5) { animation-delay: 195ms }
+@keyframes riseIn { from { opacity: 0; transform: translateY(8px) } }
+
+.err { animation: errIn 200ms var(--ease-out) both }
+@keyframes errIn { from { opacity: 0; transform: translateY(-4px) } }
+
+/* A value that just changed (total time, margin, level) refreshes in place. */
+.tick { display: inline-block; animation: tickIn 220ms var(--ease-out) both }
+@keyframes tickIn { from { opacity: 0; transform: translateY(-4px) } }
+.summary li { animation: riseIn 220ms var(--ease-out) both }
+
+/* Map: a new level crossfades in; the route draws itself from start to gate; markers pop as it arrives. */
+.map .level { animation: fade 220ms var(--ease-out) both }
+@keyframes fade { from { opacity: 0 } }
+.draw .route { stroke-dasharray: 1 1; animation: draw 900ms var(--ease-in-out) both }
+@keyframes draw { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
+.marker .pop { transform-box: fill-box; transform-origin: center; animation: pop 260ms var(--ease-out) both }
+.marker.security .pop { animation-delay: 250ms } .marker.stop .pop { animation-delay: 450ms } .marker.gate .pop { animation-delay: 800ms }
+@keyframes pop { from { opacity: 0; transform: scale(0.9) } }
+
+/* You-are-here dot: a slow ripple keeps it alive while the simulation runs. */
+.dot .ripple { fill: none; stroke: var(--accent); stroke-width: .6; transform-box: fill-box; transform-origin: center; animation: ripple 1800ms var(--ease-out) infinite }
+@keyframes ripple { from { opacity: .5; transform: scale(0.5) } to { opacity: 0; transform: scale(1.6) } }
+
+/* Step card: the accent follows the step type; the text slides up on each new step. */
+.stepcard { transition: border-left-color 200ms ease }
+.stepbody { animation: riseIn 220ms var(--ease-out) both }
+
+/* Reduced motion: keep the fades that help comprehension, drop movement. */
+@media (prefers-reduced-motion: reduce) {
+  .screen, .screen[data-dir="back"], .home .flights li, .err, .tick, .summary li, .stepbody, .marker .pop { animation-name: fade }
+  .draw .route { animation: none; stroke-dasharray: none }
+  .dot .ripple { animation: none; opacity: 0 }
+  .primary:active, .flights button:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active, .primary.sticky:active { transform: none }
+}
