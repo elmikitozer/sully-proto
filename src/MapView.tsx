@@ -180,7 +180,7 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
   }, [browse?.places, browse?.selected, level, zoomStep])
   const visRef = useRef(vis); visRef.current = vis
 
-  const pois = showPois ? data.pois.filter((p) => p.l === level && (p.c === 'restaurant' || p.c === 'toilet' || p.c === 'info')) : []
+  const pois = showPois ? data.pois.filter((p) => p.l === level && ((p.c === 'restaurant' && p.name) || p.c === 'toilet' || p.c === 'info')) : []
 
   return (
     <div className="map">

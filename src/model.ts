@@ -21,7 +21,7 @@ export const checkpoints: Poi[] = (() => {
 export const waitMin = (p: Poi) => [4, 12, 7, 15, 5, 9, 11, 6][(p.id ?? 0) % 8]
 
 export type StopKind = 'restaurant' | 'toilet' | 'info'
-export const stopPois = (k: StopKind) => data.pois.filter((p) => p.c === k && (p.l === 1 || p.l === 2))
+export const stopPois = (k: StopKind) => data.pois.filter((p) => p.c === k && (p.l === 1 || p.l === 2) && (k !== 'restaurant' || p.name))
 
 // --- Flights (demo data) ----------------------------------------------------
 import { flights, type Flight } from './flights-data'
@@ -97,6 +97,7 @@ export interface Place extends Poi { pid: number; kind: PlaceKind; terminal: str
 /** Every searchable place. `pid` is the index in data.pois, stable across builds of the same data. */
 export const places: Place[] = data.pois.flatMap((p, pid) => {
   if (!PLACE_KINDS.includes(p.c as PlaceKind)) return []
+  if (p.c === 'restaurant' && !p.name) return [] // food pictogram with no known name: hidden until we have real data
   const kind = p.c as PlaceKind
   const named = kind === 'security' ? checkpoints.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name : p.name
   return [{ ...p, pid, kind, name: named, terminal: terminalOf(p.x, p.y) }]
