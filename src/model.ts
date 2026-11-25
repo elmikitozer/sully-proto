@@ -100,8 +100,8 @@ export function plan(start: Pt, flight: Flight, stopKind?: StopKind): Plan | nul
 }
 
 // --- Explore: any place, with walking time ------------------------------------
-export type PlaceKind = 'toilet' | 'restaurant' | 'info' | 'gate' | 'security'
-export const PLACE_KINDS: PlaceKind[] = ['toilet', 'restaurant', 'info', 'gate', 'security']
+export type PlaceKind = 'toilet' | 'restaurant' | 'info' | 'gate' | 'security' | 'transport'
+export const PLACE_KINDS: PlaceKind[] = ['restaurant', 'toilet', 'gate', 'info', 'security', 'transport']
 export interface Place extends Poi { pid: number; kind: PlaceKind; terminal: string }
 
 /** Every searchable place. `pid` is the index in data.pois, stable across builds of the same data. */
@@ -111,6 +111,11 @@ export const places: Place[] = data.pois.flatMap((p, pid) => {
   const named = kind === 'gate' ? gates.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name
     : kind === 'security' ? checkpoints.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name : undefined
   return [{ ...p, pid, kind, name: named, terminal: terminalOf(p.x, p.y) }]
+})
+/** Where to write each terminal's name on the map: centre of its gates. */
+export const terminalLabels = ['Orly 1', 'Orly 2', 'Orly 3', 'Orly 4'].map((name) => {
+  const g = gates.filter((p) => p.terminal === name)
+  return { name, x: g.reduce((a, p) => a + p.x, 0) / g.length, y: g.reduce((a, p) => a + p.y, 0) / g.length }
 })
 export const placeById = (pid: number) => places.find((p) => p.pid === pid)
 

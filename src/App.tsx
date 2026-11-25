@@ -172,7 +172,7 @@ export default function App() {
     navigate({ screen: tab })
   }
   const openPlace = (pid: number) => navigate({ screen: 'place', pid, from: homeStart })
-  const exploreCat = (cat?: PlaceKind) => navigate({ screen: 'explore', cat }, { replace: screen === 'explore' })
+  const exploreCat = (cat?: PlaceKind) => navigate({ screen: 'explore', cat, list: route.list }, { replace: screen === 'explore' })
   const guiding = screen === 'nav' || screen === 'placeNav'
 
   if (!onboarded) return <Onboarding lang={lang} setLang={setLang} onDone={finishOnboarding} />
@@ -193,7 +193,7 @@ export default function App() {
         <Home dir={dir} lang={lang} query={query} setQuery={setQuery} err={err} start={homeStart} setStart={setHomeStart} submit={(c) => submit(c)}
           current={myFlight} boardAt={boardAt} plan={myPlan} trip={trip} onAckGate={ackGate} onContinue={() => myFlight && submit(myFlight.code)} onShortcut={(k) => navigate({ screen: 'explore', cat: k })} />
       )}
-      {screen === 'explore' && <Explore dir={dir} lang={lang} cat={route.cat} setCat={exploreCat} start={homeStart} setStart={setHomeStart} onPlace={openPlace} />}
+      {screen === 'explore' && <Explore dir={dir} lang={lang} cat={route.cat} setCat={exploreCat} list={!!route.list} setList={(l) => navigate({ screen: 'explore', cat: route.cat, list: l }, { replace: true })} start={homeStart} setStart={setHomeStart} onPlace={openPlace} />}
       {screen === 'myflight' && <MyFlight dir={dir} lang={lang} flight={myFlight} plan={myPlan} boardAt={boardAt} trip={trip} onGuide={() => myFlight && submit(myFlight.code)} onAdd={() => navigate({ screen: 'home' })}
         onGateChange={changeGate} onAckGate={ackGate} onReset={() => { resetClock(); if (trip && myBase) setTrip({ code: trip.code, boardAt: nowMs() + myBase.boardInMin * 60000 }) }} />}
       {screen === 'place' && place && placeRoute && (

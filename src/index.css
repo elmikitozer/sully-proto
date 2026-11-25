@@ -3,7 +3,7 @@
   --bg:#f4f2ed; --card:#fff; --card-2:#faf9f6; --ink:#101a33; --muted:#667085; --line:#e6e3dc; --chip:#eeece6;
   --accent:#1f5fff; --accent-ink:#fff; --accent-soft:#e6edff; --route:#1f5fff; --ok:#13804a; --warn:#b45309; --danger:#d92d20;
   --k-toilet:#0e7490; --k-restaurant:#ea580c; --k-info:#7c3aed; --k-gate:#13804a; --k-security:#d92d20;
-  --zone:#e9edf3; --zone-stroke:#cfd7e3; --wall:#9aa5b4;
+  --zone:#ffffff; --zone-stroke:#dfe3e8; --wall:#efe9df; --wall-stroke:#ddd4c6; --map-bg:#eceff1; --tlabel:#5f6b7a; --k-transport:#2563eb;
   --r-sm:10px; --r-md:14px; --r-lg:20px; --r-xl:28px;
   --shadow-1: 0 1px 2px rgba(16,26,51,.06), 0 1px 1px rgba(16,26,51,.04);
   --shadow-2: 0 8px 28px rgba(16,26,51,.12), 0 2px 6px rgba(16,26,51,.06);
@@ -18,11 +18,11 @@
   --bg:#0b1020; --card:#151c2e; --card-2:#111827; --ink:#e8edf6; --muted:#98a2b3; --line:#232c42; --chip:#1d2538;
   --accent:#5b8cff; --accent-soft:#1b2a52; --route:#5b8cff; --ok:#4ade80; --warn:#fbbf24; --danger:#f87171;
   --k-toilet:#22d3ee; --k-restaurant:#fb923c; --k-info:#a78bfa; --k-gate:#4ade80; --k-security:#f87171;
-  --zone:#1b2539; --zone-stroke:#2a3650; --wall:#4a5870; --shadow-2: 0 8px 28px rgba(0,0,0,.45); --shadow-up: 0 -8px 30px rgba(0,0,0,.4); color-scheme: dark; } }
+  --zone:#1d2536; --zone-stroke:#2c374c; --wall:#2a3346; --wall-stroke:#354058; --map-bg:#121827; --tlabel:#8b97aa; --k-transport:#60a5fa; --shadow-2: 0 8px 28px rgba(0,0,0,.45); --shadow-up: 0 -8px 30px rgba(0,0,0,.4); color-scheme: dark; } }
 :root[data-theme="dark"] { --bg:#0b1020; --card:#151c2e; --card-2:#111827; --ink:#e8edf6; --muted:#98a2b3; --line:#232c42; --chip:#1d2538;
   --accent:#5b8cff; --accent-soft:#1b2a52; --route:#5b8cff; --ok:#4ade80; --warn:#fbbf24; --danger:#f87171;
   --k-toilet:#22d3ee; --k-restaurant:#fb923c; --k-info:#a78bfa; --k-gate:#4ade80; --k-security:#f87171;
-  --zone:#1b2539; --zone-stroke:#2a3650; --wall:#4a5870; color-scheme: dark; }
+  --zone:#1d2536; --zone-stroke:#2c374c; --wall:#2a3346; --wall-stroke:#354058; --map-bg:#121827; --tlabel:#8b97aa; --k-transport:#60a5fa; color-scheme: dark; }
 
 * { box-sizing: border-box; }
 body { margin:0; background: var(--bg); color: var(--ink); }
@@ -151,7 +151,18 @@ main.detail { padding: 0; gap: 0 }
 /* Map */
 .mapwrap { position: relative; border-radius: var(--r-lg); overflow: hidden; background: var(--bg) }
 .map, .map svg { width: 100%; height: 100%; display:block; touch-action: none }
-.zones { fill: var(--zone); stroke: var(--zone-stroke) } .walls { fill: var(--wall) }
+.zones { fill: var(--zone); stroke: var(--zone-stroke) } .walls { fill: var(--wall); stroke: var(--wall-stroke) }
+.map { background: var(--map-bg) }
+.tlabel { fill: var(--tlabel); font-family: var(--display); font-weight: 700; text-anchor: middle; letter-spacing: .02em; paint-order: stroke; stroke: var(--map-bg); stroke-width: .6; pointer-events: none; opacity: .85 }
+.pin { --c: var(--accent) } .pin.toilet { --c: var(--k-toilet) } .pin.restaurant { --c: var(--k-restaurant) } .pin.info { --c: var(--k-info) } .pin.gate { --c: var(--k-gate) } .pin.security { --c: var(--k-security) } .pin.transport { --c: var(--k-transport) }
+.pin-dot { fill: var(--c); stroke: #fff; stroke-width: .5 } .pin-ico { color: #fff }
+.pin-drop { fill: var(--c); stroke: #fff; stroke-width: .6; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)) }
+.pin.sel { animation: pinDrop 320ms var(--ease-out) both; transform-box: fill-box; transform-origin: 50% 100% }
+@keyframes pinDrop { from { opacity: 0; transform: translateY(-6px) scale(.8) } }
+.pin-label { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--zone); stroke-width: .9; pointer-events: none }
+.pin.sel .pin-label { font-weight: 700 }
+.liftpin { opacity: .7 } .liftpin rect { fill: #9aa3ae } .liftpin svg { color: #fff }
+.kind.transport { --c: var(--k-transport) }
 .poi circle { fill: var(--card); stroke: var(--zone-stroke) } .poi-ico { color: var(--muted) }
 .route { fill: none; stroke-linecap: round; stroke-linejoin: round } .route.active { stroke: var(--route) } .route.casing { stroke: var(--card) } .route.other { stroke: var(--route); opacity: .25 }
 .marker circle { stroke: var(--card); stroke-width: 1 } .marker-ico { color: #fff } .marker text { text-anchor: middle; font-weight: 700 }
@@ -237,10 +248,42 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .demobtns button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 600 }
 .demotools .hint svg { vertical-align: -2px }
 
+/* Explore map (free browsing) */
+main.explore.mapmode { padding: 0; gap: 0 }
+.xmap { position: relative; height: calc(100dvh - 58px - var(--tabbar-h) - max(8px, env(safe-area-inset-bottom, 0px)) - env(safe-area-inset-top, 0px)); overflow: hidden }
+.xmap .map { height: 100% }
+.xmap .zoom { top: auto; bottom: 110px }
+@media (pointer: coarse) { .xmap .zoom { display: none } }
+.xtop { position: absolute; top: 8px; left: 12px; right: 12px; z-index: 4; display: flex; flex-direction: column; gap: 8px; pointer-events: none }
+.xtop > * { pointer-events: auto }
+.inputicon.floating input { border: 0; box-shadow: var(--shadow-2); border-radius: 999px }
+.xtop .chips.scroll { margin-inline: -12px; padding-inline: 12px; padding-bottom: 4px }
+.xtop .chips button { box-shadow: var(--shadow-1); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 6px; border-color: transparent }
+.xtop .chips button:first-child { padding-left: 12px }
+.chips button .kind { width: 24px; height: 24px; border-radius: 999px }
+.chips .on .kind { background: rgba(255,255,255,.18); color: inherit }
+.suggest { list-style: none; margin: 0; padding: 4px 0; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow-2); animation: riseIn 180ms var(--ease-out) both }
+.suggest button { width: 100%; display: flex; gap: 12px; align-items: center; padding: 8px 14px; border: 0; background: none; text-align: left }
+.suggest .kind { width: 32px; height: 32px; border-radius: 10px }
+.xside { position: absolute; left: 12px; bottom: 112px; z-index: 3 }
+.viewtoggle { display: inline-flex; background: var(--card); border-radius: 999px; padding: 3px; box-shadow: var(--shadow-2) }
+.viewtoggle button { border: 0; background: none; display: inline-flex; gap: 6px; align-items: center; padding: 7px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--muted) }
+.viewtoggle .on { background: var(--ink); color: var(--bg) }
+.explore-head { display: flex; align-items: center; justify-content: space-between; gap: 8px } .explore-head .viewtoggle { box-shadow: var(--shadow-1) }
+.xlevels { position: absolute; right: 12px; top: 128px; z-index: 3; display: flex; flex-direction: column; background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow-2); overflow: hidden }
+.xlevels button { width: 40px; height: 38px; border: 0; background: none; font-weight: 700; font-size: 14px; color: var(--muted) }
+.xlevels button + button { border-top: 1px solid var(--line) }
+.xlevels .on { background: var(--accent); color: var(--accent-ink) }
+.xlocate { position: absolute; right: 12px; bottom: 60px; z-index: 3 }
+.xlevelname { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 3; background: var(--card); box-shadow: var(--shadow-1); border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap }
+.xcard { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 5; background: var(--card); border-radius: var(--r-xl); box-shadow: var(--shadow-2); padding: 16px; display: flex; flex-direction: column; gap: 8px; animation: sheetIn 300ms var(--ease-out) both }
+.xcard .muted { margin: 0 }
+.xcard-x { position: absolute; right: 10px; top: 10px; border: 0; background: var(--chip); border-radius: 999px; width: 32px; height: 32px; display: grid; place-items: center; color: var(--muted) }
+
 /* ───────── Motion (Emil Kowalski's animate guidance: transform/opacity, strong curves, <300ms UI) ───────── */
 
 /* Press feedback: every tappable control answers the finger. */
-.primary, .flights button, .chips button, .stepbtns button, .zoom button, .levels button, .lang button, .back, .brand, .shortcuts button, .places button, .hero, .fab, .tabbar button, .ghost {
+.primary, .flights button, .chips button, .stepbtns button, .zoom button, .levels button, .lang button, .back, .brand, .shortcuts button, .places button, .hero, .fab, .tabbar button, .ghost, .xlevels button, .viewtoggle button, .suggest button {
   transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease, opacity 150ms ease;
 }
 .primary:active, .flights button:active, .shortcuts button:active, .hero:active, .fab:active, .tabbar button:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active { transform: scale(0.97) }

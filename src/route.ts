@@ -12,12 +12,12 @@ import type { PlaceKind, StopKind } from './model'
 
 export type Screen = 'home' | 'explore' | 'myflight' | 'trip' | 'nav' | 'place' | 'placeNav'
 export type Tab = 'home' | 'explore' | 'myflight'
-export interface Route { screen: Screen; code?: string; pid?: number; from?: string; stop?: StopKind; cat?: PlaceKind }
+export interface Route { screen: Screen; code?: string; pid?: number; from?: string; stop?: StopKind; cat?: PlaceKind; list?: boolean }
 
 // Depth drives the slide direction: tabs are level 0, details 1, guidance 2.
 const DEPTH: Record<Screen, number> = { home: 0, explore: 0, myflight: 0, trip: 1, place: 1, nav: 2, placeNav: 2 }
 const STOPS: StopKind[] = ['restaurant', 'toilet', 'info']
-const CATS: PlaceKind[] = ['toilet', 'restaurant', 'info', 'gate', 'security']
+const CATS: PlaceKind[] = ['toilet', 'restaurant', 'info', 'gate', 'security', 'transport']
 
 export const tabOf = (s: Screen): Tab => (s === 'explore' || s === 'place' || s === 'placeNav' ? 'explore' : s === 'myflight' ? 'myflight' : 'home')
 
@@ -27,7 +27,7 @@ export function parse(loc: { pathname: string; search: string }): Route {
   const path = loc.pathname.replace(/\/+$/, '') || '/'
   if (path === '/explore') {
     const c = q.get('c') as PlaceKind | null
-    return { screen: 'explore', from, cat: c && CATS.includes(c) ? c : undefined }
+    return { screen: 'explore', from, cat: c && CATS.includes(c) ? c : undefined, list: q.get('v') === 'list' }
   }
   if (path === '/my-flight') return { screen: 'myflight' }
   const pl = path.match(/^\/place\/(\d+)(\/go)?$/)
@@ -48,6 +48,7 @@ export function href(r: Route): string {
   if (r.from && r.screen !== 'myflight' && r.screen !== 'home') q.set('from', r.from)
   if (r.stop && (r.screen === 'trip' || r.screen === 'nav')) q.set('stop', r.stop)
   if (r.cat && r.screen === 'explore') q.set('c', r.cat)
+  if (r.list && r.screen === 'explore') q.set('v', 'list')
   const qs = q.toString() ? '?' + q.toString() : ''
   switch (r.screen) {
     case 'explore': return '/explore' + qs

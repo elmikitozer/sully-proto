@@ -121,6 +121,15 @@ const T = {
   zoomIn: { fr: 'Zoomer', en: 'Zoom in' },
   zoomOut: { fr: 'Dézoomer', en: 'Zoom out' },
   fit: { fr: 'Recentrer', en: 'Recentre' },
+  catTransport: { fr: 'Transports', en: 'Transport' },
+  nameTransport: { fr: 'Transports', en: 'Transport' },
+  viewMap: { fr: 'Carte', en: 'Map' },
+  viewList: { fr: 'Liste', en: 'List' },
+  searchMap: { fr: 'Rechercher dans Orly', en: 'Search Orly' },
+  directions: { fr: 'Itinéraire', en: 'Directions' },
+  fromYou: { fr: 'depuis {p}', en: 'from {p}' },
+  levelName: { fr: 'Niveau {l}', en: 'Level {l}' },
+  placesHere: { fr: '{n} lieux à ce niveau', en: '{n} places on this level' },
   arrived: { fr: 'Bon vol !', en: 'Have a good flight!' },
 }
 export type Key = keyof typeof T

@@ -2,10 +2,11 @@ import { useMemo, useRef, useState, useEffect } from 'react'
 import { data, type Poi, type Pt } from './router'
 import { easeInOut, reducedMotion } from './motion'
 
-import { Info, Maximize2, Minus, Plane, Plus, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { ArrowUpDown, Bus, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { terminalLabels, type Place } from './model'
 import { t } from './i18n'
 
-const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane }
+const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, lift: ArrowUpDown }
 /** A Lucide icon centred on (0,0) inside the map's SVG, `s` map units wide. */
 const MapIcon = ({ icon: I, s, className }: { icon?: LucideIcon; s: number; className?: string }) =>
   I ? <I x={-s / 2} y={-s / 2} width={s} height={s} strokeWidth={2.4} className={className} aria-hidden /> : null
@@ -19,11 +20,15 @@ interface Props {
   heading?: number
   follow?: boolean
   showPois?: boolean
+  /** Free exploration: every place as a coloured pin, tap to select. */
+  browse?: { places: Place[]; selected?: number; label: (p: Place) => string; onSelect: (pid?: number) => void }
+  /** Glide the camera to centre this point (and zoom in if far out). Change `key` to re-trigger. */
+  focus?: { p: Pt; key: string | number; w?: number; lift?: number } | null
 }
 
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
-export default function MapView({ level, routes, markers, dot, heading, follow, showPois = true }: Props) {
+export default function MapView({ level, routes, markers, dot, heading, follow, showPois = true, browse, focus }: Props) {
   const lang = document.documentElement.lang === 'en' ? 'en' : 'fr' // App keeps <html lang> in sync
   const lv = data.levels[String(level)]
   const zonesD = useMemo(() => lv.zones.map(toD).join(''), [lv])
@@ -69,6 +74,15 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
     if (lastLevel.current !== level) { lastLevel.current = level; setView(fit) } else animateView(fit)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fit, follow])
+  // Focus: centre a point (search result, selected pin, "my position").
+  useEffect(() => {
+    if (!focus) return
+    const v = viewRef.current, r = svgRef.current?.getBoundingClientRect()
+    const w = Math.min(v.w, focus.w ?? 260), h = r && r.width ? (r.height / r.width) * w : (v.h / v.w) * w // match the screen's shape
+    const to = { x: focus.p.x - w / 2, y: -focus.p.y - h / 2 + (focus.lift ?? 0) * h, w, h } // lift: show the point above centre (room for a card)
+    if (focus.p.l !== level) setView(to); else animateView(to, 380)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focus?.key])
   // In follow mode the camera is centred on the dot every frame; the state only keeps the zoom.
   const shown: View = follow && dot ? { x: dot.x - view.w / 2, y: -dot.y - view.h / 2, w: view.w, h: view.h } : view
 
@@ -84,8 +98,11 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
     pinch.current = { d: Math.hypot(a.x - b.x, a.y - b.y), v: viewRef.current, cx: ((a.x + b.x) / 2 - r.left) / r.width, cy: ((a.y + b.y) / 2 - r.top) / r.height }
     drag.current = null
   }
+  // A tap (no drag) on the map selects the nearest pin in browse mode.
+  const tap = useRef<{ x: number; y: number; t: number } | null>(null)
   const onDown = (e: React.PointerEvent) => {
     cancelAnimationFrame(anim.current)
+    tap.current = pointers.current.size === 0 ? { x: e.clientX, y: e.clientY, t: performance.now() } : null
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     ;(e.currentTarget as Element).setPointerCapture?.(e.pointerId)
     if (pointers.current.size === 2) pinchStart()
@@ -108,6 +125,16 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
   }
   const onUp = (e: React.PointerEvent) => {
     pointers.current.delete(e.pointerId)
+    const tp = tap.current; tap.current = null
+    if (browse && tp && pointers.current.size === 0 && Math.hypot(e.clientX - tp.x, e.clientY - tp.y) < 8 && performance.now() - tp.t < 500) {
+      const el = svgRef.current!, r = el.getBoundingClientRect(), v = shownRef.current
+      const s = Math.max(v.w / r.width, v.h / r.height)
+      const mx = v.x + (e.clientX - r.left - (r.width - v.w / s) / 2) * s
+      const my = -(v.y + (e.clientY - r.top - (r.height - v.h / s) / 2) * s)
+      let best: Place | undefined, bd = 22 * s // 22 px tap radius
+      for (const p of browse.places) { if (p.l !== level) continue; const d = Math.hypot(p.x - mx, p.y - my); if (d < bd) { bd = d; best = p } }
+      browse.onSelect(best?.pid)
+    }
     if (pointers.current.size < 2) pinch.current = null
     const rest = [...pointers.current.values()][0]
     drag.current = rest ? { x: rest.x, y: rest.y, v: viewRef.current } : null
@@ -118,6 +145,8 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
   const zoomWheel = (k: number) => setView(zoomed(viewRef.current, k))
   const refit = () => (follow ? animateView({ ...viewRef.current, ...FOLLOW }, 240) : animateView(fit))
   const sw = Math.max(shown.w, shown.h) / 220
+  const shownRef = useRef(shown); shownRef.current = shown
+  const close = Math.min(shown.w, shown.h) < 240 // zoomed in enough for names
 
   const pois = showPois ? data.pois.filter((p) => p.l === level && (p.c === 'restaurant' || p.c === 'toilet' || p.c === 'info')) : []
 
@@ -128,7 +157,28 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
         onWheel={(e) => zoomWheel(e.deltaY > 0 ? 1.15 : 0.87)}>
         <g key={level} className="level">
         <path d={zonesD} className="zones" strokeWidth={sw * 0.3} />
-        <path d={wallsD} className="walls" />
+        <path d={wallsD} className="walls" strokeWidth={sw * 0.25} />
+        {terminalLabels.map((tl) => (
+          <text key={tl.name} x={tl.x} y={-tl.y} className="tlabel" fontSize={sw * (close ? 7 : 8)}>{tl.name}</text>
+        ))}
+        {browse && close && data.pois.filter((p) => p.l === level && p.c === 'lift').map((p, i) => (
+          <g key={'l' + i} transform={`translate(${p.x},${-p.y})`} className="liftpin"><rect x={-sw * 2.4} y={-sw * 2.4} width={sw * 4.8} height={sw * 4.8} rx={sw} /><MapIcon icon={ICON.lift} s={sw * 3.4} /></g>
+        ))}
+        {browse && browse.places.filter((p) => p.l === level).sort((a, b) => (a.pid === browse.selected ? 1 : 0) - (b.pid === browse.selected ? 1 : 0)).map((p) => {
+          const sel = p.pid === browse.selected
+          return (
+            <g key={p.pid} transform={`translate(${p.x},${-p.y})`} className={'pin ' + p.kind + (sel ? ' sel' : '')}>
+              {sel ? <>
+                <path d={`M0,0 C${-sw * 2},${-sw * 5} ${-sw * 7},${-sw * 7} ${-sw * 7},${-sw * 12} A${sw * 7},${sw * 7} 0 1 1 ${sw * 7},${-sw * 12} C${sw * 7},${-sw * 7} ${sw * 2},${-sw * 5} 0,0 Z`} className="pin-drop" />
+                <g transform={`translate(0,${-sw * 12})`}><MapIcon icon={ICON[p.kind]} s={sw * 7} className="pin-ico" /></g>
+              </> : <>
+                <circle r={sw * 3.6} className="pin-dot" />
+                <MapIcon icon={ICON[p.kind]} s={sw * 4} className="pin-ico" />
+              </>}
+              {(close || sel) && <text className="pin-label" x={sw * (sel ? 9 : 5.5)} y={sel ? -sw * 10.5 : sw * 1.6} fontSize={sw * (sel ? 5 : 4)}>{browse.label(p)}</text>}
+            </g>
+          )
+        })}
         {pois.map((p, i) => (
           <g key={i} transform={`translate(${p.x},${-p.y})`} className="poi">
             <circle r={sw * 3.2} />
