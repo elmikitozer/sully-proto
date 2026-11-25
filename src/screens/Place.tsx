@@ -23,7 +23,7 @@ export default function Place({ dir, lang, place, route, startPt, startLabel, on
       </div>
       <section className="sheet">
         <div className="grab" aria-hidden />
-        <PlaceInfo place={place} lang={lang} walkMin={route.walkMin} fromLabel={`${startLabel} · ${Math.round(route.metres / 10) * 10} m`} onGo={onStart} />
+        <PlaceInfo place={place} lang={lang} walkMin={route.walkMin} queue={route.queueMin != null ? { min: route.queueMin, name: route.via ?? '' } : undefined} fromLabel={`${startLabel} · ${Math.round(route.metres / 10) * 10} m`} onGo={onStart} />
         {alts.length > 0 && <>
           <h3 className="sub-h">{t(lang, 'nearbyAlt')}</h3>
           <ul className="places compact">

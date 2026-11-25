@@ -12,7 +12,7 @@ export function GET(request: Request) {
   const list = flights
     .filter((f) => !code || f.code.replace(/\s+/g, '') === code)
     .map((f, i) => ({
-      code: f.code, airline: f.airline, destination: f.city.en, iata: f.iata, terminal: f.terminal, gate: f.gate,
+      code: f.code, airline: f.airline, destination: f.city.en, iata: f.iata, terminal: f.terminal, gate: f.gate, schengen: !f.nonSchengen,
       boardingAt: new Date(now + f.boardInMin * 60000).toISOString(),
       status: f.boardInMin <= 40 ? 'boarding_soon' : STATUS[i % STATUS.length],
     }))

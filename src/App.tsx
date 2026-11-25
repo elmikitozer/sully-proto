@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUpDown, ChevronLeft, Volume2, VolumeX, CornerUpLeft, CornerUpRight, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
+import { ArrowUpDown, BookUser, ChevronLeft, Volume2, VolumeX, CornerUpLeft, CornerUpRight, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
 import MapView, { splitByLevel } from './MapView'
 import { findFlight, placeById, places, plan, routeToPlace, starts, STOP_MIN, WALK, type Flight, type Lang, type Plan, type PlaceKind, type StopKind } from './model'
 import { t } from './i18n'
@@ -84,6 +84,7 @@ function buildSteps(p: Plan, lang: Lang, f: Flight, stopKind?: StopKind): Step[]
     steps.push(...walkSteps(leg.path, target, li, lang))
     const end = leg.path[leg.path.length - 1]
     if (leg.kind === 'toSecurity') steps.push({ kind: 'security', text: t(lang, 'stepSecurity', { n: p.security.name! }), sub: t(lang, 'wait', { n: p.waitMin }), level: end.l, path: [end], leg: li })
+    if (leg.kind === 'toSecurity' && p.passportMin) steps.push({ kind: 'security', text: t(lang, 'stepPassport'), sub: t(lang, 'wait', { n: p.passportMin }), level: end.l, path: [end], leg: li })
     if (leg.kind === 'toStop' && stopKind) steps.push({ kind: 'stop', text: t(lang, 'stepStop', { k: t(lang, (stopKind + 'Place') as never) }), sub: `${STOP_MIN[stopKind]} min`, level: end.l, path: [end], leg: li })
     if (leg.kind === 'toGate') steps.push({ kind: 'gate', text: t(lang, 'stepGate', { g: f.gate }), sub: t(lang, 'arrived'), level: end.l, path: [end], leg: li })
   })
@@ -269,6 +270,7 @@ function Trip({ dir, lang, flight, plan: p, base, boardAt, stopKind, setStopKind
           <li><span className="tl-dot start" /><div><b>{startLabel}</b></div></li>
           <li><span className="tl-ico"><Footprints size={14} /></span><div className="muted">{t(lang, 'walk')} · {p.walkMin} min</div></li>
           <li><span className="tl-dot security"><ShieldCheck size={12} /></span><div><b>{t(lang, 'security')} {p.security.name}</b><div className="muted">{t(lang, 'wait', { n: p.waitMin })}</div></div></li>
+          {p.passportMin > 0 && <li><span className="tl-dot security"><BookUser size={12} /></span><div><b>{t(lang, 'passport')}</b><div className="muted">{t(lang, 'passportWhy', { n: p.passportMin })}</div></div></li>}
           {p.stop && stopKind && <li><span className="tl-dot stop"><StopIcon size={12} /></span><div><b>{t(lang, STOP_NAME[stopKind])}</b><div className="muted">{p.stopMin} min</div></div></li>}
           <li><span className="tl-dot gate"><Plane size={12} /></span><div><b>{t(lang, 'gate')} {flight.gate}</b></div></li>
         </ol>

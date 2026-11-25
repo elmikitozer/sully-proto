@@ -116,7 +116,7 @@ export function details(p: Place): Details {
     }
     case 'gate': {
       const f = flights.find((x) => x.gate === p.name)
-      d = { subtitle: { fr: 'Porte d’embarquement', en: 'Boarding gate' }, icon: Plane, tone: 'green', stayMin: 0, tags: ['seats', 'usb'],
+      d = { subtitle: { fr: 'Porte d’embarquement', en: 'Boarding gate' }, icon: Plane, tone: 'green', stayMin: 0, tags: [],
         live: f ? { fr: `${f.code} vers ${f.city.fr}`, en: `${f.code} to ${f.city.en}` } : { fr: 'Pas de vol de démo à cette porte', en: 'No demo flight at this gate' } }
       break
     }

@@ -43,8 +43,10 @@ export const starts: Start[] = [
 export const WALK = 1.2 // m/s, relaxed pace with luggage
 export type LegKind = 'toSecurity' | 'toStop' | 'toGate'
 export interface Leg { kind: LegKind; path: Pt[]; metres: number; target: Poi }
-export interface Plan { legs: Leg[]; security: Poi; gate: Poi; stop?: Poi; walkMin: number; waitMin: number; stopMin: number; totalMin: number; alternatives: { p: Poi; total: number }[] }
+export interface Plan { legs: Leg[]; security: Poi; gate: Poi; stop?: Poi; walkMin: number; waitMin: number; passportMin: number; stopMin: number; totalMin: number; alternatives: { p: Poi; total: number }[] }
 
+/** Passport control for non-Schengen flights. Simulated wait; its exact location is not in our data. */
+export const PASSPORT_MIN = 8
 export const STOP_MIN: Record<StopKind, number> = { restaurant: 15, toilet: 5, info: 3 }
 
 export function plan(start: Pt, flight: Flight, stopKind?: StopKind): Plan | null {
@@ -86,7 +88,8 @@ export function plan(start: Pt, flight: Flight, stopKind?: StopKind): Plan | nul
   const walkMin = Math.ceil((metres / WALK + lifts * 45) / 60)
   const w = waitMin(best.p)
   const stopMin = stopKind && stop ? STOP_MIN[stopKind] : 0
-  return { legs, security: best.p, gate, stop, walkMin, waitMin: w, stopMin, totalMin: walkMin + w + stopMin, alternatives: scored.slice(1, 3).map((x) => ({ p: x.p, total: Math.round(x.total) })) }
+  const passportMin = flight.nonSchengen ? PASSPORT_MIN : 0
+  return { legs, security: best.p, gate, stop, walkMin, waitMin: w, passportMin, stopMin, totalMin: walkMin + w + passportMin + stopMin, alternatives: scored.slice(1, 3).map((x) => ({ p: x.p, total: Math.round(x.total) })) }
 }
 
 // --- Explore: any place, with walking time ------------------------------------
@@ -122,17 +125,34 @@ export function walkTimes(from: Pt): Map<number, number> {
   const out = new Map<number, number>()
   for (const p of places) {
     const d = f.dist[nodeOf(p)]
-    if (isFinite(d)) out.set(p.pid, Math.max(1, Math.ceil(d / WALK / 60))) // ceil, like routeToPlace
+    if (isFinite(d)) out.set(p.pid, Math.max(1, Math.ceil(d / WALK / 60)) + (p.kind === 'gate' ? gateQueue(from, p)?.wait ?? 0 : 0)) // ceil, like routeToPlace
   }
   return out
 }
-export interface PlaceRoute { path: Pt[]; metres: number; walkMin: number }
+/** Where a place sits. Only what we know for sure: gates are past security, transport is public. */
+export type Zone = 'public' | 'airside'
+export const zoneOf = (p: Place): Zone | undefined => (p.kind === 'gate' ? 'airside' : p.kind === 'transport' ? 'public' : undefined)
+/** Security checkpoint a passenger coming from `from` (public side) would use to reach a gate, with its queue. */
+export function gateQueue(from: Pt, gate: Pt): { cp: Poi; wait: number } | null {
+  const f = fieldFrom(from)
+  let best: { cp: Poi; wait: number; t: number } | null = null
+  for (const cp of checkpoints) {
+    const d = f.dist[nodeOf(cp)]; if (!isFinite(d)) continue
+    const t = (d + Math.hypot(cp.x - gate.x, cp.y - gate.y)) / WALK / 60 + waitMin(cp)
+    if (!best || t < best.t) best = { cp, wait: waitMin(cp), t }
+  }
+  return best
+}
+export interface PlaceRoute { path: Pt[]; metres: number; walkMin: number; queueMin?: number; via?: string }
 export function routeToPlace(from: Pt, place: Place): PlaceRoute | null {
   const f = fieldFrom(from)
   const n = nodeOf(place)
   if (!isFinite(f.dist[n])) return null
-  const path = pathTo(f, n)
+  const q = place.kind === 'gate' ? gateQueue(from, place) : null
+  // A gate is reached through security: walk to the checkpoint, then on to the gate.
+  const path = q ? [...pathTo(f, nodeOf(q.cp)), ...pathTo(dijkstra(nodeOf(q.cp)), n).slice(1)] : pathTo(f, n)
+  if (!path.length) return null
   const metres = pathLength(path)
   const lifts = path.filter((p, i) => i > 0 && p.l !== path[i - 1].l).length
-  return { path, metres, walkMin: Math.max(1, Math.ceil((metres / WALK + lifts * 45) / 60)) }
+  return { path, metres, walkMin: Math.max(1, Math.ceil((metres / WALK + lifts * 45) / 60)) + (q?.wait ?? 0), queueMin: q?.wait, via: q?.cp.name }
 }

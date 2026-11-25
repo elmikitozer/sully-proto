@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { BadgePercent, Clock3, Footprints, Navigation, QrCode } from 'lucide-react'
+import { BadgePercent, Clock3, DoorOpen, Footprints, Navigation, QrCode, ShieldCheck } from 'lucide-react'
 import { details, openState, priceText, TAGS } from './details'
 import { useNow } from './clock'
-import type { Lang, Place } from './model'
+import { zoneOf, type Lang, type Place } from './model'
 import { t } from './i18n'
 import { haptic, placeLabel, placeWhere } from './ui'
 
 /** Rich place card: cover, name, open now, live info, features, sponsored offer, directions. */
-export default function PlaceInfo({ place, lang, walkMin, fromLabel, onGo, compact }: { place: Place; lang: Lang; walkMin?: number; fromLabel?: string; onGo?: () => void; compact?: boolean }) {
+export default function PlaceInfo({ place, lang, walkMin, queue, fromLabel, onGo, compact }: { place: Place; lang: Lang; walkMin?: number; queue?: { min: number; name: string }; fromLabel?: string; onGo?: () => void; compact?: boolean }) {
   const d = details(place)
   const now = useNow(30000)
   const os = openState(d, now, lang)
@@ -26,7 +26,9 @@ export default function PlaceInfo({ place, lang, walkMin, fromLabel, onGo, compa
       <div className="pinfo-lines">
         {os && <span className={os.open ? 'ok' : 'warn'}><Clock3 size={14} aria-hidden /> {os.text}</span>}
         {d.live && <span className="live"><span className="pulse" aria-hidden /> {d.live[lang]}</span>}
-        {walkMin != null && <span><Footprints size={14} aria-hidden /> {walkMin} min{fromLabel ? ` · ${t(lang, 'fromYou', { p: fromLabel })}` : ''}</span>}
+        {zoneOf(place) === 'airside' && <span><ShieldCheck size={14} aria-hidden /> {t(lang, 'zoneAirside')}</span>}
+        {zoneOf(place) === 'public' && <span><DoorOpen size={14} aria-hidden /> {t(lang, 'zonePublic')}</span>}
+        {walkMin != null && <span><Footprints size={14} aria-hidden /> {walkMin} min{fromLabel ? ` · ${t(lang, 'fromYou', { p: fromLabel })}` : ''}{queue ? ` · ${t(lang, 'queueIncl', { n: queue.min, s: queue.name })}` : ''}</span>}
       </div>
       {d.tags.length > 0 && (
         <ul className="tags">{d.tags.map((id) => { const T = TAGS[id]; return <li key={id}><T.icon size={14} aria-hidden /> {T.label[lang]}</li> })}</ul>
