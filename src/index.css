@@ -49,7 +49,7 @@ select { background-color: var(--card); color: var(--ink) }
 .lang button { border:0; background: transparent; padding: 4px 10px; font-size: 13px; font-weight: 600; border-radius: 999px; color: var(--muted) }
 .lang .on { background: var(--card); color: var(--ink); box-shadow: var(--shadow-1) }
 .demopill-wrap { position: relative }
-.demopill { border: 1px dashed var(--warn); text-transform: none; color: var(--warn); background: color-mix(in srgb, var(--warn) 10%, transparent); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px }
+.demopill { border: 1px dashed var(--warn); text-transform: none; color: var(--warn); background: color-mix(in srgb, var(--warn) 10%, transparent); font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 999px }
 .demopop { position: absolute; top: calc(100% + 8px); left: -40px; width: 260px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; font-size: 12px; line-height: 1.45; color: var(--muted); box-shadow: var(--shadow-2); z-index: 30; animation: riseIn 180ms var(--ease-out) both }
 
 main { padding: 4px max(16px, env(safe-area-inset-right, 0px)) calc(var(--tabbar-h) + 28px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display:flex; flex-direction: column; gap: 12px; flex: 1 }
@@ -60,16 +60,16 @@ h3 { font-size: 15px; margin: 0 0 8px }
 
 /* Tab bar */
 .tabbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(480px, 100%); z-index: 25; display: grid; grid-template-columns: repeat(3, 1fr); padding: 6px 8px max(8px, env(safe-area-inset-bottom, 0px)); background: var(--blur-bg); backdrop-filter: saturate(1.6) blur(16px); -webkit-backdrop-filter: saturate(1.6) blur(16px); border-top: 1px solid var(--line) }
-.tabbar button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 11px; font-weight: 600; color: var(--muted); border-radius: var(--r-md) }
-.tabbar button { position: relative } .tabbar button.on { color: var(--ink) }
-.tabbar button.on::before { content: ''; position: absolute; top: -6px; left: 28%; right: 28%; height: 4px; background: var(--signal); border-radius: 0 0 4px 4px }
-.tabbar button svg { transition: transform 200ms var(--ease-out) }
-.tabbar button.on svg { transform: translateY(-1px) }
+.tabbar a { text-decoration: none; border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; font-size: 12px; font-weight: 600; color: var(--muted); border-radius: var(--r-md) }
+.tabbar a { position: relative } .tabbar a.on { color: var(--ink) }
+.tabbar a.on::before { content: ''; position: absolute; top: -6px; left: 28%; right: 28%; height: 4px; background: var(--signal); border-radius: 0 0 var(--r-sm) var(--r-sm) }
+.tabbar a svg { transition: transform 200ms var(--ease-out) }
+.tabbar a.on svg { transform: translateY(-1px) }
 
 /* Controls */
 .field { display:flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); font-weight: 500 }
 .field.inline { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; white-space: nowrap }
-.field.inline select { font-size: 14px; padding: 8px 10px }
+.field.inline select { font-size: 16px; padding: 8px 10px }
 .field input, .field select, .inputicon input { font-size: 17px; padding: 12px 14px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--card); color: var(--ink); width: 100%; min-width: 0 }
 .inputicon { position: relative; display: flex; align-items: center; color: var(--muted) }
 .inputicon > svg { position: absolute; left: 14px; pointer-events: none }
@@ -91,7 +91,7 @@ h3 { font-size: 15px; margin: 0 0 8px }
 .chips.scroll::-webkit-scrollbar { display: none }
 .chips button { flex: none; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 14px; font-size: 14px; font-weight: 500 }
 .chips .on { background: var(--ink); color: var(--bg); border-color: var(--ink) }
-.kind { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; flex: none; color: var(--c, var(--accent)); background: color-mix(in srgb, var(--c, var(--accent)) 13%, transparent) }
+.kind { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: var(--r-md); flex: none; color: var(--c, var(--accent)); background: color-mix(in srgb, var(--c, var(--accent)) 13%, transparent) }
 .kind.toilet { --c: var(--k-toilet) } .kind.restaurant { --c: var(--k-restaurant) } .kind.shop { --c: var(--k-shop) } .kind.info { --c: var(--k-info) } .kind.gate { --c: var(--k-gate) } .kind.security { --c: var(--k-security) }
 .summary { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 14px } .summary li { display:flex; justify-content: space-between; gap: 8px }
 .marginline { font-size: 14px; margin: 0 }
@@ -121,16 +121,16 @@ h3 { font-size: 15px; margin: 0 0 8px }
 .pl-main { flex: 1; display: flex; flex-direction: column; min-width: 0 } .pl-main b { font-size: 15px; font-weight: 600 } .pl-main span { font-size: 13px; color: var(--muted) }
 .pl-min { font-family: var(--display); font-weight: 700; font-size: 22px; white-space: nowrap } .pl-min small { font-size: 12px; color: var(--muted); font-weight: 500 }
 .chev { color: var(--muted); flex: none }
-.places.compact .kind { width: 30px; height: 30px; border-radius: 9px }
+.places.compact .kind { width: 30px; height: 30px; border-radius: var(--r-sm) }
 
 /* Detail screens (trip, place): map on top, sheet over it */
 main.detail { padding: 0; gap: 0 }
 .detail-map { position: relative; height: 42dvh; min-height: 260px; background: var(--bg) }
 .detail-map .map { height: 100% }
 .sheet { position: relative; z-index: 2; margin-top: -24px; background: var(--card); border-radius: var(--r-xl) var(--r-xl) 0 0; box-shadow: var(--shadow-up); padding: 10px 18px calc(var(--tabbar-h) + 28px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 12px; flex: 1 }
-.grab { width: 40px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 4px }
+.grab { width: 40px; height: 5px; border-radius: 999px; background: var(--line); margin: 0 auto 4px }
 .sheet-title { font-family: var(--display); font-size: 30px; line-height: 1.05; text-transform: none;  color: var(--ink); margin: 2px 0; font-weight: 700 }
-.fab { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--card); box-shadow: var(--shadow-2); display: grid; place-items: center; color: var(--ink) }
+.fab { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--card); box-shadow: var(--shadow-2); display: grid; place-items: center; color: var(--ink) }
 .fab.on { background: var(--accent); color: var(--accent-ink) }
 .back-fab { position: absolute; left: 12px; top: 12px; z-index: 3 }
 .trip-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start }
@@ -143,7 +143,7 @@ main.detail { padding: 0; gap: 0 }
 .tl-ico { background: var(--card); color: var(--muted); border: 2px solid var(--line) }
 .tl-dot.start { background: var(--ink); border: 5px solid var(--card); outline: 2px solid var(--ink) } .tl-dot.security { background: var(--k-security) } .tl-dot.stop { background: var(--k-restaurant) } .tl-dot.gate { background: var(--k-gate) }
 .place-head { display: flex; gap: 12px; align-items: center }
-.place-head .kind { width: 48px; height: 48px; border-radius: 14px }
+.place-head .kind { width: 48px; height: 48px; border-radius: var(--r-lg) }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
 .stats > div { background: var(--card-2); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; display: flex; flex-direction: column; gap: 2px }
 .stats b { font-family: var(--display); font-size: 28px } .stats span { font-size: 12px; color: var(--muted); display: inline-flex; gap: 4px; align-items: center }
@@ -186,7 +186,7 @@ main.detail { padding: 0; gap: 0 }
 .marker .mlabel { fill: var(--ink); paint-order: stroke; stroke: var(--card); stroke-width: .8 }
 .dot circle { fill: var(--route); stroke: #fff; stroke-width: 1 } .dot .cone { fill: var(--route); opacity: .28 } .dot .halo { fill: var(--route); opacity: .2; stroke: none }
 .zoom { position: absolute; right: 12px; top: 12px; display:flex; flex-direction: column; gap: 0; background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow-2); overflow: hidden }
-.zoom button { width: 40px; height: 40px; border: 0; background: none; font-size: 18px; display: grid; place-items: center }
+.zoom button { width: 44px; height: 44px; border: 0; background: none; font-size: 18px; display: grid; place-items: center }
 .zoom button + button { border-top: 1px solid var(--line) }
 .levels { position: absolute; left: 12px; bottom: 36px; display:flex; gap: 2px; background: var(--card); border-radius: 999px; padding: 3px; box-shadow: var(--shadow-2) }
 .levels button { border: 0; background: none; border-radius: 999px; padding: 6px 10px; font-size: 13px; font-weight: 600; color: var(--muted) }
@@ -204,7 +204,7 @@ main.nav { padding: 0; gap: 0; height: 100dvh }
 .stepcard.security { --c: var(--k-security) } .stepcard.stop { --c: var(--k-restaurant) } .stepcard.gate { --c: var(--k-gate) } .stepcard.lift { --c: var(--k-info) } .stepicon.left, .stepicon.right { background: var(--signal); color: var(--signal-ink) }
 .progress { height: 4px; background: var(--line); margin: 0 -18px 14px } .progress span { display: block; height: 100%; background: var(--c); transition: width 120ms linear }
 .stepbody { display: flex; gap: 14px; align-items: flex-start }
-.stepicon { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--c) }
+.stepicon { flex: none; width: 46px; height: 46px; border-radius: var(--r-lg); display: grid; place-items: center; color: #fff; background: var(--c) }
 .stepn { font-size: 12px; color: var(--muted); font-weight: 600 } .steptext { font-size: 26px; font-weight: 700; margin: 2px 0; line-height: 1.1 } .stepsub { color: var(--muted); font-size: 14px }
 .stepbtns { display:grid; grid-template-columns: 52px 1fr 52px; gap: 8px; margin-top: 14px }
 .stepbtns button { border: 1px solid var(--line); background: var(--chip); border-radius: var(--r-md); padding: 12px 6px; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 6px }
@@ -221,7 +221,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .onb-art { width: 148px; height: 148px; border-radius: var(--r-lg); display: grid; place-items: center; margin-bottom: 18px; background: var(--asphalt); color: var(--signal); box-shadow: var(--shadow-2) }
 .onb-slide h1 { font-size: 44px }
 .onb-dots { display: flex; gap: 6px; justify-content: center; margin: 20px 0 }
-.onb-dots span { width: 8px; height: 8px; border-radius: 4px; background: var(--line); transition: width 240ms var(--ease-out), background-color 200ms ease } .onb-dots .on { width: 24px; background: var(--ink) }
+.onb-dots span { width: 8px; height: 8px; border-radius: 999px; background: var(--line); transition: width 240ms var(--ease-out), background-color 200ms ease } .onb-dots .on { width: 24px; background: var(--ink) }
 .onb-actions { display: flex; gap: 8px } .onb-actions .primary { flex: 1 }
 
 
@@ -237,7 +237,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -24px) scale(.97) } }
 .toast-body { flex: 1; display: flex; gap: 12px; align-items: flex-start; text-align: left; background: none; border: 0; color: inherit; padding: 12px 4px 12px 14px }
 .toast-body > span:last-child { display: flex; flex-direction: column; gap: 2px; font-size: 14px } .toast-body > span:last-child span { opacity: .75 }
-.toast-ico { width: 32px; height: 32px; border-radius: 10px; background: var(--signal); color: var(--signal-ink); display: grid; place-items: center; flex: none }
+.toast-ico { width: 32px; height: 32px; border-radius: var(--r-md); background: var(--signal); color: var(--signal-ink); display: grid; place-items: center; flex: none }
 .toast-x { background: none; border: 0; color: inherit; opacity: .6; padding: 12px }
 .assistant { display: flex; flex-direction: column; gap: 12px; --c: var(--ok) }
 .assistant.go { --c: var(--route) } .assistant.hurry { --c: var(--warn) } .assistant.boarding { --c: var(--danger) } .assistant.closed { --c: var(--muted) }
@@ -279,7 +279,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .chips .on .kind { background: rgba(255,255,255,.18); color: inherit }
 .suggest { list-style: none; margin: 0; padding: 4px 0; background: var(--card); border-radius: var(--r-lg); box-shadow: var(--shadow-2); animation: riseIn 180ms var(--ease-out) both }
 .suggest button { width: 100%; display: flex; gap: 12px; align-items: center; padding: 8px 14px; border: 0; background: none; text-align: left }
-.suggest .kind { width: 32px; height: 32px; border-radius: 10px }
+.suggest .kind { width: 32px; height: 32px; border-radius: var(--r-md) }
 .xside { position: absolute; left: 12px; bottom: 112px; z-index: 3 }
 .viewtoggle { display: inline-flex; background: var(--card); border-radius: 999px; padding: 3px; box-shadow: var(--shadow-2) }
 .viewtoggle button { border: 0; background: none; display: inline-flex; gap: 6px; align-items: center; padding: 7px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--muted) }
@@ -302,7 +302,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .pinfo.compact .cover { height: 76px }
 .cover.has-photo { height: 168px } .pinfo.compact .cover.has-photo { height: 112px }
 .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
-.cover-credit { position: absolute; right: 6px; bottom: 6px; font-size: 10px; line-height: 1; padding: 3px 6px; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.cover-credit { position: absolute; right: 6px; bottom: 6px; font-size: 12px; line-height: 1; padding: 3px 6px; border-radius: var(--r-sm); background: rgba(0,0,0,.55); color: #fff; max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 .tone-brown { background: color-mix(in srgb, #a16207 45%, #5b3a12) } .tone-amber { background: color-mix(in srgb, #f59e0b 45%, #c2410c) } .tone-red { background: color-mix(in srgb, #ef4444 45%, #991b1b) }
 .tone-rose { background: color-mix(in srgb, #fb7185 45%, #be123c) } .tone-green { background: color-mix(in srgb, #22c55e 45%, #166534) } .tone-orange { background: color-mix(in srgb, #fb923c 45%, #c2410c) }
 .tone-plum { background: color-mix(in srgb, #a855f7 45%, #581c87) } .tone-sky { background: color-mix(in srgb, #38bdf8 45%, #1d4ed8) } .tone-teal { background: color-mix(in srgb, #2dd4bf 45%, #0f766e) }
@@ -315,7 +315,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .tags li { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; background: var(--chip); color: var(--ink); padding: 5px 9px; border-radius: 999px }
 .offer { border: 1.5px dashed color-mix(in srgb, #eab308 70%, transparent); background: color-mix(in srgb, #fde047 14%, var(--card)); border-radius: var(--r-md); padding: 10px 12px; display: flex; flex-direction: column; gap: 8px }
 .offer-top { display: flex; flex-direction: column; gap: 2px } .offer-top b { font-size: 15px }
-.sponsored { font-size: 10px; font-weight: 700; color: #a16207; font-style: normal }
+.sponsored { font-size: 12px; font-weight: 700; color: #a16207; font-style: normal }
 .offer-btn { align-self: flex-start; border: 0; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13px }
 .offer-code { display: flex; align-items: center; gap: 12px; animation: riseIn 220ms var(--ease-out) both } .offer-code span { display: flex; flex-direction: column } .offer-code b { font-family: var(--display); font-size: 28px; letter-spacing: .06em } .offer-code small { color: var(--muted) }
 .pin-offer { fill: #facc15; stroke: #fff }
@@ -330,7 +330,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .ideas h3 { font-family: var(--display); font-size: 26px; line-height: 1.05; margin: 0 }
 .idealist { list-style: none; margin: 0 -6px; padding: 0; display: grid; gap: 2px }
 .idealist button { width: 100%; display: flex; gap: 12px; align-items: center; padding: 8px 6px; border: 0; background: none; text-align: left; border-radius: var(--r-md) }
-.idea-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #fff; flex: none }
+.idea-ico { width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; color: #fff; flex: none }
 .ideas-if { display: flex; align-items: center; gap: 6px; flex-wrap: wrap }
 .ideas-if button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 600 }
 .ideas-if .on { background: var(--ink); color: var(--bg); border-color: var(--ink) }
@@ -338,10 +338,10 @@ main.explore.mapmode { padding: 0; gap: 0 }
 /* ───────── Motion (Emil Kowalski's animate guidance: transform/opacity, strong curves, <300ms UI) ───────── */
 
 /* Press feedback: every tappable control answers the finger. */
-.primary, .flights button, .chips button, .stepbtns button, .zoom button, .levels button, .lang button, .back, .brand, .shortcuts button, .places button, .hero, .fab, .tabbar button, .ghost, .xlevels button, .viewtoggle button, .suggest button, .idealist button, .offer-btn {
+.primary, .flights button, .chips button, .stepbtns button, .zoom button, .levels button, .lang button, .back, .brand, .shortcuts button, .places button, .hero, .fab, .tabbar a, .ghost, .xlevels button, .viewtoggle button, .suggest button, .idealist button, .offer-btn {
   transition: transform 160ms var(--ease-out), background-color 150ms ease, color 150ms ease, border-color 150ms ease, opacity 150ms ease;
 }
-.primary:active, .flights button:active, .shortcuts button:active, .hero:active, .fab:active, .tabbar button:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active { transform: scale(0.97) }
+.primary:active, .flights button:active, .shortcuts button:active, .hero:active, .fab:active, .tabbar a:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active { transform: scale(0.97) }
 .back:active, .brand:active { opacity: .6 }
 .primary.sticky:active { transform: scale(0.98) }
 @media (hover: hover) and (pointer: fine) {
@@ -394,7 +394,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
   .screen, .screen[data-dir="back"], .home .flights li, .err, .tick, .summary li, .stepbody, .marker .pop { animation-name: fade }
   .draw .route { animation: none; stroke-dasharray: none }
   .dot .ripple { animation: none; opacity: 0 }
-  .primary:active, .flights button:active, .shortcuts button:active, .hero:active, .fab:active, .tabbar button:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active, .primary.sticky:active { transform: none }
+  .primary:active, .flights button:active, .shortcuts button:active, .hero:active, .fab:active, .tabbar a:active, .chips button:active, .stepbtns button:active:not(:disabled), .zoom button:active, .levels button:active, .lang button:active, .primary.sticky:active { transform: none }
 }
 
 /* Sheet slides up over the map on detail screens. */
@@ -402,3 +402,20 @@ main.explore.mapmode { padding: 0; gap: 0 }
 @keyframes sheetIn { from { transform: translateY(40px); opacity: .6 } }
 .screen[data-dir="tab"] { animation-name: fade; animation-duration: 180ms }
 @media (prefers-reduced-motion: reduce) { .sheet, .onb-slide { animation-name: fade } .toast { animation: none } .pulse { animation: none } }
+
+/* ───────── Polish pass (Vercel web interface guidelines, Emil Kowalski, Uizze checklist) ─────────
+   Small controls keep their look but get a 44px touch target. */
+.lang button, .demopill, .chips button, .viewtoggle button, .levels button, .xlevels button, .ideas-if button, .brand, .inputicon .clear, .field.inline select { position: relative }
+.lang button::after, .demopill::after, .chips button::after, .viewtoggle button::after, .levels button::after, .xlevels button::after, .ideas-if button::after, .brand::after, .inputicon .clear::after {
+  content: ''; position: absolute; top: min(0px, calc((100% - 44px) / 2)); bottom: min(0px, calc((100% - 44px) / 2)); left: min(0px, calc((100% - 44px) / 2)); right: min(0px, calc((100% - 44px) / 2)) }
+.field.inline select { min-height: 44px }
+input, select, a { touch-action: manipulation }
+.sheet, .explore .places, .xsheet { overscroll-behavior: contain }
+/* Photos fade in over the illustration instead of popping. */
+.cover img { animation: fadeIn 240ms var(--ease-out) both }
+@keyframes fadeIn { from { opacity: 0 } }
+@media (prefers-reduced-motion: reduce) { .cover img { animation: none } }
+/* The floating main action sits on a solid band, so the list never shows through around it. */
+.sheet .primary.sticky { box-shadow: 0 -12px 0 var(--card), 0 14px 0 var(--card) }
+/* Tab bar: nearly opaque, so scrolled text does not read through the labels. */
+.tabbar { background: color-mix(in srgb, var(--bg) 95%, transparent) }

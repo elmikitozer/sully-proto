@@ -98,8 +98,8 @@ export default function MyFlight({ dir, lang, flight, plan, boardAt, trip, onGui
             })}
           </ol>
           <ul className="summary">
-            <li><span>{t(lang, 'bestSecurity')}</span><b>{plan.security.name} · {plan.waitMin} min</b></li>
-            <li><span>{t(lang, 'timeToGate')}</span><b>{plan.totalMin} min</b></li>
+            <li><span>{t(lang, 'bestSecurity')}</span><b>{plan.security.name} · {plan.waitMin} min</b></li>
+            <li><span>{t(lang, 'timeToGate')}</span><b>{plan.totalMin} min</b></li>
           </ul>
           {margin != null && <p className={(margin >= 10 ? 'ok' : 'warn') + ' marginline'}>{margin >= 0 ? t(lang, 'margin', { n: margin }) : t(lang, 'late', { n: -margin })}</p>}
           {perm !== 'granted'
@@ -107,7 +107,7 @@ export default function MyFlight({ dir, lang, flight, plan, boardAt, trip, onGui
             : <span className="muted small"><BellRing size={14} aria-hidden /> {t(lang, 'notifDone')}</span>}
         </section>
       )}
-      <button className="primary" onClick={() => { haptic(); onGuide() }}><Navigation size={18} aria-hidden /> {t(lang, 'guideMe')}</button>
+      <button className="primary" onClick={() => { haptic(); onGuide() }}><Navigation size={18} aria-hidden /> {t(lang, 'seeRoute')}</button>
       {ideas}
 
       <section className="card demotools">

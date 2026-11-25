@@ -52,7 +52,7 @@ export default function PlaceInfo({ place, lang, walkMin, queue, fromLabel, onGo
         {d.live && <span className="live"><span className="pulse" aria-hidden /> {d.live[lang]}</span>}
         {zoneOf(place) === 'airside' && <span><ShieldCheck size={14} aria-hidden /> {t(lang, 'zoneAirside')}</span>}
         {zoneOf(place) === 'public' && <span><DoorOpen size={14} aria-hidden /> {t(lang, 'zonePublic')}</span>}
-        {walkMin != null && <span><Footprints size={14} aria-hidden /> {walkMin} min{fromLabel ? ` · ${t(lang, 'fromYou', { p: fromLabel })}` : ''}{queue ? ` · ${t(lang, 'queueIncl', { n: queue.min, s: queue.name })}` : ''}</span>}
+        {walkMin != null && <span><Footprints size={14} aria-hidden /> {walkMin} min{fromLabel ? ` · ${t(lang, 'fromYou', { p: fromLabel })}` : ''}{queue ? ` · ${t(lang, 'queueIncl', { n: queue.min, s: queue.name })}` : ''}</span>}
       </div>
       {d.tags.length > 0 && (
         <ul className="tags">{d.tags.map((id) => { const T = TAGS[id]; return <li key={id}><T.icon size={14} aria-hidden /> {T.label[lang]}</li> })}</ul>

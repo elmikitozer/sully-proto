@@ -109,7 +109,7 @@ export function details(p: Place): Details {
     }
     case 'toilet':
       d = { subtitle: { fr: 'Sanitaires', en: 'Restrooms' }, icon: Toilet, tone: 'teal', stayMin: 5, tags: [],
-        live: { fr: `Nettoyées il y a ${5 + (h % 25)} min (démo)`, en: `Cleaned ${5 + (h % 25)} min ago (demo)` } }
+        live: { fr: `Nettoyées il y a ${5 + (h % 25)} min (démo)`, en: `Cleaned ${5 + (h % 25)} min ago (demo)` } }
       break
     case 'info':
       d = p.sub === 'kiosk'
@@ -122,13 +122,13 @@ export function details(p: Place): Details {
         d = { title: parafe ? { fr: 'Passeports · sas PARAFE', en: 'Passports · PARAFE e-gates' } : { fr: 'Contrôle des passeports', en: 'Passport control' },
           subtitle: parafe ? { fr: 'Contrôle automatisé, passeport biométrique', en: 'Automated check, biometric passport' } : { fr: 'Police aux frontières · vols hors Schengen', en: 'Border police · non-Schengen flights' },
           icon: parafe ? ScanFace : BookUser, tone: 'red', stayMin: PASSPORT_MIN, tags: [],
-          live: { fr: `Attente estimée ${PASSPORT_MIN} min`, en: `Estimated wait ${PASSPORT_MIN} min` } }
+          live: { fr: `Attente estimée ${PASSPORT_MIN} min`, en: `Estimated wait ${PASSPORT_MIN} min` } }
         break
       }
       const cp = checkpoints.find((c) => c.x === p.x && c.y === p.y && c.l === p.l)
       const w = cp ? waitMin(cp) : 6
       d = { subtitle: { fr: 'Contrôle de sûreté', en: 'Security check' }, icon: ShieldCheck, tone: 'red', stayMin: w, tags: [...(cp?.priority ? ['fast' as const] : []), ...(cp?.assisted ? ['pmr' as const] : [])],
-        live: { fr: `Attente estimée ${w} min`, en: `Estimated wait ${w} min` } }
+        live: { fr: `Attente estimée ${w} min`, en: `Estimated wait ${w} min` } }
       break
     }
     case 'gate': {

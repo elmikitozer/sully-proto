@@ -27,7 +27,7 @@ export default function Home({ dir, lang, query, setQuery, err, start, setStart,
           <span className="sign-top"><b translate="no">{current.code}</b><span>{current.city[lang]}</span><span className="sign-time">{hhmm(new Date(boardAt))}</span></span>
           <span className="sign-main">
             <span className="sign-gate"><small>{t(lang, 'gate')}</small><b>{current.gate}</b></span>
-            <span className="sign-info"><b>{current.terminal}</b><span>{t(lang, 'boardsIn')} <b>{mins} min</b></span></span>
+            <span className="sign-info"><b>{current.terminal}</b><span>{t(lang, 'boardsIn')} <b>{mins} min</b></span></span>
             <ArrowUpRight className="sign-arrow" size={36} strokeWidth={2.5} aria-hidden />
           </span>
           {phase && plan && <span className={'hero-phase ' + phase}><span className="pulse" aria-hidden />{phaseText(phase, lang, current, plan, boardAt)}</span>}

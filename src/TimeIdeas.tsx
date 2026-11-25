@@ -59,7 +59,7 @@ export default function TimeIdeas({ lang, boardAt, totalMin, from, gate, onPlace
       )}
       <div className="ideas-if">
         <span className="hint">{t(lang, 'ideasIf')}</span>
-        {[15, 30, 60].map((m) => <button key={m} className={what === m ? 'on' : ''} onClick={() => setWhat(what === m ? null : m)}>{m} min</button>)}
+        {[15, 30, 60].map((m) => <button key={m} className={what === m ? 'on' : ''} onClick={() => setWhat(what === m ? null : m)}>{m} min</button>)}
       </div>
     </section>
   )

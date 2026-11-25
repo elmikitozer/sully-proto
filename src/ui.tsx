@@ -22,18 +22,20 @@ export const placeWhere = (p: Place, lang: Lang) => `${p.terminal} · ${t(lang, 
 export const haptic = () => { try { navigator.vibrate?.(8) } catch { /* not supported */ } }
 
 export function TabBar({ tab, lang, onTab }: { tab: Tab; lang: Lang; onTab: (t: Tab) => void }) {
-  const items: { id: Tab; icon: LucideIcon; label: Key }[] = [
-    { id: 'home', icon: Navigation, label: 'tabTrip' },
-    { id: 'explore', icon: Compass, label: 'tabExplore' },
-    { id: 'myflight', icon: TicketsPlane, label: 'tabFlight' },
+  const items: { id: Tab; href: string; icon: LucideIcon; label: Key }[] = [
+    { id: 'home', href: '/', icon: Navigation, label: 'tabTrip' },
+    { id: 'explore', href: '/explore', icon: Compass, label: 'tabExplore' },
+    { id: 'myflight', href: '/my-flight', icon: TicketsPlane, label: 'tabFlight' },
   ]
   return (
     <nav className="tabbar" aria-label="Sully">
-      {items.map(({ id, icon: Icon, label }) => (
-        <button key={id} className={tab === id ? 'on' : ''} aria-current={tab === id ? 'page' : undefined} onClick={() => { haptic(); onTab(id) }}>
+      {items.map(({ id, href, icon: Icon, label }) => (
+        // Real links (open in a new tab, long-press preview); a plain tap stays in the app.
+        <a key={id} href={href} className={tab === id ? 'on' : ''} aria-current={tab === id ? 'page' : undefined}
+          onClick={(e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); haptic(); onTab(id) }}>
           <Icon size={22} strokeWidth={tab === id ? 2.4 : 1.8} aria-hidden />
           <span>{t(lang, label)}</span>
-        </button>
+        </a>
       ))}
     </nav>
   )
