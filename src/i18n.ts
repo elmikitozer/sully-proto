@@ -116,6 +116,11 @@ const T = {
   notifOn: { fr: 'Activer les notifications', en: 'Turn on notifications' },
   notifDone: { fr: 'Notifications activées', en: 'Notifications on' },
   live: { fr: 'Données de vol (API démo) · {t}', en: 'Flight data (demo API) · {t}' },
+  voice: { fr: 'Guidage vocal', en: 'Voice guidance' },
+  mapLabel: { fr: 'Plan d’Orly, niveau {l}', en: 'Orly map, level {l}' },
+  zoomIn: { fr: 'Zoomer', en: 'Zoom in' },
+  zoomOut: { fr: 'Dézoomer', en: 'Zoom out' },
+  fit: { fr: 'Recentrer', en: 'Recentre' },
   arrived: { fr: 'Bon vol !', en: 'Have a good flight!' },
 }
 export type Key = keyof typeof T

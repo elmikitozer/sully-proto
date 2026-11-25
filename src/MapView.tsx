@@ -2,7 +2,8 @@ import { useMemo, useRef, useState, useEffect } from 'react'
 import { data, type Poi, type Pt } from './router'
 import { easeInOut, reducedMotion } from './motion'
 
-import { Info, Plane, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { Info, Maximize2, Minus, Plane, Plus, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { t } from './i18n'
 
 const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane }
 /** A Lucide icon centred on (0,0) inside the map's SVG, `s` map units wide. */
@@ -23,6 +24,7 @@ interface Props {
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
 export default function MapView({ level, routes, markers, dot, heading, follow, showPois = true }: Props) {
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'fr' // App keeps <html lang> in sync
   const lv = data.levels[String(level)]
   const zonesD = useMemo(() => lv.zones.map(toD).join(''), [lv])
   const wallsD = useMemo(() => lv.walls.map(toD).join(''), [lv])
@@ -121,7 +123,7 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
 
   return (
     <div className="map">
-      <svg ref={svgRef} viewBox={`${shown.x} ${shown.y} ${shown.w} ${shown.h}`} preserveAspectRatio="xMidYMid meet"
+      <svg ref={svgRef} role="img" aria-label={t(lang, 'mapLabel', { l: level })} viewBox={`${shown.x} ${shown.y} ${shown.w} ${shown.h}`} preserveAspectRatio="xMidYMid meet"
         onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}
         onWheel={(e) => zoomWheel(e.deltaY > 0 ? 1.15 : 0.87)}>
         <g key={level} className="level">
@@ -162,9 +164,9 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
         </g>
       </svg>
       <div className="zoom">
-        <button onClick={() => zoomBtn(0.7)} aria-label="zoom in">+</button>
-        <button onClick={() => zoomBtn(1.4)} aria-label="zoom out">−</button>
-        <button onClick={refit} aria-label="fit">⤢</button>
+        <button onClick={() => zoomBtn(0.7)} aria-label={t(lang, 'zoomIn')}><Plus size={18} /></button>
+        <button onClick={() => zoomBtn(1.4)} aria-label={t(lang, 'zoomOut')}><Minus size={18} /></button>
+        <button onClick={refit} aria-label={t(lang, 'fit')}><Maximize2 size={16} /></button>
       </div>
     </div>
   )

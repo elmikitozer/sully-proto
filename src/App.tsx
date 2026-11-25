@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUpDown, ChevronLeft, CornerUpLeft, CornerUpRight, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
+import { ArrowUpDown, ChevronLeft, Volume2, VolumeX, CornerUpLeft, CornerUpRight, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
 import MapView, { splitByLevel } from './MapView'
 import { findFlight, placeById, places, plan, routeToPlace, starts, STOP_MIN, WALK, type Flight, type Lang, type Plan, type PlaceKind, type StopKind } from './model'
 import { t } from './i18n'
@@ -334,6 +334,17 @@ function Nav({ dir, lang, legs, steps, markers, title, onBack }: { dir: string; 
   const go = (d: number) => { haptic(); if (!reducedMotion()) setHop({ from: dot, k: 0 }); setI((x) => Math.max(0, Math.min(steps.length - 1, x + d))); setFrac(0) }
   const Icon = STEP_ICON[step.kind]
   const done = i === steps.length - 1
+  // Voice guidance: reads each new step aloud (hands busy with luggage or kids, low vision).
+  const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window
+  const [voice, setVoiceState] = useState<boolean>(() => canSpeak && load('voice', false))
+  const setVoice = (v: boolean) => { setVoiceState(v); save('voice', v); if (!v) window.speechSynthesis?.cancel() }
+  useEffect(() => {
+    if (!voice || !canSpeak) return
+    const u = new SpeechSynthesisUtterance(step.text + (step.sub && !step.sub.startsWith('≈') ? '. ' + step.sub : ''))
+    u.lang = lang === 'fr' ? 'fr-FR' : 'en-GB'
+    window.speechSynthesis.cancel(); window.speechSynthesis.speak(u)
+  }, [i, voice, lang, step, canSpeak])
+  useEffect(() => () => window.speechSynthesis?.cancel(), [])
   return (
     <main className="nav screen" data-dir={dir}>
       <div className="mapwrap full">
@@ -342,6 +353,7 @@ function Nav({ dir, lang, legs, steps, markers, title, onBack }: { dir: string; 
           <button className="fab" onClick={onBack} aria-label={t(lang, 'back')}><ChevronLeft size={22} /></button>
           <div className="navpill"><b>{title}</b><span>{Math.ceil(remainingM / WALK / 60)} {t(lang, 'left')}</span></div>
           <div key={dot.l} className="navpill lvl tick">{t(lang, 'levelShort', { l: dot.l })}</div>
+          {canSpeak && <button className={'fab' + (voice ? ' on' : '')} onClick={() => setVoice(!voice)} aria-pressed={voice} aria-label={t(lang, 'voice')}>{voice ? <Volume2 size={20} /> : <VolumeX size={20} />}</button>}
         </div>
       </div>
       <section className={'stepcard ' + step.kind + (done ? ' done' : '')} aria-live="polite">
