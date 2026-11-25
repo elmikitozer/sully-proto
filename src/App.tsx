@@ -12,6 +12,7 @@ import Onboarding from './Onboarding'
 import { newGateFor, useMyTrip, withGate } from './assistant'
 import { nowMs, resetClock, useNow } from './clock'
 import AssistantToasts from './AssistantToasts'
+import TimeIdeas from './TimeIdeas'
 import Home, { hhmm } from './screens/Home'
 import Explore from './screens/Explore'
 import Place, { placeMarkerKind } from './screens/Place'
@@ -191,10 +192,12 @@ export default function App() {
       )}
       {screen === 'home' && (
         <Home dir={dir} lang={lang} query={query} setQuery={setQuery} err={err} start={homeStart} setStart={setHomeStart} submit={(c) => submit(c)}
-          current={myFlight} boardAt={boardAt} plan={myPlan} trip={trip} onAckGate={ackGate} onContinue={() => myFlight && submit(myFlight.code)} onShortcut={(k) => navigate({ screen: 'explore', cat: k })} />
+          current={myFlight} boardAt={boardAt} plan={myPlan} trip={trip} onAckGate={ackGate}
+          ideas={myPlan && boardAt ? <TimeIdeas lang={lang} boardAt={boardAt} totalMin={myPlan.totalMin} from={homeStartPt} gate={myPlan.gate} onPlace={openPlace} /> : null} onContinue={() => myFlight && submit(myFlight.code)} onShortcut={(k) => navigate({ screen: 'explore', cat: k })} />
       )}
       {screen === 'explore' && <Explore dir={dir} lang={lang} cat={route.cat} setCat={exploreCat} list={!!route.list} setList={(l) => navigate({ screen: 'explore', cat: route.cat, list: l }, { replace: true })} start={homeStart} setStart={setHomeStart} onPlace={openPlace} />}
-      {screen === 'myflight' && <MyFlight dir={dir} lang={lang} flight={myFlight} plan={myPlan} boardAt={boardAt} trip={trip} onGuide={() => myFlight && submit(myFlight.code)} onAdd={() => navigate({ screen: 'home' })}
+      {screen === 'myflight' && <MyFlight dir={dir} lang={lang} flight={myFlight} plan={myPlan} boardAt={boardAt} trip={trip}
+        ideas={myPlan && boardAt ? <TimeIdeas lang={lang} boardAt={boardAt} totalMin={myPlan.totalMin} from={homeStartPt} gate={myPlan.gate} onPlace={openPlace} /> : null} onGuide={() => myFlight && submit(myFlight.code)} onAdd={() => navigate({ screen: 'home' })}
         onGateChange={changeGate} onAckGate={ackGate} onReset={() => { resetClock(); if (trip && myBase) setTrip({ code: trip.code, boardAt: nowMs() + myBase.boardInMin * 60000 }) }} />}
       {screen === 'place' && place && placeRoute && (
         <Place dir={dir} lang={lang} place={place} route={placeRoute} startPt={start.pt} startLabel={start.label[lang]}

@@ -4,6 +4,7 @@ import { easeInOut, reducedMotion } from './motion'
 
 import { ArrowUpDown, Bus, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
 import { terminalLabels, type Place } from './model'
+import { details } from './details'
 import { t } from './i18n'
 
 const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, lift: ArrowUpDown }
@@ -174,6 +175,7 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
               </> : <>
                 <circle r={sw * 3.6} className="pin-dot" />
                 <MapIcon icon={ICON[p.kind]} s={sw * 4} className="pin-ico" />
+                {details(p).offer && <circle cx={sw * 2.8} cy={-sw * 2.8} r={sw * 1.4} className="pin-offer" />}
               </>}
               {(close || sel) && <text className="pin-label" x={sw * (sel ? 9 : 5.5)} y={sel ? -sw * 10.5 : sw * 1.6} fontSize={sw * (sel ? 5 : 4)}>{browse.label(p)}</text>}
             </g>

@@ -37,10 +37,10 @@ export function GateBanner({ lang, trip, plan, onSee, onAck }: { lang: Lang; tri
 
 interface Props {
   dir: string; lang: Lang; flight: Flight | null; plan: Plan | null; boardAt: number | null; trip: MyTrip | null
-  onGuide: () => void; onAdd: () => void; onGateChange: () => void; onAckGate: () => void; onReset: () => void
+  onGuide: () => void; onAdd: () => void; onGateChange: () => void; onAckGate: () => void; onReset: () => void; ideas: React.ReactNode
 }
 
-export default function MyFlight({ dir, lang, flight, plan, boardAt, trip, onGuide, onAdd, onGateChange, onAckGate, onReset }: Props) {
+export default function MyFlight({ dir, lang, flight, plan, boardAt, trip, onGuide, onAdd, onGateChange, onAckGate, onReset, ideas }: Props) {
   const now = useNow(1000)
   const apiAt = useApiStatus()
   const [perm, setPerm] = useState(() => (typeof Notification !== 'undefined' ? Notification.permission : 'denied'))
@@ -108,6 +108,7 @@ export default function MyFlight({ dir, lang, flight, plan, boardAt, trip, onGui
         </section>
       )}
       <button className="primary" onClick={() => { haptic(); onGuide() }}><Navigation size={18} aria-hidden /> {t(lang, 'guideMe')}</button>
+      {ideas}
 
       <section className="card demotools">
         <h3>{t(lang, 'demoTools')}</h3>

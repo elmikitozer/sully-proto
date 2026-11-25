@@ -12,10 +12,10 @@ export const hhmm = (d: Date) => d.toLocaleTimeString('fr-FR', { hour: '2-digit'
 interface Props {
   dir: string; lang: Lang; query: string; setQuery: (q: string) => void; err: boolean
   start: string; setStart: (s: string) => void; submit: (code?: string) => void
-  current: Flight | null; boardAt: number | null; plan: Plan | null; trip: MyTrip | null; onAckGate: () => void; onContinue: () => void; onShortcut: (k: PlaceKind) => void
+  current: Flight | null; boardAt: number | null; plan: Plan | null; trip: MyTrip | null; onAckGate: () => void; ideas: React.ReactNode; onContinue: () => void; onShortcut: (k: PlaceKind) => void
 }
 
-export default function Home({ dir, lang, query, setQuery, err, start, setStart, submit, current, boardAt, plan, trip, onAckGate, onContinue, onShortcut }: Props) {
+export default function Home({ dir, lang, query, setQuery, err, start, setStart, submit, current, boardAt, plan, trip, onAckGate, ideas, onContinue, onShortcut }: Props) {
   const now = useNow(5000)
   const mins = boardAt ? Math.max(0, Math.round((boardAt - now) / 60000)) : 0
   const phase = boardAt && plan ? phaseAt(now, milestones(boardAt, plan)) : null
@@ -35,6 +35,7 @@ export default function Home({ dir, lang, query, setQuery, err, start, setStart,
         <h1>{t(lang, 'tagline')}</h1>
       )}
 
+      {ideas}
       <section className="card search">
         <label className="field">
           <span>{t(lang, 'flightLabel')}</span>

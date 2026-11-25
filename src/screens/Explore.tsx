@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
-import { ChevronRight, List, LocateFixed, Map as MapIcon, Navigation, Search, X } from 'lucide-react'
+import { BadgePercent, ChevronRight, List, LocateFixed, Map as MapIcon, Search, X } from 'lucide-react'
+import PlaceInfo from '../PlaceInfo'
+import { details } from '../details'
 import MapView from '../MapView'
 import { PLACE_KINDS, places, starts, walkTimes, type Lang, type Place, type PlaceKind } from '../model'
 import { LEVELS } from '../router'
@@ -47,6 +49,9 @@ export default function Explore(props: Props) {
   if (!list) return <ExploreMap {...props} q={q} setQ={setQ} shown={shown} times={times} chips={chips} toggle={toggle} fromLabel={from.label[lang]} fromPt={from.pt} />
 
   const sorted = [...shown].sort((a, b) => times.get(a.pid)! - times.get(b.pid)!)
+  // Business model rule: sponsored results only in a category search (never for gates), max 2, always labelled.
+  const sponsored = cat && cat !== 'gate' && cat !== 'security' ? sorted.filter((p) => details(p).offer).slice(0, 2) : []
+  const rows = [...sponsored.map((p) => ({ p, ad: true })), ...sorted.filter((p) => !sponsored.includes(p)).map((p) => ({ p, ad: false }))]
   return (
     <main className="explore screen" data-dir={dir}>
       <div className="explore-head"><h1 className="title">{t(lang, 'exploreTitle')}</h1>{toggle}</div>
@@ -64,11 +69,11 @@ export default function Explore(props: Props) {
       </label>
       <p className="hint">{sorted.length ? t(lang, 'results', { n: sorted.length }) : t(lang, 'noResults')}</p>
       <ul className="places">
-        {sorted.slice(0, 60).map((p) => (
-          <li key={p.pid}>
+        {rows.slice(0, 60).map(({ p, ad }) => (
+          <li key={p.pid + (ad ? 'ad' : '')} className={ad ? 'ad' : ''}>
             <button onClick={() => props.onPlace(p.pid)}>
-              <KindBadge kind={p.kind} />
-              <span className="pl-main"><b>{placeLabel(p, lang)}</b><span>{placeWhere(p, lang)}</span></span>
+              <KindBadge kind={p.kind} icon={details(p).icon} />
+              <span className="pl-main"><b>{placeLabel(p, lang)}</b><span>{ad ? <><em className="sponsored">{t(lang, 'sponsored')}</em> {details(p).offer!.text[lang]}</> : <>{details(p).name ? details(p).subtitle[lang] + ' · ' : ''}{placeWhere(p, lang)}{details(p).offer ? <BadgePercent size={13} className="offer-ico" aria-label={t(lang, 'offer')} /> : null}</>}</span></span>
               <span className="pl-min">{times.get(p.pid)}<small> min</small></span>
               <ChevronRight size={18} className="chev" aria-hidden />
             </button>
@@ -107,7 +112,7 @@ function ExploreMap({ dir, lang, q, setQ, shown, times, chips, toggle, fromLabel
             <ul className="suggest">
               {suggestions.map((p) => (
                 <li key={p.pid}><button onClick={() => pick(p)}>
-                  <KindBadge kind={p.kind} size={16} />
+                  <KindBadge kind={p.kind} size={16} icon={details(p).icon} />
                   <span className="pl-main"><b>{placeLabel(p, lang)}</b><span>{placeWhere(p, lang)}</span></span>
                   <span className="pl-min">{times.get(p.pid)}<small> min</small></span>
                 </button></li>
@@ -129,12 +134,7 @@ function ExploreMap({ dir, lang, q, setQ, shown, times, chips, toggle, fromLabel
         {selected && (
           <section key={selected.pid} className="xcard">
             <button className="xcard-x" onClick={() => setSel(undefined)} aria-label={t(lang, 'gotIt')}><X size={18} /></button>
-            <div className="place-head">
-              <KindBadge kind={selected.kind} size={22} />
-              <div><h2 className="sheet-title">{placeLabel(selected, lang)}</h2><div className="muted">{placeWhere(selected, lang)}</div></div>
-            </div>
-            <p className="muted">{times.get(selected.pid)} min · {t(lang, 'fromYou', { p: fromLabel })}</p>
-            <button className="primary" onClick={() => onPlace(selected.pid)}><Navigation size={18} aria-hidden /> {t(lang, 'directions')}</button>
+            <PlaceInfo place={selected} lang={lang} walkMin={times.get(selected.pid)} fromLabel={fromLabel} onGo={() => onPlace(selected.pid)} compact />
           </section>
         )}
       </div>

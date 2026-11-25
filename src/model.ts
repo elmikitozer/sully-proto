@@ -132,7 +132,7 @@ export function walkTimes(from: Pt): Map<number, number> {
   const out = new Map<number, number>()
   for (const p of places) {
     const d = f.dist[nodeOf(p)]
-    if (isFinite(d)) out.set(p.pid, Math.max(1, Math.round(d / WALK / 60)))
+    if (isFinite(d)) out.set(p.pid, Math.max(1, Math.ceil(d / WALK / 60))) // ceil, like routeToPlace
   }
   return out
 }

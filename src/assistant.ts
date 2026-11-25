@@ -10,7 +10,8 @@ export const BUFFER_MIN = 15 // arrive at the gate this long before boarding
 export interface Milestones { leaveAt: number; gateBy: number; boardAt: number; closeAt: number }
 export function milestones(boardAt: number, plan: Plan): Milestones {
   const gateBy = boardAt - BUFFER_MIN * 60000
-  return { leaveAt: gateBy - plan.totalMin * 60000, gateBy, boardAt, closeAt: boardAt + 20 * 60000 }
+  // Leave 10 min earlier than strictly needed: queues vary, and it gives the 'go' advice a real window.
+  return { leaveAt: gateBy - (plan.totalMin + 10) * 60000, gateBy, boardAt, closeAt: boardAt + 20 * 60000 }
 }
 export function phaseAt(now: number, m: Milestones): Phase {
   if (now >= m.closeAt) return 'closed'

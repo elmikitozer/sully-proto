@@ -3,12 +3,18 @@ import { Bus, Compass, Info, Navigation, Plane, ShieldCheck, TicketsPlane, Toile
 import type { Lang, Place, PlaceKind } from './model'
 import { t, type Key } from './i18n'
 import type { Tab } from './route'
+import { details } from './details'
 
 export const KIND_ICON: Record<PlaceKind | 'stop', LucideIcon> = { toilet: Toilet, restaurant: Utensils, info: Info, gate: Plane, security: ShieldCheck, transport: Bus, stop: Utensils }
 export const CAT_KEY: Record<PlaceKind, Key> = { toilet: 'catToilet', restaurant: 'catRestaurant', info: 'catInfo', gate: 'catGate', security: 'catSecurity', transport: 'catTransport' }
 const NAME_KEY: Record<PlaceKind, Key> = { toilet: 'nameToilet', restaurant: 'nameRestaurant', info: 'nameInfo', gate: 'nameGate', security: 'nameSecurity', transport: 'nameTransport' }
 
-export const placeLabel = (p: Place, lang: Lang) => t(lang, NAME_KEY[p.kind], { n: p.name ?? '' }).trim()
+export const placeLabel = (p: Place, lang: Lang) => {
+  const d = details(p) // demo names for food outlets, transport type
+  if (d.name) return d.name
+  if (p.kind === 'transport') return d.subtitle[lang]
+  return t(lang, NAME_KEY[p.kind], { n: p.name ?? '' }).trim()
+}
 export const placeWhere = (p: Place, lang: Lang) => `${p.terminal} · ${t(lang, 'levelShort', { l: p.l })}`
 
 /** Light tap feedback where the browser supports it (Android); silent elsewhere. */
@@ -43,7 +49,7 @@ export function DemoPill({ lang }: { lang: Lang }) {
   )
 }
 
-export function KindBadge({ kind, size = 20 }: { kind: PlaceKind; size?: number }) {
-  const Icon = KIND_ICON[kind]
+export function KindBadge({ kind, size = 20, icon }: { kind: PlaceKind; size?: number; icon?: LucideIcon }) {
+  const Icon = icon ?? KIND_ICON[kind]
   return <span className={'kind ' + kind}><Icon size={size} strokeWidth={2.2} aria-hidden /></span>
 }
