@@ -155,13 +155,13 @@ main.detail { padding: 0; gap: 0 }
 .map { background: var(--map-bg) }
 .tlabel { fill: var(--tlabel); font-family: var(--display); font-weight: 700; text-anchor: middle; letter-spacing: .02em; paint-order: stroke; stroke: var(--map-bg); stroke-width: .6; pointer-events: none; opacity: .85 }
 .pin { --c: var(--accent) } .pin.toilet { --c: var(--k-toilet) } .pin.restaurant { --c: var(--k-restaurant) } .pin.info { --c: var(--k-info) } .pin.gate { --c: var(--k-gate) } .pin.security { --c: var(--k-security) } .pin.transport { --c: var(--k-transport) }
-.pin-dot { fill: var(--c); stroke: #fff; stroke-width: .5 } .pin-ico { color: #fff }
-.pin-drop { fill: var(--c); stroke: #fff; stroke-width: .6; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)) }
+.pin-dot { fill: var(--c); stroke: #fff } .pin-mini { fill: var(--c); opacity: .55 } .pin-ico { color: #fff }
+.pin-drop { fill: var(--c); stroke: #fff; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.35)) }
 .pin.sel { animation: pinDrop 320ms var(--ease-out) both; transform-box: fill-box; transform-origin: 50% 100% }
 @keyframes pinDrop { from { opacity: 0; transform: translateY(-6px) scale(.8) } }
-.pin-label { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--zone); stroke-width: .9; pointer-events: none }
+.pin-label { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--zone); pointer-events: none }
 .pin.sel .pin-label { font-weight: 700 }
-.liftpin { opacity: .7 } .liftpin rect { fill: #9aa3ae } .liftpin svg { color: #fff }
+.liftpin { opacity: .45 } .liftpin rect { fill: #9aa3ae } .liftpin svg { color: #fff }
 .kind.transport { --c: var(--k-transport) }
 .poi circle { fill: var(--card); stroke: var(--zone-stroke) } .poi-ico { color: var(--muted) }
 .route { fill: none; stroke-linecap: round; stroke-linejoin: round } .route.active { stroke: var(--route) } .route.casing { stroke: var(--card) } .route.other { stroke: var(--route); opacity: .25 }
@@ -300,7 +300,7 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .sponsored { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #a16207; font-style: normal }
 .offer-btn { align-self: flex-start; border: 0; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13px }
 .offer-code { display: flex; align-items: center; gap: 12px; animation: riseIn 220ms var(--ease-out) both } .offer-code span { display: flex; flex-direction: column } .offer-code b { font-family: var(--display); font-size: 22px; letter-spacing: .06em } .offer-code small { color: var(--muted) }
-.pin-offer { fill: #facc15; stroke: #fff; stroke-width: .4 }
+.pin-offer { fill: #facc15; stroke: #fff }
 .places li.ad { background: color-mix(in srgb, #fde047 10%, var(--card)) }
 .offer-ico { color: #ca8a04; margin-left: 6px; vertical-align: -2px }
 .xcard { max-height: 70%; overflow-y: auto }

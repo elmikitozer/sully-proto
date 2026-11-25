@@ -27,6 +27,9 @@ interface Props {
   focus?: { p: Pt; key: string | number; w?: number; lift?: number } | null
 }
 
+// Which pins win when several overlap (lower = kept first).
+const PRIO: Record<string, number> = { security: 0, info: 1, toilet: 2, restaurant: 3, gate: 4, transport: 5 }
+
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
 export default function MapView({ level, routes, markers, dot, heading, follow, showPois = true, browse, focus }: Props) {
@@ -132,8 +135,10 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
       const s = Math.max(v.w / r.width, v.h / r.height)
       const mx = v.x + (e.clientX - r.left - (r.width - v.w / s) / 2) * s
       const my = -(v.y + (e.clientY - r.top - (r.height - v.h / s) / 2) * s)
-      let best: Place | undefined, bd = 22 * s // 22 px tap radius
-      for (const p of browse.places) { if (p.l !== level) continue; const d = Math.hypot(p.x - mx, p.y - my); if (d < bd) { bd = d; best = p } }
+      // Visible pins first (22 px tap radius), then the small dots (12 px).
+      let best: Place | undefined, bd = 22 * s
+      for (const p of visRef.current?.shown ?? []) { const d = Math.hypot(p.x - mx, p.y - my); if (d < bd) { bd = d; best = p } }
+      if (!best) { bd = 12 * s; for (const p of visRef.current?.hidden ?? []) { const d = Math.hypot(p.x - mx, p.y - my); if (d < bd) { bd = d; best = p } } }
       browse.onSelect(best?.pid)
     }
     if (pointers.current.size < 2) pinch.current = null
@@ -147,7 +152,33 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
   const refit = () => (follow ? animateView({ ...viewRef.current, ...FOLLOW }, 240) : animateView(fit))
   const sw = Math.max(shown.w, shown.h) / 220
   const shownRef = useRef(shown); shownRef.current = shown
-  const close = Math.min(shown.w, shown.h) < 240 // zoomed in enough for names
+  // Map units per screen pixel: pins keep a constant size on screen whatever the zoom or the frame's shape.
+  const [size, setSize] = useState<{ w: number; h: number } | null>(null)
+  useEffect(() => {
+    const el = svgRef.current; if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(() => { const r = el.getBoundingClientRect(); setSize({ w: r.width, h: r.height }) })
+    ro.observe(el); return () => ro.disconnect()
+  }, [])
+  const upp = size && size.w ? Math.max(shown.w / size.w, shown.h / size.h) : sw * 0.55
+  const close = upp < 0.7 // zoomed in enough for names
+  // Declutter like a real map: pins that would overlap a more important one shrink to a small dot until you zoom in.
+  const zoomStep = Math.round(Math.log2(upp) * 6)
+  const vis = useMemo(() => {
+    if (!browse) return null
+    const R = upp > 1.6 ? 7 : 9 // px
+    const minD = R * 2.15 * upp
+    const list = browse.places.filter((p) => p.l === level)
+      .sort((a, b) => (PRIO[a.kind] - PRIO[b.kind]) || (details(b).offer ? 1 : 0) - (details(a).offer ? 1 : 0) || a.pid - b.pid)
+    const sel = list.find((p) => p.pid === browse.selected)
+    const out: Place[] = sel ? [sel] : [], hidden: Place[] = []
+    for (const p of list) {
+      if (p === sel) continue
+      if (out.some((q) => Math.hypot(q.x - p.x, q.y - p.y) < minD)) hidden.push(p); else out.push(p)
+    }
+    return { R, shown: out.reverse(), hidden } // reversed: most important drawn last (on top)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [browse?.places, browse?.selected, level, zoomStep])
+  const visRef = useRef(vis); visRef.current = vis
 
   const pois = showPois ? data.pois.filter((p) => p.l === level && (p.c === 'restaurant' || p.c === 'toilet' || p.c === 'info')) : []
 
@@ -163,21 +194,25 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
           <text key={tl.name} x={tl.x} y={-tl.y} className="tlabel" fontSize={sw * (close ? 7 : 8)}>{tl.name}</text>
         ))}
         {browse && close && data.pois.filter((p) => p.l === level && p.c === 'lift').map((p, i) => (
-          <g key={'l' + i} transform={`translate(${p.x},${-p.y})`} className="liftpin"><rect x={-sw * 2.4} y={-sw * 2.4} width={sw * 4.8} height={sw * 4.8} rx={sw} /><MapIcon icon={ICON.lift} s={sw * 3.4} /></g>
+          <g key={'l' + i} transform={`translate(${p.x},${-p.y})`} className="liftpin"><rect x={-upp * 6} y={-upp * 6} width={upp * 12} height={upp * 12} rx={upp * 3} /><MapIcon icon={ICON.lift} s={upp * 9} /></g>
         ))}
-        {browse && browse.places.filter((p) => p.l === level).sort((a, b) => (a.pid === browse.selected ? 1 : 0) - (b.pid === browse.selected ? 1 : 0)).map((p) => {
+        {vis && vis.hidden.map((p) => (
+          <circle key={'h' + p.pid} cx={p.x} cy={-p.y} r={upp * 2} className={'pin-mini pin ' + p.kind} />
+        ))}
+        {browse && vis && vis.shown.map((p) => {
           const sel = p.pid === browse.selected
+          const R = vis.R * upp, u = upp * 2.3
           return (
             <g key={p.pid} transform={`translate(${p.x},${-p.y})`} className={'pin ' + p.kind + (sel ? ' sel' : '')}>
               {sel ? <>
-                <path d={`M0,0 C${-sw * 2},${-sw * 5} ${-sw * 7},${-sw * 7} ${-sw * 7},${-sw * 12} A${sw * 7},${sw * 7} 0 1 1 ${sw * 7},${-sw * 12} C${sw * 7},${-sw * 7} ${sw * 2},${-sw * 5} 0,0 Z`} className="pin-drop" />
-                <g transform={`translate(0,${-sw * 12})`}><MapIcon icon={ICON[p.kind]} s={sw * 7} className="pin-ico" /></g>
+                <path d={`M0,0 C${-u * 2},${-u * 5} ${-u * 7},${-u * 7} ${-u * 7},${-u * 12} A${u * 7},${u * 7} 0 1 1 ${u * 7},${-u * 12} C${u * 7},${-u * 7} ${u * 2},${-u * 5} 0,0 Z`} className="pin-drop" strokeWidth={upp * 1.5} />
+                <g transform={`translate(0,${-u * 12})`}><MapIcon icon={ICON[p.kind]} s={u * 7} className="pin-ico" /></g>
               </> : <>
-                <circle r={sw * 3.6} className="pin-dot" />
-                <MapIcon icon={ICON[p.kind]} s={sw * 4} className="pin-ico" />
-                {details(p).offer && <circle cx={sw * 2.8} cy={-sw * 2.8} r={sw * 1.4} className="pin-offer" />}
+                <circle r={R} className="pin-dot" strokeWidth={upp * 1.5} />
+                <MapIcon icon={ICON[p.kind]} s={R * 1.15} className="pin-ico" />
+                {details(p).offer && <circle cx={R * 0.75} cy={-R * 0.75} r={upp * 3} className="pin-offer" strokeWidth={upp} />}
               </>}
-              {(close || sel) && <text className="pin-label" x={sw * (sel ? 9 : 5.5)} y={sel ? -sw * 10.5 : sw * 1.6} fontSize={sw * (sel ? 5 : 4)}>{browse.label(p)}</text>}
+              {(upp < 0.7 || sel) && <text className="pin-label" x={sel ? u * 9 : R + upp * 4} y={sel ? -u * 10.5 : upp * 4} fontSize={upp * (sel ? 13 : 11)} strokeWidth={upp * 3}>{browse.label(p)}</text>}
             </g>
           )
         })}
