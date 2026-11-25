@@ -89,6 +89,12 @@ const T = {
   bestSecurity: { fr: 'Sûreté conseillée', en: 'Suggested security' },
   timeToGate: { fr: 'Temps jusqu’à la porte', en: 'Time to gate' },
   changeFlight: { fr: 'Changer de vol', en: 'Change flight' },
+  stepTurn: { fr: '{d}, puis marchez {m} m', en: '{d}, then walk {m} m' },
+  turnLeft: { fr: 'Tournez à gauche', en: 'Turn left' },
+  turnRight: { fr: 'Tournez à droite', en: 'Turn right' },
+  bearLeft: { fr: 'Serrez à gauche', en: 'Bear left' },
+  bearRight: { fr: 'Serrez à droite', en: 'Bear right' },
+  landmark: { fr: 'repère : {p}', en: 'landmark: {p}' },
   arrived: { fr: 'Bon vol !', en: 'Have a good flight!' },
 }
 export type Key = keyof typeof T

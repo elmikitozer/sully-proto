@@ -157,7 +157,7 @@ main.detail { padding: 0; gap: 0 }
 .marker.start circle { fill: var(--ink) } .marker.start .start-core { fill: var(--card); stroke: none }
 .marker.security circle { fill: var(--k-security) } .marker.stop circle { fill: var(--k-restaurant) } .marker.gate circle { fill: var(--k-gate) }
 .marker .mlabel { fill: var(--ink); paint-order: stroke; stroke: var(--card); stroke-width: .8 }
-.dot circle { fill: var(--accent); stroke: #fff; stroke-width: 1 } .dot .halo { fill: var(--accent); opacity: .2; stroke: none }
+.dot circle { fill: var(--accent); stroke: #fff; stroke-width: 1 } .dot .cone { fill: var(--accent); opacity: .28 } .dot .halo { fill: var(--accent); opacity: .2; stroke: none }
 .zoom { position: absolute; right: 12px; top: 12px; display:flex; flex-direction: column; gap: 0; background: var(--card); border-radius: var(--r-md); box-shadow: var(--shadow-2); overflow: hidden }
 .zoom button { width: 40px; height: 40px; border: 0; background: none; font-size: 18px; display: grid; place-items: center }
 .zoom button + button { border-top: 1px solid var(--line) }
@@ -174,7 +174,7 @@ main.nav { padding: 0; gap: 0; height: 100dvh }
 .navpill { background: var(--card); box-shadow: var(--shadow-2); border-radius: 999px; padding: 8px 14px; display: flex; gap: 8px; align-items: baseline; font-size: 14px }
 .navpill span { color: var(--muted) } .navpill.lvl { margin-left: auto; font-weight: 700 }
 .stepcard { --c: var(--accent); background: var(--card); border-radius: var(--r-xl) var(--r-xl) 0 0; padding: 0 18px max(16px, env(safe-area-inset-bottom, 0px)); box-shadow: var(--shadow-up); position: relative; overflow: hidden }
-.stepcard.security { --c: var(--k-security) } .stepcard.stop { --c: var(--k-restaurant) } .stepcard.gate { --c: var(--k-gate) } .stepcard.lift { --c: var(--k-info) }
+.stepcard.security { --c: var(--k-security) } .stepcard.stop { --c: var(--k-restaurant) } .stepcard.gate { --c: var(--k-gate) } .stepcard.lift { --c: var(--k-info) } .stepicon.left, .stepicon.right { background: var(--ink); color: var(--bg) }
 .progress { height: 4px; background: var(--line); margin: 0 -18px 14px } .progress span { display: block; height: 100%; background: var(--c); transition: width 120ms linear }
 .stepbody { display: flex; gap: 14px; align-items: flex-start }
 .stepicon { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--c) }

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ArrowUpDown, ChevronLeft, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
+import { ArrowUpDown, ChevronLeft, CornerUpLeft, CornerUpRight, Footprints, Pause, Play, Plane, ShieldCheck, SkipBack, SkipForward, Sparkles } from 'lucide-react'
 import MapView, { splitByLevel } from './MapView'
-import { findFlight, placeById, plan, routeToPlace, starts, STOP_MIN, WALK, type Flight, type Lang, type Plan, type PlaceKind, type StopKind } from './model'
+import { findFlight, placeById, places, plan, routeToPlace, starts, STOP_MIN, WALK, type Flight, type Lang, type Plan, type PlaceKind, type StopKind } from './model'
 import { t } from './i18n'
 import { easeInOut, reducedMotion } from './motion'
 import type { Pt } from './router'
@@ -14,20 +14,61 @@ import Explore from './screens/Explore'
 import Place, { placeMarkerKind } from './screens/Place'
 import MyFlight from './screens/MyFlight'
 
-type StepKind = 'walk' | 'lift' | 'security' | 'stop' | 'gate'
+type StepKind = 'walk' | 'left' | 'right' | 'lift' | 'security' | 'stop' | 'gate'
 interface Step { kind: StepKind; text: string; sub?: string; level: number; path: Pt[]; leg: number }
 type Marker = { p: Pt; kind: 'start' | 'security' | 'stop' | 'gate'; label?: string }
 
-/** Walk + lift steps for one leg, split wherever the path changes level. */
+/** Split a same-level polyline into straight runs: a new run starts at every turn sharper than 30°. */
+function runsOf(seg: Pt[]): { pts: Pt[]; m: number; turn: number }[] {
+  const runs: { pts: Pt[]; m: number; turn: number }[] = []
+  const head = (a: Pt, b: Pt) => Math.atan2(b.y - a.y, b.x - a.x)
+  for (let i = 1; i < seg.length; i++) {
+    const a = seg[i - 1], b = seg[i], m = Math.hypot(b.x - a.x, b.y - a.y)
+    if (m < 0.5) continue
+    const last = runs[runs.length - 1]
+    if (last) {
+      const lp = last.pts
+      let d = head(a, b) - head(lp[lp.length - 2], lp[lp.length - 1])
+      d = Math.atan2(Math.sin(d), Math.cos(d)) // -π..π, > 0 = left (map y points up)
+      // Tiny runs (< 8 m) are smoothing noise: fold them into the previous run.
+      if (Math.abs(d) < Math.PI / 6 || last.m < 8) { lp.push(b); last.m += m; continue }
+      runs.push({ pts: [a, b], m, turn: d })
+    } else runs.push({ pts: [a, b], m, turn: 0 })
+  }
+  return runs
+}
+
+/** Nearest named landmark (toilets, info desk, food, security, gate) within 25 m of a point. */
+function landmarkNear(p: Pt, lang: Lang): string | undefined {
+  let best: { label: string; d: number } | undefined
+  for (const q of places) {
+    if (q.l !== p.l) continue
+    const d = Math.hypot(q.x - p.x, q.y - p.y)
+    if (d < 25 && (!best || d < best.d)) best = { label: placeLabel(q, lang), d }
+  }
+  return best?.label
+}
+
+/** Walk + turn + lift steps for one leg, split wherever the path turns or changes level. */
 function walkSteps(path: Pt[], target: string, leg: number, lang: Lang): Step[] {
   const out: Step[] = []
   const parts = splitByLevel(path)
   parts.forEach((seg, si) => {
     if (si > 0) out.push({ kind: 'lift', text: t(lang, 'stepLift', { l: seg[0].l }), level: seg[0].l, path: [parts[si - 1][parts[si - 1].length - 1], seg[0]], leg })
-    let m = 0
-    for (let i = 1; i < seg.length; i++) m += Math.hypot(seg[i].x - seg[i - 1].x, seg[i].y - seg[i - 1].y)
-    if (m < 3) return
-    out.push({ kind: 'walk', text: t(lang, 'stepWalk', { m: Math.round(m / 5) * 5 || 5 }) + ' ' + t(lang, 'stepWalkTo', { t: target }), sub: `≈ ${Math.max(1, Math.round(m / WALK / 60))} min`, level: seg[0].l, path: seg, leg })
+    const runs = runsOf(seg).filter((r, _k, all) => r.m >= 3 || all.length === 1)
+    runs.forEach((r, k) => {
+      const metres = Math.round(r.m / 5) * 5 || 5
+      const mins = `≈ ${Math.max(1, Math.round(r.m / WALK / 60))} min`
+      const lastRun = k === runs.length - 1
+      let text: string
+      if (k === 0) text = t(lang, 'stepWalk', { m: metres }) + ' ' + t(lang, 'stepWalkTo', { t: target })
+      else {
+        const a = Math.abs(r.turn), dirKey = r.turn > 0 ? (a < Math.PI / 3 ? 'bearLeft' : 'turnLeft') : (a < Math.PI / 3 ? 'bearRight' : 'turnRight')
+        text = t(lang, 'stepTurn', { d: t(lang, dirKey), m: metres }) + (lastRun ? ' ' + t(lang, 'stepWalkTo', { t: target }) : '')
+      }
+      const mark = k > 0 ? landmarkNear(r.pts[0], lang) : undefined
+      out.push({ kind: k === 0 ? 'walk' : r.turn > 0 ? 'left' : 'right', text, sub: mark ? `${t(lang, 'landmark', { p: mark })} · ${mins}` : mins, level: seg[0].l, path: r.pts, leg })
+    })
   })
   return out
 }
@@ -225,7 +266,7 @@ function Trip({ dir, lang, flight, plan: p, base, now, stopKind, setStopKind, st
 }
 
 const STOP_NAME = { restaurant: 'nameRestaurant', toilet: 'nameToilet', info: 'nameInfo' } as const
-const STEP_ICON: Record<StepKind, typeof Footprints> = { walk: Footprints, lift: ArrowUpDown, security: ShieldCheck, stop: Sparkles, gate: Plane }
+const STEP_ICON: Record<StepKind, typeof Footprints> = { walk: Footprints, left: CornerUpLeft, right: CornerUpRight, lift: ArrowUpDown, security: ShieldCheck, stop: Sparkles, gate: Plane }
 
 function Nav({ dir, lang, legs, steps, markers, title, onBack }: { dir: string; lang: Lang; legs: Pt[][]; steps: Step[]; markers: Marker[]; title: string; onBack: () => void }) {
   const [i, setI] = useState(0)
@@ -246,6 +287,10 @@ function Nav({ dir, lang, legs, steps, markers, title, onBack }: { dir: string; 
     return () => cancelAnimationFrame(raf)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hop?.from])
+  // Heading of the walker, for the direction cone on the dot (kept when standing still).
+  const headingRef = useRef(0)
+  const ahead = along(step.path, Math.min(1, frac + 0.04))
+  if (Math.hypot(ahead.x - target.x, ahead.y - target.y) > 0.2) headingRef.current = Math.atan2(ahead.y - target.y, ahead.x - target.x)
   const e = hop ? easeInOut(hop.k) : 1
   const dot = hop && hop.k < 1 && hop.from.l === target.l ? { l: target.l, x: hop.from.x + (target.x - hop.from.x) * e, y: hop.from.y + (target.y - hop.from.y) * e } : target
   // Smooth simulation: advance the dot every animation frame (constant speed, ~9 m per demo second).
@@ -261,20 +306,20 @@ function Nav({ dir, lang, legs, steps, markers, title, onBack }: { dir: string; 
       const nf = Math.min(1, fracRef.current + dt * perSec)
       fracRef.current = nf; setFrac(nf)
       if (nf < 1) { raf = requestAnimationFrame(tick); return }
-      if (i < steps.length - 1) pause = window.setTimeout(() => { setI((x) => Math.min(x + 1, steps.length - 1)); setFrac(0) }, step.kind === 'walk' ? 300 : 1400)
+      if (i < steps.length - 1) pause = window.setTimeout(() => { setI((x) => Math.min(x + 1, steps.length - 1)); setFrac(0) }, step.kind === 'walk' || step.kind === 'left' || step.kind === 'right' ? 300 : 1400)
       else setPlaying(false)
     }
     raf = requestAnimationFrame(tick)
     return () => { cancelAnimationFrame(raf); clearTimeout(pause) }
   }, [playing, i, step, steps.length])
-  const remainingM = steps.slice(i).reduce((a, s) => a + (s.kind === 'walk' ? s.path.reduce((b, q, k) => b + (k ? Math.hypot(q.x - s.path[k - 1].x, q.y - s.path[k - 1].y) : 0), 0) : 0), 0)
+  const remainingM = steps.slice(i).reduce((a, s) => a + (s.kind === 'walk' || s.kind === 'left' || s.kind === 'right' ? s.path.reduce((b, q, k) => b + (k ? Math.hypot(q.x - s.path[k - 1].x, q.y - s.path[k - 1].y) : 0), 0) : 0), 0)
   const go = (d: number) => { haptic(); if (!reducedMotion()) setHop({ from: dot, k: 0 }); setI((x) => Math.max(0, Math.min(steps.length - 1, x + d))); setFrac(0) }
   const Icon = STEP_ICON[step.kind]
   const done = i === steps.length - 1
   return (
     <main className="nav screen" data-dir={dir}>
       <div className="mapwrap full">
-        <MapView level={dot.l} routes={legs.map((path, k) => ({ path, active: k >= step.leg }))} markers={markers} dot={dot} follow />
+        <MapView level={dot.l} routes={legs.map((path, k) => ({ path, active: k >= step.leg }))} markers={markers} dot={dot} heading={headingRef.current} follow />
         <div className="navtop">
           <button className="fab" onClick={onBack} aria-label={t(lang, 'back')}><ChevronLeft size={22} /></button>
           <div className="navpill"><b>{title}</b><span>{Math.ceil(remainingM / WALK / 60)} {t(lang, 'left')}</span></div>

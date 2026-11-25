@@ -14,13 +14,15 @@ interface Props {
   routes: { path: Pt[]; active: boolean }[]
   markers: { p: Pt | Poi; kind: 'start' | 'security' | 'stop' | 'gate'; label?: string }[]
   dot?: Pt | null
+  /** Walking direction in radians (map coordinates, y up), drawn as a cone on the dot. */
+  heading?: number
   follow?: boolean
   showPois?: boolean
 }
 
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
-export default function MapView({ level, routes, markers, dot, follow, showPois = true }: Props) {
+export default function MapView({ level, routes, markers, dot, heading, follow, showPois = true }: Props) {
   const lv = data.levels[String(level)]
   const zonesD = useMemo(() => lv.zones.map(toD).join(''), [lv])
   const wallsD = useMemo(() => lv.walls.map(toD).join(''), [lv])
@@ -68,15 +70,46 @@ export default function MapView({ level, routes, markers, dot, follow, showPois 
   // In follow mode the camera is centred on the dot every frame; the state only keeps the zoom.
   const shown: View = follow && dot ? { x: dot.x - view.w / 2, y: -dot.y - view.h / 2, w: view.w, h: view.h } : view
 
+  // One finger (or mouse) pans; two fingers pinch-zoom around their midpoint.
   const drag = useRef<{ x: number; y: number; v: View } | null>(null)
+  const pointers = useRef(new Map<number, { x: number; y: number }>())
+  const pinch = useRef<{ d: number; v: View; cx: number; cy: number } | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
-  const onDown = (e: React.PointerEvent) => { cancelAnimationFrame(anim.current); drag.current = { x: e.clientX, y: e.clientY, v: viewRef.current }; (e.target as Element).setPointerCapture?.(e.pointerId) }
+  const pinchStart = () => {
+    const [a, b] = [...pointers.current.values()]
+    const el = svgRef.current; if (!el) return
+    const r = el.getBoundingClientRect()
+    pinch.current = { d: Math.hypot(a.x - b.x, a.y - b.y), v: viewRef.current, cx: ((a.x + b.x) / 2 - r.left) / r.width, cy: ((a.y + b.y) / 2 - r.top) / r.height }
+    drag.current = null
+  }
+  const onDown = (e: React.PointerEvent) => {
+    cancelAnimationFrame(anim.current)
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    ;(e.currentTarget as Element).setPointerCapture?.(e.pointerId)
+    if (pointers.current.size === 2) pinchStart()
+    else drag.current = { x: e.clientX, y: e.clientY, v: viewRef.current }
+  }
   const onMove = (e: React.PointerEvent) => {
+    if (!pointers.current.has(e.pointerId)) return
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    const p = pinch.current
+    if (p && pointers.current.size >= 2) {
+      const [a, b] = [...pointers.current.values()]
+      const k = Math.min(4, Math.max(0.25, p.d / Math.max(1, Math.hypot(a.x - b.x, a.y - b.y))))
+      const w = p.v.w * k, h = p.v.h * k
+      setView({ x: p.v.x + (p.v.w - w) * p.cx, y: p.v.y + (p.v.h - h) * p.cy, w, h })
+      return
+    }
     const d = drag.current; const el = svgRef.current; if (!d || !el || follow) return
     const r = el.getBoundingClientRect(); const s = Math.max(d.v.w / r.width, d.v.h / r.height)
     setView({ ...d.v, x: d.v.x - (e.clientX - d.x) * s, y: d.v.y - (e.clientY - d.y) * s })
   }
-  const onUp = () => { drag.current = null }
+  const onUp = (e: React.PointerEvent) => {
+    pointers.current.delete(e.pointerId)
+    if (pointers.current.size < 2) pinch.current = null
+    const rest = [...pointers.current.values()][0]
+    drag.current = rest ? { x: rest.x, y: rest.y, v: viewRef.current } : null
+  }
   const zoomed = (v: View, k: number) => ({ x: v.x + (v.w * (1 - k)) / 2, y: v.y + (v.h * (1 - k)) / 2, w: v.w * k, h: v.h * k })
   // Buttons glide (occasional); the wheel stays instant (fired many times per second).
   const zoomBtn = (k: number) => animateView(zoomed(viewRef.current, k), 240)
@@ -122,6 +155,7 @@ export default function MapView({ level, routes, markers, dot, follow, showPois 
           <g transform={`translate(${dot.x},${-dot.y})`} className="dot">
             <circle r={sw * 9} className="halo" />
             <circle r={sw * 9} className="ripple" />
+            {heading != null && <path className="cone" d={`M0,0 L${sw * 14},${-sw * 6} A${sw * 15},${sw * 15} 0 0 1 ${sw * 14},${sw * 6} Z`} transform={`rotate(${(-heading * 180) / Math.PI})`} />}
             <circle r={sw * 4.5} />
           </g>
         )}
