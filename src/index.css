@@ -197,6 +197,45 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .onb-dots span { width: 8px; height: 8px; border-radius: 4px; background: var(--line); transition: width 240ms var(--ease-out), background-color 200ms ease } .onb-dots .on { width: 24px; background: var(--accent) }
 .onb-actions { display: flex; gap: 8px } .onb-actions .primary { flex: 1 }
 
+
+/* Assistant */
+.banner { display: flex; gap: 12px; align-items: flex-start; border-radius: var(--r-lg); padding: 14px 16px; border: 1px solid; font-size: 14px }
+.banner.warn { background: color-mix(in srgb, var(--warn) 12%, var(--card)); border-color: color-mix(in srgb, var(--warn) 40%, transparent); color: var(--ink) }
+.banner.warn > svg { color: var(--warn); flex: none; margin-top: 2px }
+.banner > div { display: flex; flex-direction: column; gap: 2px } .banner span { color: var(--muted) }
+.banner-actions { display: flex; gap: 8px; margin-top: 8px }
+.banner-actions button { border: 0; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; background: var(--ink); color: var(--bg) }
+.banner-actions button + button { background: transparent; color: var(--ink); border: 1px solid var(--line) }
+.toast { position: fixed; z-index: 50; top: max(10px, env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); width: min(456px, calc(100% - 24px)); display: flex; align-items: flex-start; background: var(--ink); color: var(--bg); border-radius: var(--r-lg); box-shadow: 0 16px 40px rgba(0,0,0,.3); animation: toastIn 360ms var(--ease-out) both }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, -24px) scale(.97) } }
+.toast-body { flex: 1; display: flex; gap: 12px; align-items: flex-start; text-align: left; background: none; border: 0; color: inherit; padding: 12px 4px 12px 14px }
+.toast-body > span:last-child { display: flex; flex-direction: column; gap: 2px; font-size: 14px } .toast-body > span:last-child span { opacity: .75 }
+.toast-ico { width: 32px; height: 32px; border-radius: 10px; background: var(--accent); color: #fff; display: grid; place-items: center; flex: none }
+.toast-x { background: none; border: 0; color: inherit; opacity: .6; padding: 12px }
+.assistant { display: flex; flex-direction: column; gap: 12px; --c: var(--ok) }
+.assistant.go { --c: var(--accent) } .assistant.hurry { --c: var(--warn) } .assistant.boarding { --c: var(--danger) } .assistant.closed { --c: var(--muted) }
+.assistant-head { display: flex; align-items: center; gap: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--c) }
+.assistant-now { font-family: var(--display); font-size: 20px; font-weight: 700; margin: 0; line-height: 1.25 }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--c, currentColor); box-shadow: 0 0 0 0 color-mix(in srgb, var(--c, currentColor) 60%, transparent); animation: pulseRing 1.8s var(--ease-out) infinite; flex: none }
+@keyframes pulseRing { to { box-shadow: 0 0 0 8px transparent } }
+.milestones { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; border-left: 2px solid var(--line); margin-left: 5px }
+.milestones li { display: flex; align-items: center; gap: 10px; padding: 6px 0 6px 14px; position: relative; font-size: 14px; color: var(--muted) }
+.milestones li b { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ink) }
+.ms-dot { position: absolute; left: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--card); border: 2px solid var(--line) }
+.milestones li.done { color: var(--ink) } .milestones li.done .ms-dot { background: var(--ok); border-color: var(--ok) }
+.milestones li.next { color: var(--ink); font-weight: 600 } .milestones li.next .ms-dot { border-color: var(--c); background: color-mix(in srgb, var(--c) 30%, var(--card)) }
+.hero-phase { display: flex; align-items: center; gap: 8px; margin-top: 6px; background: rgba(255,255,255,.12); border-radius: var(--r-md); padding: 8px 10px; font-size: 14px; font-weight: 600; --c: #6ee7a8 }
+.hero-phase.go { --c: #fff } .hero-phase.hurry { --c: #fcd34d } .hero-phase.boarding { --c: #fca5a5 }
+.mono { font-variant-numeric: tabular-nums }
+.pass-grid b.changed { color: var(--warn) }
+.ghost.left { align-self: flex-start; padding: 4px 0; display: inline-flex; align-items: center; gap: 6px }
+.small { font-size: 13px; display: inline-flex; gap: 6px; align-items: center }
+.demotools { border-style: dashed; background: transparent; box-shadow: none; display: flex; flex-direction: column; gap: 8px }
+.demotools h3 { margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--warn) }
+.demobtns { display: flex; flex-wrap: wrap; gap: 8px }
+.demobtns button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 12px; font-size: 13px; font-weight: 600 }
+.demotools .hint svg { vertical-align: -2px }
+
 /* ───────── Motion (Emil Kowalski's animate guidance: transform/opacity, strong curves, <300ms UI) ───────── */
 
 /* Press feedback: every tappable control answers the finger. */
@@ -263,4 +302,4 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .sheet { animation: sheetIn 360ms var(--ease-out) both }
 @keyframes sheetIn { from { transform: translateY(40px); opacity: .6 } }
 .screen[data-dir="tab"] { animation-name: fade; animation-duration: 180ms }
-@media (prefers-reduced-motion: reduce) { .sheet, .onb-slide { animation-name: fade } }
+@media (prefers-reduced-motion: reduce) { .sheet, .onb-slide { animation-name: fade } .toast { animation: none } .pulse { animation: none } }

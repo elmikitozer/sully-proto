@@ -9,6 +9,9 @@ import { tabOf, useRoute, type Tab } from './route'
 import { load, save } from './storage'
 import { DemoPill, KIND_ICON, TabBar, haptic, placeLabel } from './ui'
 import Onboarding from './Onboarding'
+import { newGateFor, useMyTrip, withGate } from './assistant'
+import { nowMs, resetClock, useNow } from './clock'
+import AssistantToasts from './AssistantToasts'
 import Home, { hhmm } from './screens/Home'
 import Explore from './screens/Explore'
 import Place, { placeMarkerKind } from './screens/Place'
@@ -110,11 +113,12 @@ export default function App() {
   const [err, setErr] = useState(false)
   const [homeStart, setHomeStartState] = useState(() => load('start', 'm14'))
   const setHomeStart = (s: string) => { setHomeStartState(s); save('start', s) }
-  const [myCode, setMyCode] = useState(() => load<string | null>('myFlight', null) ?? load<{ code: string } | null>('lastTrip', null)?.code ?? null)
-  const [now] = useState(() => new Date())
+  const [trip, setTrip] = useMyTrip()
 
   // The URL is the source of truth for which flight / place, start point and stop are shown.
-  const flight = route.code ? findFlight(route.code) ?? null : null
+  const baseFlight = route.code ? findFlight(route.code) ?? null : null
+  // Memoised so the (expensive) route is only recomputed when the flight or its gate really changes.
+  const flight = useMemo(() => (baseFlight ? withGate(baseFlight, trip) : null), [baseFlight, trip])
   const place = route.pid != null ? placeById(route.pid) ?? null : null
   const startId = starts.some((s) => s.id === route.from) ? route.from! : homeStart
   const stopKind = route.stop
@@ -128,10 +132,20 @@ export default function App() {
     navigate({ screen: 'home' }, { replace: true })
   }, [broken, route, navigate])
   // The flight you opened becomes "your flight" (home card + My flight tab).
-  useEffect(() => { if (flight) { setMyCode(flight.code); save('myFlight', flight.code) } }, [flight])
+  // Boarding time is fixed the first time the flight is opened, so countdowns survive reloads.
+  useEffect(() => {
+    if (!baseFlight) return
+    if (trip?.code === baseFlight.code && trip.boardAt > nowMs() - 3600000) return
+    setTrip({ code: baseFlight.code, boardAt: nowMs() + baseFlight.boardInMin * 60000 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [baseFlight])
 
-  const myFlight = myCode ? findFlight(myCode) ?? null : null
-  const boardAt = myFlight ? new Date(now.getTime() + myFlight.boardInMin * 60000) : null
+  const myBase = trip ? findFlight(trip.code) ?? null : null
+  const myFlight = useMemo(() => (myBase ? withGate(myBase, trip) : null), [myBase, trip])
+  const boardAt = trip && myFlight ? trip.boardAt : null
+  const flightBoardAt = flight && trip?.code === flight.code ? trip.boardAt : flight ? nowMs() + flight.boardInMin * 60000 : 0
+  const changeGate = () => { if (!trip || !myFlight) return; const g = newGateFor(myFlight, myFlight.gate); setTrip({ ...trip, gate: g, prevGate: myFlight.gate }) }
+  const ackGate = () => trip && setTrip({ ...trip, prevGate: undefined })
   const start = starts.find((s) => s.id === startId)!
   const homeStartPt = starts.find((s) => s.id === homeStart)!.pt
   const thePlan = useMemo(() => (flight ? plan(start.pt, flight, stopKind) : null), [flight, start, stopKind])
@@ -177,10 +191,11 @@ export default function App() {
       )}
       {screen === 'home' && (
         <Home dir={dir} lang={lang} query={query} setQuery={setQuery} err={err} start={homeStart} setStart={setHomeStart} submit={(c) => submit(c)}
-          current={myFlight} boardAt={boardAt} onContinue={() => myFlight && submit(myFlight.code)} onShortcut={(k) => navigate({ screen: 'explore', cat: k })} />
+          current={myFlight} boardAt={boardAt} plan={myPlan} trip={trip} onAckGate={ackGate} onContinue={() => myFlight && submit(myFlight.code)} onShortcut={(k) => navigate({ screen: 'explore', cat: k })} />
       )}
       {screen === 'explore' && <Explore dir={dir} lang={lang} cat={route.cat} setCat={exploreCat} start={homeStart} setStart={setHomeStart} onPlace={openPlace} />}
-      {screen === 'myflight' && <MyFlight dir={dir} lang={lang} flight={myFlight} plan={myPlan} boardAt={boardAt} onGuide={() => myFlight && submit(myFlight.code)} onAdd={() => navigate({ screen: 'home' })} />}
+      {screen === 'myflight' && <MyFlight dir={dir} lang={lang} flight={myFlight} plan={myPlan} boardAt={boardAt} trip={trip} onGuide={() => myFlight && submit(myFlight.code)} onAdd={() => navigate({ screen: 'home' })}
+        onGateChange={changeGate} onAckGate={ackGate} onReset={() => { resetClock(); if (trip && myBase) setTrip({ code: trip.code, boardAt: nowMs() + myBase.boardInMin * 60000 }) }} />}
       {screen === 'place' && place && placeRoute && (
         <Place dir={dir} lang={lang} place={place} route={placeRoute} startPt={start.pt} startLabel={start.label[lang]}
           onBack={() => back({ screen: 'explore', cat: place.kind })} onStart={() => navigate({ screen: 'placeNav', pid: place.pid, from: startId })}
@@ -192,13 +207,14 @@ export default function App() {
           onBack={() => back({ screen: 'place', pid: place.pid, from: startId })} />
       )}
       {screen === 'trip' && flight && thePlan && basePlan && (
-        <Trip dir={dir} lang={lang} flight={flight} plan={thePlan} base={basePlan} now={now} stopKind={stopKind} setStopKind={setStopKind} startPt={start.pt} startLabel={start.label[lang]}
+        <Trip dir={dir} lang={lang} flight={flight} plan={thePlan} base={basePlan} boardAt={flightBoardAt} stopKind={stopKind} setStopKind={setStopKind} startPt={start.pt} startLabel={start.label[lang]}
           onStart={() => navigate({ ...route, screen: 'nav', code: flight.code, from: startId })} onBack={() => back({ screen: 'home' })} />
       )}
       {screen === 'nav' && flight && thePlan && (
         <Nav dir={dir} lang={lang} legs={thePlan.legs.map((l) => l.path)} steps={steps} markers={markersOf(thePlan, start.pt, flight)} title={`${t(lang, 'gate')} ${flight.gate}`}
           onBack={() => back({ ...route, screen: 'trip', code: flight.code, from: startId })} />
       )}
+      <AssistantToasts lang={lang} flight={myFlight} plan={myPlan} trip={trip} onOpen={() => navigate({ screen: 'myflight' })} />
       {!guiding && <TabBar tab={tabOf(screen)} lang={lang} onTab={onTab} />}
     </div>
   )
@@ -218,13 +234,15 @@ function LevelTabs({ levels, level, setLevel, lang }: { levels: number[]; level:
   )
 }
 
-function Trip({ dir, lang, flight, plan: p, base, now, stopKind, setStopKind, startPt, startLabel, onStart, onBack }: {
-  dir: string; lang: Lang; flight: Flight; plan: Plan; base: Plan; now: Date; stopKind?: StopKind; setStopKind: (k?: StopKind) => void; startPt: Pt; startLabel: string; onStart: () => void; onBack: () => void
+function Trip({ dir, lang, flight, plan: p, base, boardAt, stopKind, setStopKind, startPt, startLabel, onStart, onBack }: {
+  dir: string; lang: Lang; flight: Flight; plan: Plan; base: Plan; boardAt: number; stopKind?: StopKind; setStopKind: (k?: StopKind) => void; startPt: Pt; startLabel: string; onStart: () => void; onBack: () => void
 }) {
   const levels = [...new Set(p.legs.flatMap((l) => l.path.map((q) => q.l)))].sort((a, b) => a - b)
   const [level, setLevel] = useState(p.gate.l)
-  const board = new Date(now.getTime() + flight.boardInMin * 60000)
-  const margin = flight.boardInMin - p.totalMin
+  const now = useNow(30000)
+  const board = new Date(boardAt)
+  const inMin = Math.max(0, Math.round((boardAt - now) / 60000))
+  const margin = inMin - p.totalMin
   const StopIcon = stopKind ? KIND_ICON[stopKind] : Sparkles
   return (
     <main className="detail screen" data-dir={dir}>
@@ -239,7 +257,7 @@ function Trip({ dir, lang, flight, plan: p, base, now, stopKind, setStopKind, st
           <div>
             <div className="muted">{flight.code} · {flight.city[lang]}</div>
             <h2 className="sheet-title">{flight.terminal} · {t(lang, 'gate')} {flight.gate}</h2>
-            <div className="muted">{t(lang, 'boarding')} {hhmm(board)} ({t(lang, 'inMin', { n: flight.boardInMin })})</div>
+            <div className="muted">{t(lang, 'boarding')} {hhmm(board)} ({t(lang, 'inMin', { n: inMin })})</div>
           </div>
           <div className="total"><b key={p.totalMin} className="tick">{p.totalMin}</b><span>min</span></div>
         </div>
