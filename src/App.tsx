@@ -182,7 +182,7 @@ export default function App() {
     <div className={'app' + (guiding ? ' guiding' : '')}>
       {!guiding && (
         <header className="topbar">
-          <a className="brand" href="/" onClick={(e) => { e.preventDefault(); navigate({ screen: 'home' }) }}>Sully</a>
+          <a className="brand" translate="no" href="/" onClick={(e) => { e.preventDefault(); navigate({ screen: 'home' }) }}>Sully</a>
           <DemoPill lang={lang} />
           <div className="lang">
             <button className={lang === 'fr' ? 'on' : ''} onClick={() => setLang('fr')}>FR</button>

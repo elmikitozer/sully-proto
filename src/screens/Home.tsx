@@ -1,4 +1,4 @@
-import { ArrowRight, Search } from 'lucide-react'
+import { ArrowUpRight, Search } from 'lucide-react'
 import { flights, starts, type Flight, type Lang, type Plan } from '../model'
 import { useNow } from '../clock'
 import { milestones, phaseAt, type MyTrip } from '../assistant'
@@ -23,13 +23,14 @@ export default function Home({ dir, lang, query, setQuery, err, start, setStart,
     <main className="home screen" data-dir={dir}>
       <GateBanner lang={lang} trip={trip} plan={plan} onSee={onContinue} onAck={onAckGate} />
       {current && boardAt ? (
-        <button className="hero" onClick={() => { haptic(); onContinue() }}>
-          <span className="hero-label">{t(lang, 'yourFlight')}</span>
-          <span className="hero-row"><b>{current.code}</b><span>{current.city[lang]}</span></span>
-          <span className="hero-big">{current.terminal} · {t(lang, 'gate')} {current.gate}</span>
-          <span className="hero-row sub"><span>{t(lang, 'boardsIn')} <b>{mins} min</b> · {hhmm(new Date(boardAt))}</span></span>
+        <button className="hero" aria-label={t(lang, 'continueGate')} onClick={() => { haptic(); onContinue() }}>
+          <span className="sign-top"><b translate="no">{current.code}</b><span>{current.city[lang]}</span><span className="sign-time">{hhmm(new Date(boardAt))}</span></span>
+          <span className="sign-main">
+            <span className="sign-gate"><small>{t(lang, 'gate')}</small><b>{current.gate}</b></span>
+            <span className="sign-info"><b>{current.terminal}</b><span>{t(lang, 'boardsIn')} <b>{mins} min</b></span></span>
+            <ArrowUpRight className="sign-arrow" size={36} strokeWidth={2.5} aria-hidden />
+          </span>
           {phase && plan && <span className={'hero-phase ' + phase}><span className="pulse" aria-hidden />{phaseText(phase, lang, current, plan, boardAt)}</span>}
-          <span className="hero-cta">{t(lang, 'continueGate')} <ArrowRight size={18} aria-hidden /></span>
         </button>
       ) : (
         <h1>{t(lang, 'tagline')}</h1>
@@ -41,7 +42,7 @@ export default function Home({ dir, lang, query, setQuery, err, start, setStart,
           <span>{t(lang, 'flightLabel')}</span>
           <span className="inputicon">
             <Search size={18} aria-hidden />
-            <input value={query} placeholder={t(lang, 'flightPh')} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && submit()} autoCapitalize="characters" enterKeyHint="go" />
+            <input value={query} placeholder={t(lang, 'flightPh')} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && submit()} autoCapitalize="characters" enterKeyHint="go" name="flight" autoComplete="off" spellCheck={false} />
           </span>
         </label>
         {err && <p className="err" role="alert">{t(lang, 'notFound')}</p>}

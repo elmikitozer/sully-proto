@@ -2,7 +2,7 @@ import type { Lang } from './model'
 const T = {
   tagline: { fr: 'Votre chemin jusqu’à la porte, sans stress.', en: 'Your way to the gate, stress-free.' },
   flightLabel: { fr: 'Votre numéro de vol', en: 'Your flight number' },
-  flightPh: { fr: 'ex. SL 1204', en: 'e.g. SL 1204' },
+  flightPh: { fr: 'ex. SL 1204…', en: 'e.g. SL 1204…' },
   demoFlights: { fr: 'Vols de démonstration', en: 'Demo flights' },
   from: { fr: 'Vous êtes à', en: 'You are at' },
   go: { fr: 'Trouver mon chemin', en: 'Find my way' },
@@ -125,7 +125,7 @@ const T = {
   nameTransport: { fr: 'Transports', en: 'Transport' },
   viewMap: { fr: 'Carte', en: 'Map' },
   viewList: { fr: 'Liste', en: 'List' },
-  searchMap: { fr: 'Rechercher dans Orly', en: 'Search Orly' },
+  searchMap: { fr: 'Rechercher dans Orly…', en: 'Search Orly…' },
   directions: { fr: 'Itinéraire', en: 'Directions' },
   fromYou: { fr: 'depuis {p}', en: 'from {p}' },
   levelName: { fr: 'Niveau {l}', en: 'Level {l}' },
