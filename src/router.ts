@@ -3,7 +3,7 @@ import raw from './data.json'
 import osm from './osm.json'
 
 export type Cat = 'security' | 'restaurant' | 'toilet' | 'info' | 'gate' | 'transport' | 'lift' | 'shop'
-export interface Poi { c: Cat; l: number; x: number; y: number; i: string; id?: number; name?: string; terminal?: string; sub?: string; h?: string }
+export interface Poi { c: Cat; l: number; x: number; y: number; i: string; id?: number; name?: string; terminal?: string; sub?: string; h?: string; osm?: string }
 interface Lift { s: string; l: number; x: number; y: number; serves: number[] }
 interface LevelData { grid: string; zones: number[][][]; walls: number[][][] }
 interface Data { res: number; minx: number; miny: number; W: number; H: number; levels: Record<string, LevelData>; pois: Poi[]; lifts: Lift[] }

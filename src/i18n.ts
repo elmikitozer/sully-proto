@@ -72,6 +72,7 @@ const T = {
   zoneAirside: { fr: 'Après la sûreté · billet nécessaire', en: 'After security · boarding pass needed' },
   zonePublic: { fr: 'Zone publique · accès libre', en: 'Public area · open to everyone' },
   queueIncl: { fr: 'dont {n} min de file à la sûreté {s}', en: 'incl. {n} min queue at security {s}' },
+  photoBy: { fr: 'Photo : {a} · Google', en: 'Photo: {a} · Google' },
   catShop: { fr: 'Boutiques', en: 'Shops' },
   nameShop: { fr: 'Boutique', en: 'Shop' },
   osmNote: { fr: 'Nom et emplacement : OpenStreetMap', en: 'Name and location: OpenStreetMap' },

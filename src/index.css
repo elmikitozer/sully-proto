@@ -300,6 +300,9 @@ main.explore.mapmode { padding: 0; gap: 0 }
 .cover { position: relative; height: 112px; border-radius: var(--r-lg); display: grid; place-items: center; color: rgba(255,255,255,.95); overflow: hidden }
 
 .pinfo.compact .cover { height: 76px }
+.cover.has-photo { height: 168px } .pinfo.compact .cover.has-photo { height: 112px }
+.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover }
+.cover-credit { position: absolute; right: 6px; bottom: 6px; font-size: 10px; line-height: 1; padding: 3px 6px; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 .tone-brown { background: color-mix(in srgb, #a16207 45%, #5b3a12) } .tone-amber { background: color-mix(in srgb, #f59e0b 45%, #c2410c) } .tone-red { background: color-mix(in srgb, #ef4444 45%, #991b1b) }
 .tone-rose { background: color-mix(in srgb, #fb7185 45%, #be123c) } .tone-green { background: color-mix(in srgb, #22c55e 45%, #166534) } .tone-orange { background: color-mix(in srgb, #fb923c 45%, #c2410c) }
 .tone-plum { background: color-mix(in srgb, #a855f7 45%, #581c87) } .tone-sky { background: color-mix(in srgb, #38bdf8 45%, #1d4ed8) } .tone-teal { background: color-mix(in srgb, #2dd4bf 45%, #0f766e) }
