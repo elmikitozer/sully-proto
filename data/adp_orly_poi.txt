@@ -1,0 +1,505 @@
+DICT
+Parking P1|Parkings proches|1|p
+Toilettes|Services Pratiques|1|p
+Espace fumeurs|Espace fumeurs|1|r
+Extime Duty Free Paris|Beauté, Alcool, Gastronomie, Tabac, Multimédia et Mode|1|r
+Arrivées Passagers 2|Arrivées Passagers|2|p
+Toilettes|Services Pratiques|2|r
+Distributeurs boissons froides|Distributeurs boissons froides|4|r
+Espace change bébé|Table à langer|4|p
+Salon bébé|Repos pour les tout petits|4|r
+Toilettes|Services Pratiques|4|r
+Espace change bébé|Table à langer|2|r
+Billetterie Air Europa|Service client et billetterie|1|p
+Espace fumeurs|Espace fumeurs|4|p
+Toilettes|Services Pratiques|3|r
+Relay|Divertissement, Presse, Multimédia|4|r
+Charge Box|Rechargement de smartphone|4|r
+Services bagages|Services Bagages|2|r
+Espace change bébé|Table à langer|3|r
+Toilettes|Services Pratiques|4|p
+Douane – Détaxe de nuit / Vols Orly 1,2,3|Point Détaxe|3|p
+Douane – Détaxe de jour / Borne PABLO / Vols Orly 4|Point Détaxe|4|p
+Galeries Lafayette - Royal Quartz Paris|Horlogerie, Bijouterie|4|r
+Distributeurs boissons froides|Distributeurs boissons froides|4|p
+Gare Routière Paris-Orly 4|Bus|*|p
+Extime Duty Free Paris|Beauté, Alcool, Gastronomie, Tabac, Multimédia et Mode|3|r
+Espace ASSISTANCE MOBILITÉ|Espace ASSISTANCE MOBILITÉ|1|p
+Extime Duty Free Paris|Beauté, Alcool, Gastronomie, Tabac, Multimédia et Mode|2|r
+Parking P2|Parkings proches|1|p
+Pharmacie|Pharmacie|4|r
+Salon TAP|Salons|1|p
+Travel & Co|Santé, Détente, Supérette|4|p
+Ladurée|Gastronomie|1|r
+Ladurée|Gastronomie|4|r
+Visit Paris Region|Espace Tourisme|3|p
+Charge Box|Rechargement de smartphone|1|r
+Global Exchange|Change, Détaxe|3|r
+Parking P4a|Parkings proches|4|p
+Brioche Dorée|Boulangerie|4|p
+Monop'daily by Relay|Santé, Détente, Supérette|3|r
+Paul|Boulangerie|3|p
+EURONET- Distributeurs de billets|Distributeur de billets|3|r
+Starbucks Coffee|Coffee Shop|3|p
+EURONET- Distributeurs de billets|Distributeur de billets|4|p
+Bag Wrap|Emballage des bagages, pesée des bagages et accessoires de voyage|4|p
+Extime Duty Free Paris|Beauté, Alcool, Gastronomie, Tabac, Multimédia et Mode|4|r
+PS5|Jeux Vidéos|3|r
+Pharmacie|Pharmacie|1|p
+Pharmacie|Pharmacie|4|p
+Billetterie Orlyval|ORLYVAL|1|p
+Synagogue|Espace Prière|4|p
+Porte E09|Portes d'embarquement|3|r
+Porte F02|Portes d'embarquement|4|r
+Espace change bébé|Table à langer|4|r
+Charge Box|Rechargement de smartphone|2|r
+Fnac|Divertissement, Presse, Multimédia|1|p
+McDonald's|Fast Food|1|p
+Billetterie Orlyval|ORLYVAL|4|p
+Paul|Boulangerie|1|r
+EURONET- Distributeurs de billets|Distributeur de billets|3|p
+Espace ASSISTANCE MOBILITÉ|Espace ASSISTANCE MOBILITÉ|4|p
+Espace change bébé|Table à langer|3|p
+Comptoir Correspondance|Comptoir Correspondance|2|r
+Espace fumeurs|Espace fumeurs|4|r
+Arrivées passagers|Arrivées Passagers|4|p
+Exki|Sain & Gourmand|1|r
+Ladurée|Gastronomie|2|p
+Espace UM - Arrivées des enfants Non Accompagnés|Arrivées des enfants non accompagnés|4|p
+Food & Café|Boulangerie|3|r
+Toilettes|Services Pratiques|1|r
+Toilettes|Services Pratiques|3|p
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|3|r
+Porte E11|Portes d'embarquement|3|r
+Bureau d'accueil interreligieux|Espace Prière|4|p
+Ladurée|Gastronomie|2|r
+Eric Kayser|Boulangerie|2|r
+Starbucks Coffee|Coffee Shop|3|r
+Carrefour City|Santé, Détente, Supérette|1|p
+Relay|Divertissement, Presse, Multimédia|1|p
+Visit Paris Region|Espace Tourisme|4|p
+PS5|Jeux Vidéos|1|r
+Cash Paris Tax Refund|Détaxe|4|p
+Arcade Gaming|Jeux Vidéos|4|r
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|4|r
+Services bagages|Services Bagages|4|p
+Air Caraibes|Service client et billetterie|4|p
+Solaris|Luxe, Mode, Accessoires|3|r
+Photomaton|Cabine photo et photocopieur|4|p
+Fnac|Divertissement, Presse, Multimédia|3|r
+Mosquée|Espace Prière|4|p
+Ladurée|Gastronomie|3|r
+Discover Paris Sport|Divertissement, Presse, Multimédia|1|r
+Visit Paris Region|Espace Tourisme|2|p
+PS5|Jeux Vidéos|4|r
+Relay|Divertissement, Presse, Multimédia|1|r
+Travelex - Distributeurs de billets|Distributeur de billets multidevises|1|r
+Salon Transavia|Salons|2|r
+Douane – Détaxe de nuit / Vols Orly 4|Point Détaxe|4|p
+Espace fumeurs|Espace fumeurs|2|r
+Aire de jeux|Jeux pour enfants|3|r
+EURONET- Distributeurs de billets|Distributeur de billets|1|r
+IT Trattoria|Spécialités italiennes|3|r
+Guerlain|Beauté|4|r
+Exki|Sain & Gourmand|4|r
+Hour Passion|Horlogerie, Bijouterie|3|r
+La Maison du Chocolat|Gastronomie|1|p
+Espace change bébé|Table à langer|1|p
+Starbucks Coffee|Coffee Shop|4|r
+Solaris|Luxe, Mode, Accessoires|4|r
+Billetterie Royal Air Maroc|Service client et billetterie|4|p
+Boite aux lettres|Envoi de courrier|4|p
+Boite aux lettres|Envoi de courrier|2|p
+Bag Wrap|Emballage des bagages, pesée des bagages et accessoires de voyage|1|p
+Service client et billetterie|Service client et billetterie|4|p
+Pèse Bagages|Pèse bagages|2|p
+Pèse Bagages|Pèse bagages|4|p
+Fnac|Divertissement, Presse, Multimédia|4|r
+Objets Trouvés|Objets trouvés|4|p
+Espace change bébé|Table à langer|2|p
+Pharmacie|Pharmacie|3|r
+Paul Le Café|Boulangerie|3|r
+Espace ASSISTANCE MOBILITÉ|Espace ASSISTANCE MOBILITÉ|3|p
+Espace change bébé|Table à langer|1|r
+Bureau de Douane des opérations commerciales|Point Détaxe|4|p
+La Maison du Chocolat|Gastronomie|3|r
+Travel & Co|Santé, Détente, Supérette|1|p
+Paul|Boulangerie|1|p
+Nespresso|Gastronomie|1|p
+Swatch|Horlogerie, Bijouterie|4|r
+Espace Information - Orly 1/2/3 - Niveau 0|Information Transports|2|p
+Carrefour City|Santé, Détente, Supérette|3|p
+Parking P4b Rouge|Parkings proches|4|p
+Chargebox|Rechargement de smartphone|4|r
+Espace Prière|Espace Prière|2|r
+Mariage Frères|Gastronomie|1|p
+Arrivées passagers|Arrivées Passagers|3|p
+Global Exchange|Change, Détaxe|2|p
+Salon bébé|Repos pour les tout petits|3|r
+Relay|Divertissement, Presse, Multimédia|2|r
+Espace fumeurs|Espace fumeurs|3|r
+Starbucks Coffee|Coffee Shop|4|p
+EURONET- Distributeurs de billets|Distributeur de billets|1|p
+Services bagages|Services Bagages|3|p
+Air Corsica|Service client et billetterie|3|p
+Espace fumeurs|Espace fumeurs|3|p
+Parking P4a|Parkings proches|*|p
+Aire de jeux|Jeux pour enfants|4|r
+Relay|Divertissement, Presse, Multimédia|4|p
+Paul|Boulangerie|4|p
+EURONET- Distributeurs de billets|Distributeur de billets|4|r
+Ladurée|Gastronomie|1|p
+Espace UM - Arrivées des enfants Non Accompagnés|Arrivées des enfants non accompagnés|2|p
+Extime Lounge|Salons|4|r
+Travel & Co|Santé, Détente, Supérette|3|r
+Porte E10|Portes d'embarquement|3|r
+Paul|Boulangerie|2|p
+Douane – Détaxe de jour / Borne PABLO / Vols Orly 1,2,3|Point Détaxe|2|p
+Billetterie Air Algérie|Service client et billetterie|4|p
+Billetterie Corsair|Service client et billetterie|4|p
+Relay|Divertissement, Presse, Multimédia|2|p
+EURONET- Distributeurs de billets|Distributeur de billets|2|p
+Point de rendez-vous|Points de rendez-vous|3|p
+ORLYVAL|ORLYVAL|1|p
+Vivanda Burger|Fast Food|3|r
+Aire de jeux|Jeux pour enfants|1|r
+Exki|Sain & Gourmand|3|r
+Fontaine à eau|Distribution eau fraîche|1|r
+Food & Café|Boulangerie|2|r
+Bag Wrap|Emballage des bagages, pesée des bagages et accessoires de voyage|3|p
+Solaris|Luxe, Mode, Accessoires|2|p
+Espace détente|Espace Détente|1|r
+Carrefour City|Santé, Détente, Supérette|4|p
+Bistrot Louise|Cuisine de chef|3|r
+Relay|Divertissement, Presse, Multimédia|3|p
+Centre médical et urgences (SMU)|Centre médical et urgences|1|p
+Litige Bagages|Services Bagages|4|r
+Parking P4b Vert|Parkings proches|4|p
+Starbucks Coffee|Coffee Shop|1|p
+Salon Premium Traveller - Iberia|Salons|1|r
+Victoria's Secret|Luxe, Mode, Accessoires|3|r
+Comptoir Correspondance|Comptoir Correspondance|4|r
+Relay|Divertissement, Presse, Multimédia|3|r
+Espace canin|Espace canin|1|r
+Toilettes|Services Pratiques|2|p
+Parking P2|Parkings proches|2|p
+Red D'HIPPO|Brasserie|1|p
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|4|p
+Bureau d'accueil interreligieux|Espace Prière|2|p
+Pré-passerelle|Pré-passerelle|1|r
+PS5|Jeux Vidéos|2|r
+Pré-passerelle|Pré-passerelle|2|r
+Espace Information Transports|Information Transports|2|p
+Point de rendez-vous|Points de rendez-vous|4|p
+Espace canin|Espace canin|4|p
+Pré-passerelle|Pré-passerelle|3|p
+Pré-passerelle|Pré-passerelle|4|p
+Bagages du monde|Consigne, vente, location|3|p
+VTC - Taxis réservés|Taxi|3|p
+Global Exchange|Change|4|r
+Extime Duty Free|Beauté, Alcool, Gastronomie, Tabac, Multimédia et Mode|4|r
+Métro ligne 14|Transports en commun|3|p
+Salle de change|Services Pratiques|4|p
+Billetterie TAP Portugal ORY 1 ZP|Service client et billetterie|1|p
+Dépose minute Orly 4 - Sortie 45d|Dépose minute|*|p
+Bar|Coffee Shop|4|r
+Eataly|Spécialités italiennes|4|r
+Salle de change|Services Pratiques|3|r
+Fontaine à eau|Distribution eau fraîche|4|p
+Point de rendez-vous|Points de rendez-vous|1|p
+Paul|Boulangerie|4|r
+Espace Prière|Espace Prière|4|r
+Espace cinéma|Espace cinéma|1|r
+Brioche Dorée|Boulangerie|3|p
+Travelex - Distributeurs de billets|Distributeur de billets multidevises|2|p
+Arrivées Passagers 1|Arrivées Passagers|1|p
+Espace canin|Espace canin|4|r
+Billetterie LP Assistance|Tours Opérateurs|3|p
+Billetterie UCPA|Tours Opérateurs|3|p
+Espace Information Transports|Information Transports|3|p
+Longchamp|Luxe, Mode, Accessoires|4|r
+Aéroports Services|Tours Opérateurs|3|p
+Rolex|Horlogerie, Bijouterie|4|r
+Jo Malone London, Tom Ford, Kilian Paris|Beauté|4|r
+Service client Air France|Information et Orientation|3|p
+Service client et billetterie|Service client et billetterie|3|p
+Travelex - Distributeurs de billets|Distributeur de billets multidevises|4|r
+Espace UM - Enfants Non Accompagnés|Arrivées des enfants non accompagnés|3|p
+Big Fernand|Cuisine de chef|4|r
+Espace Détente|Espace Détente|4|r
+Espace Prière|Espace Prière|3|r
+Espace ASSISTANCE MOBILITÉ|Espace ASSISTANCE MOBILITÉ|4|r
+Contrôles Sûreté (Accès N° 1)|Contrôles Sûreté|2|r
+Porte F28|Portes d'embarquement|4|r
+Enregistrement 34|Enregistrement|3|p
+Police aux frontières|Contrôle frontière|3|r
+Porte B17|Portes d'embarquement|1|r
+|||?
+Porte F17|Portes d'embarquement|4|r
+Porte A14|Portes d'embarquement|1|r
+Enregistrement 33|Enregistrement|3|p
+Porte A16|Portes d'embarquement|1|r
+Porte C19|Portes d'embarquement|2|r
+Borne d'Information et d'Orientation Passager|Information et Orientation|3|p
+Porte C12|Portes d'embarquement|2|r
+Contrôles Sûreté|Contrôles Sûreté|4|r
+Porte E19|Portes d'embarquement|4|r
+Porte F32|Portes d'embarquement|4|r
+Parking P3|Parkings proches|3|p
+Porte A17|Portes d'embarquement|1|r
+Livraison Bagages 4|Livraison bagages|4|r
+Livraison Bagages 6|Livraison bagages|4|r
+Livraison Bagages 5|Livraison bagages|4|r
+Distributeurs Boissons Froides|Distributeurs boissons froides|2|r
+Livraison bagages 7 hors format|Livraison bagages|4|r
+Porte E07|Portes d'embarquement|4|r
+Chariots à bagages|Chariots à Bagages|1|p
+Porte F09|Portes d'embarquement|4|r
+Porte F20|Portes d'embarquement|4|r
+Porte F33|Portes d'embarquement|4|r
+Livraison Bagages 9|Livraison bagages|2|p
+Borne d'Information et d'Orientation Passager|Information et Orientation|1|p
+Chariots à bagages|Chariots à Bagages|2|r
+Porte F26|Portes d'embarquement|4|r
+Contrôles Sûreté|Contrôles Sûreté|3|r
+Enregistrement 11|Enregistrement|1|p
+Porte F24|Portes d'embarquement|4|r
+Porte D15|Portes d'embarquement|3|r
+Accès n°1|Accès n°1|1|p
+Porte A12|Portes d'embarquement|1|r
+Borne d'Information et d'Orientation Passager|Information et Orientation|4|r
+Taxis Banlieue Orly 3 Niv. 0 Sortie 32a|Taxi|3|p
+Porte D17|Portes d'embarquement|3|r
+Porte C15|Portes d'embarquement|2|r
+Porte C22|Portes d'embarquement|2|r
+Taxis parisiens Orly 3 Niv. 0 - Sortie 32a|Taxi|3|p
+Porte E01|Portes d'embarquement|3|r
+Enregistrement 21|Enregistrement|2|p
+Chariots à bagages|Chariots à Bagages|3|r
+Accès n°1|Accès n°1|3|p
+Borne d'Information et d'Orientation Passager|Information et Orientation|4|p
+Porte F29|Portes d'embarquement|4|r
+Porte A01|Portes d'embarquement|1|r
+Livraison Bagages 1|Livraison bagages|2|r
+Portes d'embarquement|Portes d'embarquement|4|r
+Borne d'Information et d'Orientation Passager|Information et Orientation|2|p
+Contrôles Sûreté (PHMR)|Contrôles Sûreté|2|r
+Fontaine à eau|Distribution eau fraîche|4|r
+Porte E06|Portes d'embarquement|4|r
+Porte F23|Portes d'embarquement|4|r
+Fontaine à eau|Distribution eau fraîche|2|r
+Borne d'Information et d'Orientation Passager|Information et Orientation|3|r
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|2|p
+Police aux frontières|Contrôle frontière|4|r
+Porte C11|Portes d'embarquement|2|r
+Contrôle frontière automatisé PARAFE|Contrôle frontière automatisé PARAFE|4|r
+Porte B12|Portes d'embarquement|1|r
+Porte F03|Portes d'embarquement|4|r
+Contrôles Sûreté|Contrôles Sûreté|1|r
+Distributeurs boissons froides|Distributeurs boissons froides|2|p
+Porte A21|Portes d'embarquement|1|r
+Accès n°1|Accès n°1|2|p
+Porte E02|Portes d'embarquement|3|r
+Chariots à Bagages|Chariots à Bagages|4|r
+Porte A03|Portes d'embarquement|1|r
+Borne d'Information et d'Orientation Passager|Information et Orientation|1|r
+Livraison Bagages 2|Livraison bagages|2|r
+Porte B19|Portes d'embarquement|1|r
+Enregistrement 45|Enregistrement|4|p
+Police aux frontières|Contrôle frontière|4|p
+Contrôles Sûreté (PHMR)|Contrôles Sûreté|4|r
+Distributeurs boissons froides|Distributeurs boissons froides|2|r
+Porte B20|Portes d'embarquement|1|r
+Contrôle frontière automatisé PARAFE|Contrôle frontière automatisé PARAFE|3|r
+Porte F31|Portes d'embarquement|4|r
+Fontaine à eau|Distribution eau fraîche|3|r
+Chariots à Bagages|Chariots à Bagages|4|p
+Enregistrement 43|Enregistrement|4|p
+Porte F15|Portes d'embarquement|4|r
+Porte F06|Portes d'embarquement|4|r
+Enregistrement 44|Enregistrement|4|p
+Porte F07|Portes d'embarquement|4|r
+Porte B18|Portes d'embarquement|1|r
+Contrôles Sûreté (PHMR)|Contrôles Sûreté|1|r
+Espace Information Transports|Information Transports|4|p
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|2|r
+Porte A04|Portes d'embarquement|1|r
+Enregistrement 12|Enregistrement|1|p
+Porte C14|Portes d'embarquement|2|r
+Porte B15|Portes d'embarquement|1|r
+Porte F19|Portes d'embarquement|4|r
+Livraison Bagages 4|Livraison bagages|2|r
+Porte D22|Portes d'embarquement|3|r
+Livraison Bagages 3 hors format|Livraison bagages|2|r
+Livraison Bagages 3|Livraison bagages|4|r
+Porte D24|Portes d'embarquement|3|r
+Porte A11|Portes d'embarquement|1|r
+Distributeurs boissons froides|Distributeurs boissons froides|1|p
+Livraison bagages 2 hors format|Livraison bagages|4|r
+Enregistrement 32|Enregistrement|3|p
+Contrôles Sûreté (Accès N° 1)|Contrôles Sûreté|1|r
+Porte C16|Portes d'embarquement|2|r
+Porte B16|Portes d'embarquement|1|r
+Porte F25|Portes d'embarquement|4|r
+Babyfoot|Jeux pour enfants|4|r
+Contrôles Sûreté|Contrôles Sûreté|2|r
+Porte F04|Portes d'embarquement|4|r
+Accès n°1|Accès n°1|4|r
+Livraison Bagages 5|Livraison bagages|2|r
+Enregistrement 46|Enregistrement|4|p
+Porte A05|Portes d'embarquement|1|r
+Porte C23|Portes d'embarquement|2|r
+Porte B11|Portes d'embarquement|1|r
+Porte D20|Portes d'embarquement|3|r
+Livraison bagages 1|Livraison bagages|4|r
+Enregistrement 16|Enregistrement|1|p
+Porte F35|Portes d'embarquement|4|r
+Porte F01|Portes d'embarquement|4|r
+Porte D18|Portes d'embarquement|3|r
+ORLYVAL|ORLYVAL|4|p
+Porte F21|Portes d'embarquement|4|r
+Porte A20|Portes d'embarquement|1|r
+Fontaine à eau|Distribution eau fraîche|2|p
+Porte B14|Portes d'embarquement|1|r
+Porte E20|Portes d'embarquement|4|r
+Porte F18|Portes d'embarquement|4|r
+Porte D25|Portes d'embarquement|3|r
+Porte F08|Portes d'embarquement|4|r
+Livraison Bagages 8|Livraison bagages|2|r
+Porte E08|Portes d'embarquement|4|r
+Enregistrement 47|Enregistrement|4|p
+Porte F34|Portes d'embarquement|4|r
+Enregistrement 14|Enregistrement|1|p
+Porte A02|Portes d'embarquement|1|r
+Livraison Bagages 6 hors format|Livraison bagages|2|r
+Porte D21|Portes d'embarquement|3|r
+Porte A22|Portes d'embarquement|1|r
+Portes d'embarquement|Portes d'embarquement|3|r
+Porte D14|Portes d'embarquement|3|r
+Enregistrement 35|Enregistrement|3|p
+Cars de groupe 1|Bus|2|p
+Enregistrement|Enregistrement|1|p
+Porte F16|Portes d'embarquement|4|r
+Porte A19|Portes d'embarquement|1|r
+Livraison Bagages 7 hors format|Livraison bagages|2|r
+Photomaton|Cabine photo et photocopieur|2|p
+Porte F05|Portes d'embarquement|4|r
+Taxis banlieue Orly 1-2 Niv0|Taxi|2|p
+Porte D19|Portes d'embarquement|3|r
+Porte C18|Portes d'embarquement|2|r
+Porte F30|Portes d'embarquement|4|r
+Enregistrement 15|Enregistrement|1|p
+Porte F36|Portes d'embarquement|4|p
+Chariots à Bagages|Chariots à Bagages|3|p
+Distributeurs Boissons Froides|Distributeurs boissons froides|1|p
+Enregitrement 22|Enregistrement|3|p
+Porte D26|Portes d'embarquement|3|r
+Livraison bagages 3 Orly 3|Livraison bagages|3|r
+Chariots à Bagages|Chariots à Bagages|1|p
+Accès n°1|Accès n°1|3|r
+Enregistrement 42|Enregistrement|4|p
+Distributeurs boissons froides|Distributeurs boissons froides|1|r
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|1|r
+Porte B21|Portes d'embarquement|1|r
+Porte B22|Portes d'embarquement|1|p
+Livraison bagages 4 Orly 3|Livraison bagages|3|r
+Livraison bagages 1 Orly 3|Livraison bagages|3|r
+Livraison bagages 2 Orly 3|Livraison bagages|3|r
+Taxis Banlieue Orly 4 Niv . 0 - Sortie 48a|Taxi|*|p
+Taxis parisiens Orly 4 NIV.0 - Sortie 48a|Taxi|*|p
+VTC - Taxis réservés|Taxi|*|p
+Livraison bagages 6 Orly 3|Livraison bagages|3|r
+Livraison bagages 5 Orly 3|Livraison bagages|3|r
+Navette Porte D21|Navette Grise|3|r
+Navette Porte E06|Navette Grise|4|r
+Entregistrement 48|Enregistrement|4|p
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|1|p
+Borne d'enregistrement libre service|Enregistrement|4|p
+Pré-passerelle|Pré-passerelle|1|p
+Pré-passerelle|Pré-passerelle|3|r
+Pré-passerelle|Pré-passerelle|4|r
+Hotels par navette|Navette Hôtels|2|p
+Navette ICADE|Bus|2|p
+N131|Bus|2|p
+N139|Bus|2|p
+Navette Magical Shuttle|Bus|2|p
+Gare routière Paris-Orly 1-2-3|Bus|2|p
+VTC - Taxis réservés|Taxi|2|p
+Boite aux lettres|Envoi de courrier|1|p
+Espace UM - Enfants non accomagnés|Arrivées des enfants non accompagnés|2|p
+Fontaine à eau|Distribution eau fraîche|1|p
+Navette Parking|Bus|4|p
+Borne d'Information et d'Orientation Passager|Information et Orientation|2|r
+N31|Bus|4|p
+N22|Bus|4|p
+Dépose minute Orly 1,2,3|Dépose minute|*|p
+Dépose minute Orly 4|Dépose minute|4|p
+Terrasse non fumeur Orly 1,2 Niv2|Espace Détente|1|r
+Piano|Se divertir|1|r
+Piano|Se divertir|4|r
+Contrôles Sûreté|Contrôles Sûreté|4|p
+Enregistrement|Enregistrement|4|p
+Distributeurs boissons froides|Distributeurs boissons froides|3|r
+Enregistrement 44 HF|Enregistrement|4|p
+Piano|Se divertir|2|r
+Piano|Se divertir|3|r
+Fontaine à eau|Distribution eau fraîche|3|p
+Flâneuses|Espace ASSISTANCE MOBILITÉ|4|r
+Flaneuses|Espace ASSISTANCE MOBILITÉ|3|r
+Distributeurs boissons chaudes|Distributeurs boissons chaudes|3|p
+Distributeurs boissons froides|Distributeurs boissons froides|3|p
+Espace ASSISTANCE MOBILITÉ|Espace ASSISTANCE MOBILITÉ|3|r
+Babyfoot|Jeux pour enfants|1|r
+Siège sensoriel OTO|Espace ASSISTANCE MOBILITÉ|4|r
+Babyfoot|Jeux pour enfants|2|r
+Photofun|Cabine photo et photocopieur|1|r
+Porte C21|Portes d'embarquement|2|r
+Porte D12|Portes d'embarquement|3|r
+Porte D11|Portes d'embarquement|3|r
+Porte D10|Portes d'embarquement|3|r
+Porte E03|Portes d'embarquement|3|r
+Porte E04|Portes d'embarquement|3|r
+Porte E05|Portes d'embarquement|3|r
+Porte D28|Portes d'embarquement|2|r
+Porte D29|Portes d'embarquement|2|r
+Porte D27|Portes d'embarquement|2|r
+Flaneuses|Espace ASSISTANCE MOBILITÉ|4|r
+Flaneuses|Espace ASSISTANCE MOBILITÉ|2|r
+Porte D16|Portes d'embarquement|3|r
+Flâneuses|Espace ASSISTANCE MOBILITÉ|3|r
+Bus 4121|Bus|4|p
+Bus 480|Bus|4|p
+Navette Train + Air|Bus|4|p
+N139|Bus|4|p
+N131|Bus|4|p
+Magical Shuttle|Bus|4|p
+Bus 183|Bus|4|p
+Babyfoot|Jeux pour enfants|3|r
+Espace cinéma|Espace cinéma|2|r
+Espace cinéma|Espace cinéma|3|r
+Flâneuses|Espace ASSISTANCE MOBILITÉ|2|r
+Porte C20|Portes d'embarquement|2|r
+Participe aux jeux - Unboared|Jeux Vidéos|2|r
+Hotels par navette|Navette Hôtels|4|p
+Bus 5154|Bus|4|p
+Porte C10|Portes d'embarquement|2|r
+Porte C9|Portes d'embarquement|2|r
+Porte C24|Portes d'embarquement|3|r
+Porte C27|Portes d'embarquement|3|r
+Porte C26|Portes d'embarquement|3|r
+Porte C25|Portes d'embarquement|3|r
+Porte D23|Portes d'embarquement|3|r
+Porte E16|Portes d'embarquement|4|r
+Porte E18|Portes d'embarquement|4|r
+Siège sensoriel OTO|Espace ASSISTANCE MOBILITÉ|3|r
+Taxis parisiens Orly 1-2 NIV.0|Taxi|2|p
+Bus 4121|Bus|2|p
+Bus 9112|Bus|2|p
+Bus 5154|Bus|2|p
+Bus 480|Bus|2|p
+Bus 183|Bus|2|p
+Porte E14|Portes d'embarquement|4|r
+Porte E12|Portes d'embarquement|4|r
+Accès n°1|Accès n°1|4|p
+ROWS
+1,-6358,1210,0;0,-6054,1384,1;1,-3861,2825,2;1,-8524,817,3;0,-6646,265,4;0,-6435,-997,5;1,5809,-436,6;-1,3203,-76,7;1,8393,1033,8;2,5687,-327,9;0,-7619,-1620,10;0,5763,160,9;1,-6610,1023,11;2,1662,-924,12;2,-3226,-1299,13;1,5630,-295,14;2,1748,-425,9;1,8065,369,15;0,-6946,462,16;1,1737,-649,7;0,-3629,-1568,17;-1,3249,-106,18;0,-3237,-955,19;0,3452,-202,20;1,4981,-540,21;0,5158,419,22;0,2249,-20,23;1,-3136,-1038,24;1,-6875,813,25;1,-7282,-1824,26;0,-6992,655,5;1,-6814,337,27;1,5377,-202,28;1,-7074,402,29;2,-6105,-1199,5;0,1051,-688,30;1,-5970,2070,31;1,4855,-538,32;0,-3837,-936,33;-1,1695,-404,18;1,-6081,1900,34;1,-3363,-1021,35;0,1881,-170,36;0,4553,118,37;1,-2486,-1182,38;0,7304,397,9;1,1853,-628,18;1,-5214,-1480,39;1,-4265,-1838,40;0,6345,183,9;0,-7673,-1557,5;1,-5492,-1469,41;1,1862,-742,42;0,2166,-204,43;1,8282,912,44;1,-1053,-1258,9;1,-4733,-1882,45;1,-6980,-97,46;0,6368,232,9;1,1641,-707,47;1,-6485,1043,48;-1,3592,-100,49;1,-1946,-1618,50;1,4303,-859,51;1,5543,-35,52;1,-7553,415,1;1,359,-990,14;1,8734,1121,15;1,-6871,-1464,53;1,-4168,-1752,17;1,-6975,9,54;0,6595,377,6;1,-6697,1292,55;0,4090,103,56;1,-4120,2581,57;0,-3757,-912,58;0,1910,-371,59;1,-3982,-1704,60;0,-6347,-437,61;0,6182,269,62;1,-3166,-897,24;0,5254,344,63;1,-2727,-926,24;2,-4725,-1919,17;1,-8570,633,64;1,-6302,-852,65;0,4662,155,66;2,-3005,-998,67;1,-5866,1739,3;0,3534,-94,42;1,-3810,2628,68;0,-2710,-741,69;1,8006,575,14;1,-5145,-1789,70;1,-1739,-1609,71;-1,3577,-51,72;1,-3028,-1216,24;0,-3976,-1163,40;1,-6837,-1425,73;2,-8360,484,2;1,-5209,-1698,69;1,-2879,-868,24;1,-6802,-1272,74;2,-2934,-899,75;0,-3298,-1031,40;0,-6633,811,76;1,-7109,934,1;1,-6976,1078,77;1,8418,1242,62;0,4619,298,78;1,-4350,2503,79;0,3459,-80,80;0,-6570,948,77;1,-3302,-1794,45;1,5618,-18,62;2,2964,-334,9;1,8027,340,81;1,6232,-45,82;1,-3393,-1010,40;0,5108,261,83;0,3271,-105,84;1,8204,1019,9;1,-2595,-1051,85;0,-6180,1361,1;-1,3728,-71,86;1,-2500,-1104,87;-1,4146,-1,88;1,-3003,-1114,89;1,-4727,2454,90;0,-6614,597,91;1,7234,164,92;0,-7111,650,10;1,4147,-745,6;1,-8244,420,93;1,-4552,2555,94;2,-7454,-1640,95;0,5673,355,96;2,-6413,-1322,97;1,3266,-257,42;1,-4965,-1806,98;1,-5744,2074,99;-1,4905,179,18;2,-2662,-942,100;1,4578,-616,101;1,4722,-735,102;1,-3310,-1172,13;1,-2835,-1315,103;1,-6816,608,104;0,-6122,1324,105;1,-4253,-1033,58;1,5248,-255,106;1,5161,-507,107;0,1715,-292,108;0,2899,-66,109;1,3771,-717,9;0,-6484,412,110;1,-6554,1121,111;0,986,-489,112;0,3405,-444,18;0,3376,-86,42;1,-6451,-403,113;0,3537,-214,114;1,5359,-470,115;2,-8415,538,79;-1,638,-535,18;1,-2396,-1580,45;-1,3465,-87,116;1,-6819,-806,117;1,-4292,-1847,70;1,-2794,-1397,118;2,-3183,-947,119;1,-5231,-1190,120;1,-5737,1972,121;1,-6146,-1349,5;0,5631,392,122;1,-2689,-874,123;0,-8312,745,68;1,-6860,1121,124;1,-7346,372,125;1,-6805,467,126;1,5232,-493,127;0,1217,-544,22;0,-6635,448,128;0,-4112,-1130,129;0,-6328,1541,121;0,-6328,1541,68;-1,1660,831,130;0,7030,805,131;1,4454,-688,14;0,-7515,-1674,132;1,-7135,568,133;0,-3798,-1022,134;1,-3097,-994,24;0,7281,452,52;1,1444,-908,15;1,6203,-48,6;1,-6713,-403,135;1,-4825,-1770,136;1,-4537,-1850,24;1,5831,-434,82;2,-6167,-1232,10;1,-7383,-1528,137;1,-4155,-1800,138;0,3641,52,139;1,-6179,-870,140;0,-3136,-961,141;1,-4814,2453,93;1,-5872,2215,64;0,-6470,-1026,10;1,-5177,-1582,142;1,-5162,-1666,60;0,-2717,-969,143;0,2274,360,144;1,7214,258,145;0,4842,196,146;0,1454,-350,147;1,-8208,915,3;1,7893,450,148;1,-6940,746,149;0,-6707,245,150;0,-6225,1457,5;2,3906,-616,151;1,-5859,1893,93;0,-8412,755,121;1,-2815,-1354,152;0,5786,106,52;1,-1785,-1673,153;1,-4082,-1723,69;1,-7453,442,105;1,-6480,-940,154;1,-6822,-1637,5;1,-6749,-347,155;1,4136,-857,92;1,8444,1173,81;0,308,-571,156;0,2341,-180,157;2,3536,-378,72;1,-6539,-744,158;1,-4235,-1700,13;0,-6717,628,159;0,-5272,-1184,160;1,4110,-754,6;-1,1737,-374,7;1,-6586,908,161;1,8773,1475,14;1,-928,-1339,9;1,-5650,2045,68;2,-2506,-1018,162;1,2147,-696,109;1,-4445,2489,163;0,-3062,-947,141;0,-3610,-1543,13;1,-4319,-1981,164;0,-6512,-1048,5;1,-3802,2688,165;1,-7714,-1779,166;1,-5140,-1205,167;1,4126,-751,82;1,-6494,-857,168;2,-8439,645,169;1,1492,-743,170;1,-7603,-1859,53;2,-4836,-1887,13;2,-3020,-1253,171;1,-5325,-1440,172;0,1230,-562,42;1,-7169,862,105;1,-1970,-1130,62;1,8272,1105,52;0,-5419,2375,173;0,5118,228,174;-1,2656,1033,175;0,3389,-405,7;1,2032,-828,146;1,-3784,2702,121;1,-6822,1208,176;1,-3862,2772,68;0,-6417,1590,177;1,-3298,-1231,17;1,-3047,-824,178;0,7169,267,179;1,-604,-1135,131;1,7820,425,92;0,448,-561,36;1,8763,1237,145;1,-4216,-1967,119;1,-2551,-1346,180;1,-2870,-1074,40;0,-8386,854,181;0,1214,-400,22;0,-6187,1495,10;1,8372,751,102;1,-6893,791,140;1,-4373,-1818,180;1,-6799,-931,182;1,-6358,-690,183;1,-6927,-221,184;1,-6805,698,149;0,-2764,-719,60;0,5175,422,185;1,-7204,800,1;1,7898,512,82;0,-6173,1568,5;1,1497,-553,9;0,-6078,-679,186;1,-3830,3115,187;1,-4647,2891,187;1,-7119,-1583,188;1,-4318,3051,187;1,-7522,-2427,189;0,-6571,10,190;1,3053,-581,191;1,-5877,-1507,74;0,-1165,-195,192;0,-5253,-2234,193;0,7278,960,194;0,-3163,-1831,193;0,7336,823,194;0,7316,869,194;0,-3358,-852,195;0,-4329,-930,196;0,-4349,-873,160;1,4391,-634,197;1,4042,-566,198;0,-4354,-860,199;1,4347,-638,148;0,2139,-390,200;0,-6030,-1161,182;1,-6358,1210,27;0,-6030,-1161,117;1,-7011,362,201;-1,1667,816,202;1,4709,-471,203;1,3827,-302,198;1,5065,-405,204;0,-1418,-3301,193;0,-6241,1708,189;0,-5718,-1403,189;1,-4263,-1797,205;0,2048,-413,206;0,7265,323,9;1,-6702,203,207;1,5287,-364,208;2,4205,-407,209;2,-7701,753,210;2,-7722,500,210;0,-4316,-1038,211;0,-6724,628,212;0,-6671,668,213;1,7294,351,214;0,-5428,-1312,215;0,-5390,-1324,216;0,-5053,-1277,217;1,4745,-584,218;1,8381,1108,15;1,386,-1068,15;0,-5158,-1299,219;1,4925,-538,220;1,4669,-595,221;1,-1608,-1469,208;0,-5943,-1374,53;1,-5570,-1265,222;1,-5592,-1367,223;1,-822,-1295,224;0,6229,390,197;0,-3404,-985,225;1,4834,-336,226;0,2813,-97,146;1,7403,475,227;1,5321,-167,9;2,-2454,-1127,228;1,6080,-74,229;1,8799,1527,82;1,8814,1543,6;1,-5906,-1273,230;1,-5906,-1273,230;1,9006,1496,231;1,-4844,-1682,232;1,-4844,-1682,232;1,-3061,-1519,233;1,-3061,-1519,233;1,-8564,509,234;1,-8564,509,234;2,-3363,-1549,235;0,7293,813,236;0,7293,813,236;2,-1289,-1466,235;1,-6081,2059,237;1,-6081,2059,237;1,-4554,-1362,238;1,-4554,-1362,238;1,-6011,2034,239;1,-6011,2034,239;1,-7333,-1906,240;1,-7333,-1906,240;1,-4010,-1220,241;1,-4010,-1220,241;1,-7384,-1324,242;0,2099,-608,235;2,2295,-410,243;1,5463,-483,235;2,2049,-402,235;1,1212,-1002,244;1,9042,1838,245;1,-4360,-951,246;1,-5707,2416,247;1,-5707,2416,247;0,6273,568,248;0,6273,568,248;0,4929,-6,249;0,4929,-6,249;0,5373,78,250;2,-5373,-2014,235;0,5373,78,250;0,-6470,1204,251;0,4713,-17,252;0,4713,-17,252;1,3340,-356,235;1,-1736,-1296,253;1,-3029,-1019,235;0,6979,57,235;1,1991,-688,235;1,-6436,928,254;1,-6436,928,254;1,6891,96,255;1,7821,92,256;1,5713,-437,235;1,4548,-844,235;1,8987,1854,257;0,-6447,-651,258;0,-6447,-651,258;1,-6581,867,259;1,-6581,867,259;1,2066,-395,235;0,-6300,-543,260;0,-6300,-543,260;1,8672,1093,261;2,4548,-844,235;1,-3756,-1090,262;1,-3756,-1090,262;1,-5573,2447,235;2,3898,-964,235;1,-6106,1426,263;1,-6106,1426,263;0,-5004,-1246,241;0,-5004,-1246,241;1,-2377,-1299,235;-1,824,-570,22;-1,824,-570,22;1,8281,642,264;1,-3958,-1978,265;1,-3958,-1978,265;1,-7779,654,266;1,-7779,654,266;1,-3362,-1558,235;1,-6267,1797,267;1,9193,1465,235;-1,452,-512,235;2,5199,-724,235;0,3330,-347,235;1,-6267,1797,267;1,5418,-336,268;0,-7492,-1588,235;0,-5282,-1004,269;0,-5282,-1004,269;1,-4989,-2156,270;1,-4989,-2156,270;1,8442,1617,235;1,-4946,-2418,235;1,-7726,-1462,271;1,-6881,-1676,272;0,-4894,-942,273;0,-4894,-942,273;1,-3947,-1940,274;1,-3947,-1940,274;1,-6881,-1676,272;-1,1155,-404,235;1,-6794,-1090,275;1,-6316,-735,235;0,-3123,-1366,276;1,-4052,-1060,277;1,-4052,-1060,277;0,-3123,-1366,276;-1,3275,-52,278;-1,3275,-52,278;1,9053,1550,279;1,-3112,-1398,233;1,-3112,-1398,233;0,-6697,1471,280;0,-6697,1471,280;0,-6647,1244,281;0,-6647,1244,281;1,8167,561,282;1,-6506,-718,283;1,-6506,-718,283;1,-6761,303,235;1,-5809,-1163,284;1,-5809,-1163,284;2,3227,-181,235;1,4372,-177,268;1,8323,1066,285;1,-6713,1233,235;1,3898,-964,235;1,-1927,-1239,286;1,8242,583,287;1,6965,55,235;1,8431,564,235;1,7316,283,268;1,-3805,-2201,235;1,2287,-762,278;0,-6393,-849,288;0,-6393,-849,288;1,-2588,-1548,289;1,-2588,-1548,289;0,-6746,389,290;0,-6746,389,290;0,6562,324,291;0,6562,324,291;0,581,-595,278;0,581,-595,278;1,-7121,-1176,292;0,6787,367,293;0,6787,367,293;-1,2589,1078,235;1,2778,-264,235;1,-8352,927,294;0,1273,-742,235;1,-8352,927,294;0,1770,-185,235;2,-6917,-1160,235;1,4499,-797,295;0,-6586,34,260;0,-6586,34,260;1,2647,-507,235;1,-8158,568,296;1,-8158,568,296;1,-1377,-1263,235;0,-6743,371,297;0,-6743,371,297;1,-7516,-1586,235;1,-4146,2750,298;1,-4146,2750,298;1,-6209,-1232,299;1,-6209,-1232,299;2,-7535,-1585,235;1,-3881,-1928,300;1,-3881,-1928,300;0,-4092,-1372,276;0,-4092,-1372,276;-1,4300,209,235;1,-3381,-1091,235;2,-8371,673,235;0,6737,641,301;0,6737,641,301;0,-6646,1531,302;0,-6646,1531,302;1,-5926,1927,303;1,-5926,1927,303;1,-4227,2603,303;1,-4227,2603,303;0,-6829,1007,304;0,-6829,1007,304;0,-6635,350,283;0,-6635,350,283;2,2630,-513,235;0,6272,315,285;0,6272,315,285;1,-8500,456,305;1,-8500,456,305;1,-4884,-1149,235;0,1661,-642,306;1,2393,-498,307;0,1661,-642,306;2,2453,-389,308;1,2091,-611,235;0,-6762,470,309;0,-6762,470,309;1,-6064,-1697,235;-1,1744,-199,235;0,-6727,320,235;1,-6842,884,259;1,-6842,884,259;1,-8471,432,310;1,-8471,432,310;1,-5414,-1914,235;2,-4559,-1804,311;1,9133,1746,312;2,-4792,-1942,313;0,6968,448,314;0,4748,339,22;0,1428,-671,315;0,7353,676,316;0,7353,676,316;1,5798,-496,317;0,1428,-671,315;0,1428,-671,315;0,1428,-671,315;0,1554,-660,318;0,1554,-660,318;1,1265,-726,235;1,6768,62,319;0,7542,361,235;1,-8525,482,320;1,-8525,482,320;0,-6287,1411,288;0,-6287,1411,288;1,-6209,1628,321;1,-6209,1628,321;1,-3354,-1639,235;1,2929,-349,268;2,-3356,-1636,235;0,4407,304,322;0,4407,304,322;1,-6796,-1465,323;1,-6796,-1465,323;0,-6622,1562,324;0,-6622,1562,324;1,-6357,1517,325;1,-7488,-1353,326;1,-8441,890,327;1,-6357,1517,325;1,8816,1014,235;1,-8441,890,327;0,7235,950,328;0,7235,950,328;1,-5110,-1322,241;1,-5110,-1322,241;1,4328,-421,235;0,-6739,19,329;0,-6739,19,329;1,-5316,-1854,330;1,-5316,-1854,330;0,-6984,908,331;0,-6984,908,331;1,-3864,-1553,235;0,6559,651,332;0,6559,651,332;1,-3205,-1227,313;1,-3205,-1227,313;1,-3719,-1179,262;1,-6089,-1641,333;1,-6844,-1643,288;1,-6844,-1643,288;1,2592,-327,291;1,-6089,-1641,333;1,-6208,1780,334;1,-6208,1780,334;0,-6394,1552,165;0,-6394,1552,165;0,469,-525,235;1,-6239,1237,335;1,-6239,1237,335;1,8777,1431,268;0,-2706,-1119,276;0,-2706,-1119,276;0,4103,198,235;1,-6066,1576,296;1,-6066,1576,296;0,6630,866,336;0,6630,866,336;1,-4573,-1249,337;1,5639,-519,268;1,-4573,-1249,337;0,964,-589,278;0,964,-589,278;1,-8135,708,338;1,-8135,708,338;1,-7808,-1577,339;2,-1377,-1257,235;0,-4370,-894,235;1,-4393,-872,235;0,-4335,-902,246;1,-4383,-892,235;1,-8491,870,340;0,-4362,-921,235;1,-8491,870,340;1,8627,1040,341;-1,3355,-350,235;1,-4373,-914,235;0,-4377,-871,235;1,4970,-681,342;1,8949,1772,268;2,4328,-420,235;0,3898,-964,235;1,-5856,-1220,343;1,-5856,-1220,343;1,-3172,-1632,289;1,-3172,-1632,289;1,5130,-648,344;1,-5106,-1851,289;1,-5106,-1851,289;0,6492,128,345;2,-3373,-1105,235;0,6492,128,345;0,-8356,681,235;0,4924,177,6;0,4924,177,6;0,-6552,1250,260;0,-6552,1250,260;0,-6678,-132,346;0,-6678,-132,346;1,9108,1955,235;0,2451,-491,347;0,2451,-491,347;0,4963,358,278;0,4963,358,278;0,-6598,1588,348;1,-8371,609,303;1,-8371,609,303;1,-6716,-1605,349;1,-6716,-1605,349;0,-6752,961,260;0,-6752,961,260;1,-8085,861,350;1,-8085,861,350;2,-3895,-1713,235;2,3343,-353,235;1,-7014,594,259;1,-5272,-1960,351;0,6882,696,352;0,6882,696,352;0,5199,-724,235;1,-7962,817,353;1,-7962,817,353;2,-6202,-1197,288;1,-1290,-1467,235;1,-7014,594,259;1,-5272,-1960,351;1,-8141,632,321;1,-8141,632,321;1,8789,1852,354;1,8789,1852,354;1,3832,-883,355;0,-3437,-1507,276;0,-3437,-1507,276;1,-5128,-2173,356;1,-5128,-2173,356;1,8959,1470,282;0,-6014,-886,260;0,4077,170,357;0,4077,170,357;1,7890,163,358;1,-4570,2676,359;0,-6014,-886,260;1,-4570,2676,359;2,-4394,-1722,233;1,-6277,1197,235;2,-2384,-1297,235;0,-8424,709,360;0,-8424,709,360;1,-8399,912,361;1,-8399,912,361;1,1489,-951,362;1,-3873,-1653,235;2,1993,-695,235;0,7275,861,363;0,7275,861,363;0,2017,-313,278;0,2017,-313,278;1,-6212,-1588,364;1,-6212,-1588,364;1,6656,52,365;1,2326,-357,293;-1,1295,-424,235;1,2326,-357,293;0,-6557,-416,366;0,-6557,-416,366;1,2326,-357,293;1,-3901,-1714,235;1,-1594,-1368,367;1,-6264,-1620,235;1,5199,-724,235;1,-1949,-1497,289;1,-1949,-1497,289;0,2924,-397,368;0,2924,-397,368;2,516,-1074,235;1,8836,1864,369;1,-6572,1394,370;1,-6572,1394,370;0,-6671,1501,371;0,-6671,1501,371;1,-5370,-2025,235;2,-3027,-1014,235;0,6425,591,301;0,6425,591,301;2,-3877,-1656,235;1,-2933,-1618,311;1,-2933,-1618,311;1,-6515,-1309,235;0,4548,-844,235;0,-6667,-263,372;0,-6667,-263,372;1,8744,1968,235;1,9322,1749,235;1,-5293,-1911,373;1,-5293,-1911,373;1,-4086,-985,225;1,-4072,2763,374;1,-4072,2763,374;1,-4226,-1762,313;1,-4226,-1762,313;1,-5086,-1784,375;1,-5086,-1784,375;1,-3833,-1955,376;1,-3833,-1955,376;1,-4269,-1571,377;1,-4269,-1571,377;0,-6764,455,323;0,-6764,455,323;1,528,-1075,235;0,-2091,2066,378;0,-2091,2066,378;1,-2660,-1990,235;1,-5958,1529,338;1,-5958,1529,338;2,-4902,-1825,262;2,5712,-435,235;0,-6535,-343,260;0,-6535,-343,260;1,7548,352,235;1,-6836,95,259;1,-6836,95,259;1,-6014,1423,379;1,-6014,1423,379;0,7333,723,380;0,7333,723,380;1,-8352,674,235;1,-4978,2601,381;1,-4978,2601,381;0,-6647,-314,382;0,-6647,-314,382;0,-5897,-1046,383;0,-5897,-1046,383;1,5735,-588,384;1,-7019,-1127,235;1,-6310,-1009,283;1,-6310,-1009,283;-1,1375,-378,278;0,4407,304,322;0,4407,304,322;0,-4824,233,385;0,4407,304,322;0,4290,225,235;1,-5241,-2032,386;1,-5241,-2032,386;1,-6535,1536,235;1,-7539,-1629,288;0,1307,-412,235;0,3129,-196,278;0,3129,-196,278;2,-5153,-1732,289;0,5688,66,285;0,5688,66,285;1,-7374,-1925,387;1,-7374,-1925,387;1,9157,1700,388;2,2781,-263,235;2,-6525,-1306,235;2,-3059,-1365,289;0,1121,-399,357;0,1121,-399,357;1,-7718,812,389;1,-7718,812,389;2,-4211,-1689,233;1,8501,1634,390;1,-4222,-1274,391;1,-4222,-1274,391;1,-5005,-1667,391;1,-5005,-1667,391;1,-4082,-1486,391;1,-4082,-1486,391;0,-5423,-1896,235;0,-4874,-1139,235;0,-5378,-2009,235;0,-6598,1588,348;1,-7536,-1624,323;0,1032,-454,235;0,4708,337,185;1,-1908,-1356,6;1,-1892,-1334,82;1,-6768,-1472,309;0,-6390,723,392;1,-1901,-1346,82;1,-6018,-1164,393;0,7074,672,82;0,7078,663,6;1,-6292,-1564,394;0,-3821,-1213,395;0,2948,-150,22;0,2977,-143,22;0,2961,-147,185;1,-5126,-1169,391;1,-6243,1330,396;2,-4606,-1900,397;0,-4692,-1210,241;1,3167,-572,278;1,2464,-735,314;0,729,-745,398;1,-7316,638,396;1,-7342,530,396;1,-2784,-1545,397;1,-4086,-985,225;2,-8395,703,399;0,6910,190,345;2,-8393,715,400;2,-4361,-1853,397;0,-6321,-774,309;1,-8060,407,401;1,-7845,397,402;0,-3083,-1075,403;0,-3750,-1383,404;0,-2998,-1241,405;0,4485,525,406;0,4778,552,407;0,5286,638,408;0,-2612,-1186,409;0,-4114,-1459,410;1,3142,-628,86;0,-5622,-1927,411;0,-2011,-1051,412;0,-6360,1498,399;0,-5987,-964,290;0,-5987,-964,290;1,3183,-630,22;1,-6098,885,396;1,-7712,-1593,309;0,-6001,-950,297;0,-6001,-950,297;0,3932,-111,413;1,-4557,2493,400;1,-7184,613,414;1,7905,-50,194;1,-4571,2510,399;1,-5731,2440,399;0,1753,-408,415;1,-7201,524,335;0,4271,105,278;1,-6468,2242,187;1,-5849,2646,187;1,-6735,1930,187;1,-6720,1852,187;1,-8832,1236,187;1,-8821,367,187;1,-8122,-1546,189;1,-8671,1000,187;1,-7438,-2092,189;1,-7217,-2373,416;1,-8459,-1221,189;1,-7183,-947,189;1,-8785,1120,187;1,-9196,88,187;1,-7698,1053,187;1,-8460,239,187;1,-6475,2159,187;1,-7648,171,187;1,-508,-1459,194;2,-4893,-2461,417;1,-5786,-2613,193;1,-5706,-2557,193;1,9403,2282,194;1,2001,-994,418;1,8980,336,194;1,9688,1329,194;1,8915,422,194;1,9304,2274,194;1,1025,-1177,194;1,7966,136,194;1,9313,809,194;1,6886,-127,194;1,9827,1845,194;1,9899,1799,194;1,9301,876,194;1,3967,-1078,194;1,-1499,-1860,193;1,5970,-505,194;1,5984,-542,194;1,9698,1257,194;1,4615,-955,194;1,5267,-835,194;1,6959,-76,194;1,-1431,-1824,193;1,-5183,2757,187;1,-7826,-1281,189;1,253,-1319,194;1,-7522,-2427,189;1,-8299,-1493,189;1,-9344,142,187;0,-4957,-358,419;0,-5272,140,420;0,-5420,627,421;0,-5345,699,422;0,-5230,748,423;0,-5277,19,424;0,-4556,174,425;0,-2960,-672,235;1,-6504,-352,110;1,-6693,118,426;1,-6417,-558,110;1,-6401,-541,427;1,-6664,718,428;1,-6714,711,414;0,3954,402,429;0,3954,402,429;0,-6014,-1379,430;0,3166,156,431;0,3227,199,432;0,-5634,82,433;2,-4956,-2485,417;2,-2586,-2037,417;0,6354,7,194;2,-3740,-2249,417;2,-3803,-2274,417;2,-2649,-2061,417;0,1723,-104,434;2,-8353,767,435;2,-8009,512,436;1,8201,482,437;1,1068,-649,438;0,3013,-374,439;0,4291,-225,439;1,-4856,-1810,440;0,1753,-623,441;1,-7314,-1619,442;1,-5399,-2155,443;1,-4331,2701,436;1,-4331,2701,436;0,4591,-137,439;1,-8153,432,165;1,-3437,-925,313;1,-3936,-1650,444;0,-3614,-1482,313;1,-1023,-1330,285;1,-5232,-1639,444;1,-5232,-1639,444;1,-5757,-1458,288;0,-2759,-799,444;0,5133,317,59;1,3056,-334,445;1,-3213,-1688,446;1,4284,-450,285;2,-3170,-1365,313;1,3742,-778,285;0,7320,259,285;1,-4362,-1079,447;1,-4367,-1060,448;0,-5971,-1257,288;1,-6700,-1322,288;1,34,-1031,82;0,7431,389,285;1,-7993,513,335;1,-4622,2535,165;1,-6234,1223,414;1,-5757,2433,400;0,-3447,-852,120;1,-6167,1934,399;1,-4553,2468,399;0,-3497,-1444,70;0,-3217,-1416,449;1,-4677,2474,235;1,-5365,-1743,446;1,4355,-505,268;1,-3551,-1525,449;1,7556,318,445;2,-7947,767,450;1,-922,-1227,227;1,-401,-1100,6;1,-874,-1182,6;1,-415,-1101,82;1,7719,423,451;1,-387,-1097,6;1,-834,-1175,6;1,-853,-1179,82;1,-7216,-1628,452;0,-5954,-1266,309;1,3565,-539,268;-1,1992,-288,278;2,-8221,529,453;1,-6943,-1670,454;1,-2400,-1630,70;1,-2406,-1620,440;1,-3175,-1856,455;1,-2786,-1739,456;1,-2687,-1721,457;0,-3744,-890,447;0,-3687,-876,448;1,-3139,-1848,458;1,-2814,-1744,459;1,-2721,-1725,460;1,-2721,-1725,460;1,-6913,-1672,461;1,-6973,-1669,462;1,-6669,-1579,463;1,-6669,-1579,463;1,1090,-917,464;1,-7416,-1626,465;1,-4516,-2094,466;1,-2302,-1480,467;1,-3567,-902,467;0,3828,318,468;0,3413,105,469;1,-6541,-1332,430;0,3566,136,470;0,3306,246,471;0,3370,288,472;0,3551,315,473;0,3434,329,474;1,-2567,-1721,475;1,-4902,-1835,313;1,-7272,-1439,476;1,-4883,-1815,70;1,-5022,-1956,477;1,-4437,2519,450;1,-6055,-1376,478;1,-5792,2080,165;1,-1498,-1355,227;1,1409,-596,285;1,7928,314,342;1,5407,-273,445;1,8411,1126,285;1,-6471,1561,266;1,-668,-1224,437;1,-7152,-1742,479;1,-6984,-1542,480;1,3678,-556,445;1,5694,-499,445;1,-4878,-1336,241;0,2821,28,481;0,3118,49,482;2,5577,-293,285;0,-6053,-1434,483;0,-5759,-1403,484;1,-6263,-1575,485;1,-6009,-1655,486;1,-6055,-1652,487;1,-6181,-1599,488;1,-5980,-1666,489;1,-286,-1215,490;1,376,-1100,491;1,-305,-1054,235;1,-268,-1046,235;0,-326,-1050,235;0,-390,-1065,235;1,-2363,-1550,492;0,-4808,160,493;0,-4881,-94,494;0,-5272,366,495;0,-4903,20,496;0,-4777,-267,497;0,-4756,-350,498;0,126,-1164,499;0,-458,-1289,500;1,2386,-668,501

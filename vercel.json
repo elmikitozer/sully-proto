@@ -1,1 +1,7 @@
-{ "cleanUrls": true }
+{
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/((?!assets/|api/).*)", "destination": "/index.html" }]
+}
