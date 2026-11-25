@@ -34,13 +34,13 @@ export type StopKind = 'restaurant' | 'toilet' | 'info'
 export const stopPois = (k: StopKind) => data.pois.filter((p) => p.c === k && (p.l === 1 || p.l === 2))
 
 // --- Flights (demo data) ----------------------------------------------------
-export interface Flight { code: string; airline: string; city: { fr: string; en: string }; terminal: string; gate: string; boardInMin: number }
+export interface Flight { code: string; airline: string; city: { fr: string; en: string }; iata: string; terminal: string; gate: string; boardInMin: number }
 export const flights: Flight[] = [
-  { code: 'SL 1204', airline: 'Sully Air', city: { fr: 'Barcelone', en: 'Barcelona' }, terminal: 'Orly 4', gate: '57', boardInMin: 70 },
-  { code: 'SL 3310', airline: 'Sully Air', city: { fr: 'Nice', en: 'Nice' }, terminal: 'Orly 2', gate: '24', boardInMin: 55 },
-  { code: 'SL 0815', airline: 'Sully Air', city: { fr: 'Lisbonne', en: 'Lisbon' }, terminal: 'Orly 3', gate: '35', boardInMin: 45 },
-  { code: 'SL 2077', airline: 'Sully Air', city: { fr: 'Marrakech', en: 'Marrakesh' }, terminal: 'Orly 1', gate: '14', boardInMin: 90 },
-  { code: 'SL 0412', airline: 'Sully Air', city: { fr: 'Rome', en: 'Rome' }, terminal: 'Orly 4', gate: '68', boardInMin: 35 },
+  { code: 'SL 1204', airline: 'Sully Air', city: { fr: 'Barcelone', en: 'Barcelona' }, iata: 'BCN', terminal: 'Orly 4', gate: '57', boardInMin: 70 },
+  { code: 'SL 3310', airline: 'Sully Air', city: { fr: 'Nice', en: 'Nice' }, iata: 'NCE', terminal: 'Orly 2', gate: '24', boardInMin: 55 },
+  { code: 'SL 0815', airline: 'Sully Air', city: { fr: 'Lisbonne', en: 'Lisbon' }, iata: 'LIS', terminal: 'Orly 3', gate: '35', boardInMin: 45 },
+  { code: 'SL 2077', airline: 'Sully Air', city: { fr: 'Marrakech', en: 'Marrakesh' }, iata: 'RAK', terminal: 'Orly 1', gate: '14', boardInMin: 90 },
+  { code: 'SL 0412', airline: 'Sully Air', city: { fr: 'Rome', en: 'Rome' }, iata: 'FCO', terminal: 'Orly 4', gate: '68', boardInMin: 35 },
 ]
 export const findFlight = (q: string) => {
   const n = q.toUpperCase().replace(/\s+/g, '')
@@ -103,4 +103,47 @@ export function plan(start: Pt, flight: Flight, stopKind?: StopKind): Plan | nul
   const w = waitMin(best.p)
   const stopMin = stopKind && stop ? STOP_MIN[stopKind] : 0
   return { legs, security: best.p, gate, stop, walkMin, waitMin: w, stopMin, totalMin: walkMin + w + stopMin, alternatives: scored.slice(1, 3).map((x) => ({ p: x.p, total: Math.round(x.total) })) }
+}
+
+// --- Explore: any place, with walking time ------------------------------------
+export type PlaceKind = 'toilet' | 'restaurant' | 'info' | 'gate' | 'security'
+export const PLACE_KINDS: PlaceKind[] = ['toilet', 'restaurant', 'info', 'gate', 'security']
+export interface Place extends Poi { pid: number; kind: PlaceKind; terminal: string }
+
+/** Every searchable place. `pid` is the index in data.pois, stable across builds of the same data. */
+export const places: Place[] = data.pois.flatMap((p, pid) => {
+  if (!PLACE_KINDS.includes(p.c as PlaceKind)) return []
+  const kind = p.c as PlaceKind
+  const named = kind === 'gate' ? gates.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name
+    : kind === 'security' ? checkpoints.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name : undefined
+  return [{ ...p, pid, kind, name: named, terminal: terminalOf(p.x, p.y) }]
+})
+export const placeById = (pid: number) => places.find((p) => p.pid === pid)
+
+const fieldCache = new Map<string, ReturnType<typeof dijkstra>>()
+const fieldFrom = (pt: Pt) => {
+  const k = `${pt.l}:${pt.x}:${pt.y}`
+  let f = fieldCache.get(k)
+  if (!f) { f = dijkstra(nodeOf(pt)); fieldCache.set(k, f) }
+  return f
+}
+/** Walking minutes from `from` to every place (one Dijkstra, cached per start point). */
+export function walkTimes(from: Pt): Map<number, number> {
+  const f = fieldFrom(from)
+  const out = new Map<number, number>()
+  for (const p of places) {
+    const d = f.dist[nodeOf(p)]
+    if (isFinite(d)) out.set(p.pid, Math.max(1, Math.round(d / WALK / 60)))
+  }
+  return out
+}
+export interface PlaceRoute { path: Pt[]; metres: number; walkMin: number }
+export function routeToPlace(from: Pt, place: Place): PlaceRoute | null {
+  const f = fieldFrom(from)
+  const n = nodeOf(place)
+  if (!isFinite(f.dist[n])) return null
+  const path = pathTo(f, n)
+  const metres = pathLength(path)
+  const lifts = path.filter((p, i) => i > 0 && p.l !== path[i - 1].l).length
+  return { path, metres, walkMin: Math.max(1, Math.ceil((metres / WALK + lifts * 45) / 60)) }
 }

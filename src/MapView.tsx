@@ -2,7 +2,12 @@ import { useMemo, useRef, useState, useEffect } from 'react'
 import { data, type Poi, type Pt } from './router'
 import { easeInOut, reducedMotion } from './motion'
 
-const ICON: Record<string, string> = { restaurant: '🍴', toilet: 'WC', info: 'i', security: '⛨', gate: '✈' }
+import { Info, Plane, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+
+const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane }
+/** A Lucide icon centred on (0,0) inside the map's SVG, `s` map units wide. */
+const MapIcon = ({ icon: I, s, className }: { icon?: LucideIcon; s: number; className?: string }) =>
+  I ? <I x={-s / 2} y={-s / 2} width={s} height={s} strokeWidth={2.4} className={className} aria-hidden /> : null
 
 interface Props {
   level: number
@@ -92,7 +97,7 @@ export default function MapView({ level, routes, markers, dot, follow, showPois 
         {pois.map((p, i) => (
           <g key={i} transform={`translate(${p.x},${-p.y})`} className="poi">
             <circle r={sw * 3.2} />
-            <text fontSize={sw * 3.6} dy={sw * 1.2}>{ICON[p.c]}</text>
+            <MapIcon icon={ICON[p.c]} s={sw * 3.6} className="poi-ico" />
           </g>
         ))}
         {onLevel.filter((r) => !r.active).map((r) => (
@@ -108,7 +113,7 @@ export default function MapView({ level, routes, markers, dot, follow, showPois 
           <g key={'m' + i} transform={`translate(${m.p.x},${-m.p.y})`} className={'marker ' + m.kind}>
             <g className="pop">
               <circle r={sw * 6} />
-              <text fontSize={sw * 5.5} dy={sw * 2}>{m.kind === 'start' ? '●' : m.kind === 'security' ? ICON.security : m.kind === 'gate' ? ICON.gate : ICON[(m.p as Poi).c] ?? '★'}</text>
+              {m.kind === 'start' ? <circle r={sw * 2.2} className="start-core" /> : <MapIcon icon={m.kind === 'security' ? ICON.security : m.kind === 'gate' ? ICON.gate : ICON[(m.p as Poi).c] ?? Utensils} s={sw * 6} className="marker-ico" />}
               {m.label && <text className="mlabel" fontSize={sw * 5} y={-sw * 9}>{m.label}</text>}
             </g>
           </g>
