@@ -57,7 +57,7 @@ export default function Home({ dir, lang, query, setQuery, err, start, setStart,
 
       <h2>{t(lang, 'needs')}</h2>
       <div className="shortcuts">
-        {(['toilet', 'restaurant', 'info'] as PlaceKind[]).map((k) => (
+        {(['toilet', 'restaurant', 'shop', 'info'] as PlaceKind[]).map((k) => (
           <button key={k} onClick={() => onShortcut(k)}><KindBadge kind={k} size={22} /><span>{t(lang, CAT_KEY[k])}</span></button>
         ))}
       </div>

@@ -31,6 +31,7 @@ export default function PlaceInfo({ place, lang, walkMin, fromLabel, onGo, compa
       {d.tags.length > 0 && (
         <ul className="tags">{d.tags.map((id) => { const T = TAGS[id]; return <li key={id}><T.icon size={14} aria-hidden /> {T.label[lang]}</li> })}</ul>
       )}
+      {place.i === 'osm' && place.kind !== 'gate' && <p className="hint src">{t(lang, 'osmNote')}</p>}
       {d.offer && (
         <div className="offer">
           <div className="offer-top"><span className="sponsored">{t(lang, 'sponsored')}</span><b>{d.offer.text[lang]}</b></div>

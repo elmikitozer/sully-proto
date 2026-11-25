@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Bus, Compass, Info, Navigation, Plane, ShieldCheck, TicketsPlane, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { Bus, Compass, Info, Navigation, Plane, ShieldCheck, ShoppingBag, TicketsPlane, Toilet, Utensils, type LucideIcon } from 'lucide-react'
 import type { Lang, Place, PlaceKind } from './model'
 import { t, type Key } from './i18n'
 import type { Tab } from './route'
 import { details } from './details'
 
-export const KIND_ICON: Record<PlaceKind | 'stop', LucideIcon> = { toilet: Toilet, restaurant: Utensils, info: Info, gate: Plane, security: ShieldCheck, transport: Bus, stop: Utensils }
-export const CAT_KEY: Record<PlaceKind, Key> = { toilet: 'catToilet', restaurant: 'catRestaurant', info: 'catInfo', gate: 'catGate', security: 'catSecurity', transport: 'catTransport' }
-const NAME_KEY: Record<PlaceKind, Key> = { toilet: 'nameToilet', restaurant: 'nameRestaurant', info: 'nameInfo', gate: 'nameGate', security: 'nameSecurity', transport: 'nameTransport' }
+export const KIND_ICON: Record<PlaceKind | 'stop', LucideIcon> = { toilet: Toilet, restaurant: Utensils, shop: ShoppingBag, info: Info, gate: Plane, security: ShieldCheck, transport: Bus, stop: Utensils }
+export const CAT_KEY: Record<PlaceKind, Key> = { toilet: 'catToilet', restaurant: 'catRestaurant', shop: 'catShop', info: 'catInfo', gate: 'catGate', security: 'catSecurity', transport: 'catTransport' }
+const NAME_KEY: Record<PlaceKind, Key> = { toilet: 'nameToilet', restaurant: 'nameRestaurant', shop: 'nameShop', info: 'nameInfo', gate: 'nameGate', security: 'nameSecurity', transport: 'nameTransport' }
 
 export const placeLabel = (p: Place, lang: Lang) => {
   const d = details(p) // demo names for food outlets, transport type

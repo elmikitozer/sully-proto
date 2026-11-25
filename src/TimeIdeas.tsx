@@ -2,7 +2,7 @@
 // before the passenger must head to the gate, from the interview needs
 // (sit down and eat, coffee, kids, toilets, ask someone).
 import { useMemo, useState } from 'react'
-import { Baby, ChevronRight, Coffee, Info, Sandwich, Soup, Toilet, type LucideIcon } from 'lucide-react'
+import { ChevronRight, Coffee, Info, Sandwich, ShoppingBag, Soup, Toilet, type LucideIcon } from 'lucide-react'
 import { places, walkTimes, type Lang, type Place } from './model'
 import type { Pt } from './router'
 import { details, openState } from './details'
@@ -13,10 +13,10 @@ import { placeLabel, placeWhere } from './ui'
 
 interface Idea { id: Key; icon: LucideIcon; pick: (p: Place) => boolean; tone: string }
 const IDEAS: Idea[] = [
-  { id: 'ideaMeal', icon: Soup, tone: 'red', pick: (p) => p.kind === 'restaurant' && details(p).stayMin >= 30 },
-  { id: 'ideaQuick', icon: Sandwich, tone: 'amber', pick: (p) => p.kind === 'restaurant' && details(p).stayMin >= 8 && details(p).stayMin <= 20 && !details(p).subtitle.en.includes('Coffee') },
-  { id: 'ideaCoffee', icon: Coffee, tone: 'brown', pick: (p) => p.kind === 'restaurant' && (details(p).subtitle.en === 'Coffee shop' || details(p).subtitle.en === 'Juice bar') },
-  { id: 'ideaKids', icon: Baby, tone: 'sky', pick: (p) => p.kind === 'restaurant' && details(p).tags.includes('kids') },
+  { id: 'ideaMeal', icon: Soup, tone: 'red', pick: (p) => p.kind === 'restaurant' && p.sub === 'restaurant' },
+  { id: 'ideaQuick', icon: Sandwich, tone: 'amber', pick: (p) => p.kind === 'restaurant' && (p.sub === 'fast_food' || p.sub === 'bakery') },
+  { id: 'ideaCoffee', icon: Coffee, tone: 'brown', pick: (p) => p.kind === 'restaurant' && p.sub === 'cafe' },
+  { id: 'ideaShop', icon: ShoppingBag, tone: 'plum', pick: (p) => p.kind === 'shop' },
   { id: 'ideaToilet', icon: Toilet, tone: 'teal', pick: (p) => p.kind === 'toilet' },
   { id: 'ideaInfo', icon: Info, tone: 'violet', pick: (p) => p.kind === 'info' },
 ]

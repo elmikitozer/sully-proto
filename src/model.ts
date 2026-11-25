@@ -1,21 +1,11 @@
 import { data, dijkstra, nodeOf, pathTo, pathLength, type Poi, type Pt } from './router'
 
 export type Lang = 'fr' | 'en'
-export const terminalOf = (x: number, y: number) => (x > -147 ? 'Orly 4' : x > -397 ? 'Orly 3' : y > -22 ? 'Orly 1' : 'Orly 2')
+export const terminalOf = (x: number, y: number) => (x > -147 ? 'Orly 4' : y > 50 && x < -200 ? 'Orly 1' : x > -397 ? 'Orly 3' : y > -22 ? 'Orly 1' : 'Orly 2')
 
 // --- Named places -----------------------------------------------------------
-// Gate POSITIONS come from the ADP plan (boarding pictograms, level 1).
-// Gate NUMBERS are placeholders: the public plan does not carry them.
-const GATE_BASE: Record<string, number> = { 'Orly 1': 10, 'Orly 2': 20, 'Orly 3': 30, 'Orly 4': 50 }
-export const gates: Poi[] = (() => {
-  const g = data.pois.filter((p) => p.c === 'gate').map((p) => ({ ...p, terminal: terminalOf(p.x, p.y) }))
-  const out: Poi[] = []
-  for (const t of Object.keys(GATE_BASE)) {
-    const list = g.filter((p) => p.terminal === t).sort((a, b) => (t === 'Orly 1' ? b.y - a.y : a.x - b.x))
-    list.forEach((p, i) => out.push({ ...p, name: String(GATE_BASE[t] + i) }))
-  }
-  return out
-})()
+// Gate positions and numbers come from OpenStreetMap (real Orly gate numbers).
+export const gates: Poi[] = data.pois.filter((p) => p.c === 'gate').map((p) => ({ ...p, terminal: terminalOf(p.x, p.y) }))
 
 // Security checkpoints = security pictograms on the departures level.
 // Waiting times are simulated (a real version would read ADP queue sensors).
@@ -100,16 +90,15 @@ export function plan(start: Pt, flight: Flight, stopKind?: StopKind): Plan | nul
 }
 
 // --- Explore: any place, with walking time ------------------------------------
-export type PlaceKind = 'toilet' | 'restaurant' | 'info' | 'gate' | 'security' | 'transport'
-export const PLACE_KINDS: PlaceKind[] = ['restaurant', 'toilet', 'gate', 'info', 'security', 'transport']
+export type PlaceKind = 'toilet' | 'restaurant' | 'shop' | 'info' | 'gate' | 'security' | 'transport'
+export const PLACE_KINDS: PlaceKind[] = ['restaurant', 'shop', 'toilet', 'gate', 'info', 'security', 'transport']
 export interface Place extends Poi { pid: number; kind: PlaceKind; terminal: string }
 
 /** Every searchable place. `pid` is the index in data.pois, stable across builds of the same data. */
 export const places: Place[] = data.pois.flatMap((p, pid) => {
   if (!PLACE_KINDS.includes(p.c as PlaceKind)) return []
   const kind = p.c as PlaceKind
-  const named = kind === 'gate' ? gates.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name
-    : kind === 'security' ? checkpoints.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name : undefined
+  const named = kind === 'security' ? checkpoints.find((g) => g.x === p.x && g.y === p.y && g.l === p.l)?.name : p.name
   return [{ ...p, pid, kind, name: named, terminal: terminalOf(p.x, p.y) }]
 })
 /** Where to write each terminal's name on the map: centre of its gates. */

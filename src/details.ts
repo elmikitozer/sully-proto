@@ -1,31 +1,53 @@
-// Demo details for each place: names, opening hours, features, offers.
-// ALL FICTIONAL. The ADP plan only gives a pictogram per place (no names,
-// no hours). A real version would read the airport's retail database.
-import { Accessibility, Armchair, Baby, Beef, Coffee, Croissant, CupSoda, Fish, IceCreamCone, Info, Languages, Pizza, Plane, PlugZap, Salad, Sandwich, ShieldCheck, Soup, Sparkles, Toilet, TrainFront, Bus, CarTaxiFront, Wine, Leaf, ShoppingBag, type LucideIcon } from 'lucide-react'
+// Details for each place. Names of shops and food outlets are real (OpenStreetMap);
+// offers, queue times and cleaning times are fictional demo data.
+// A real version would read the airport's retail database.
+import { Accessibility, Armchair, Baby, Banknote, BookOpen, Coffee, Cookie, Croissant, Cross, Gem, Gift, Glasses, Info, Languages, Newspaper, Plane, PlugZap, Sandwich, ShieldCheck, Shirt, ShoppingBasket, Smartphone, Soup, Sparkles, Toilet, TrainFront, Bus, CarTaxiFront, Utensils, Watch, Wine, Leaf, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { flights, waitMin, checkpoints, type Lang, type Place } from './model'
 
 type L = { fr: string; en: string }
 const hash = (n: number) => { let x = (n + 1) * 2654435761; x = (x ^ (x >>> 13)) >>> 0; return x }
 
-interface Food { name: string; type: L; icon: LucideIcon; price: 1 | 2 | 3; min: number; tags: TagId[]; tone: string }
-const FOOD: Food[] = [
-  { name: 'Café Envol', type: { fr: 'Café', en: 'Coffee shop' }, icon: Coffee, price: 1, min: 10, tags: ['seats', 'usb'], tone: 'brown' },
-  { name: 'Boulangerie du Tarmac', type: { fr: 'Boulangerie', en: 'Bakery' }, icon: Croissant, price: 1, min: 8, tags: ['takeaway', 'kids'], tone: 'amber' },
-  { name: 'Bistrot Altitude', type: { fr: 'Bistrot', en: 'Bistro' }, icon: Soup, price: 3, min: 35, tags: ['seats', 'veggie'], tone: 'red' },
-  { name: 'Escale Sushi', type: { fr: 'Japonais', en: 'Japanese' }, icon: Fish, price: 2, min: 20, tags: ['seats'], tone: 'rose' },
-  { name: 'Green Bowl', type: { fr: 'Healthy', en: 'Healthy' }, icon: Salad, price: 2, min: 15, tags: ['veggie', 'takeaway'], tone: 'green' },
-  { name: 'Piste Pizza', type: { fr: 'Pizzeria', en: 'Pizza' }, icon: Pizza, price: 2, min: 20, tags: ['kids', 'seats'], tone: 'orange' },
-  { name: 'Le Comptoir d’Orly', type: { fr: 'Brasserie', en: 'Brasserie' }, icon: Beef, price: 3, min: 40, tags: ['seats', 'kids'], tone: 'red' },
-  { name: 'Bar Terminal', type: { fr: 'Bar à vin', en: 'Wine bar' }, icon: Wine, price: 2, min: 20, tags: ['seats', 'usb'], tone: 'plum' },
-  { name: 'Le Petit Sandwich', type: { fr: 'Sandwicherie', en: 'Sandwiches' }, icon: Sandwich, price: 1, min: 8, tags: ['takeaway'], tone: 'amber' },
-  { name: 'Glacier Nuage', type: { fr: 'Glacier', en: 'Ice cream' }, icon: IceCreamCone, price: 1, min: 8, tags: ['kids', 'takeaway'], tone: 'sky' },
-  { name: 'Juice Lab', type: { fr: 'Jus & smoothies', en: 'Juice bar' }, icon: CupSoda, price: 1, min: 6, tags: ['veggie', 'takeaway'], tone: 'green' },
-]
+// Food outlets and shops: the NAME, type and (when mapped) opening hours are real, from OpenStreetMap.
+// Typical time spent is our estimate. Offers stay fictional (business-model demo).
+interface Type { type: L; icon: LucideIcon; min: number; tone: string }
+const FOOD: Record<string, Type> = {
+  cafe: { type: { fr: 'Café', en: 'Coffee shop' }, icon: Coffee, min: 10, tone: 'brown' },
+  bakery: { type: { fr: 'Boulangerie', en: 'Bakery' }, icon: Croissant, min: 8, tone: 'amber' },
+  fast_food: { type: { fr: 'Restauration rapide', en: 'Fast food' }, icon: Sandwich, min: 15, tone: 'orange' },
+  restaurant: { type: { fr: 'Restaurant', en: 'Restaurant' }, icon: Soup, min: 35, tone: 'red' },
+  bar: { type: { fr: 'Bar', en: 'Bar' }, icon: Wine, min: 20, tone: 'plum' },
+}
+const UNNAMED_FOOD: Type = { type: { fr: 'Restauration', en: 'Food & drinks' }, icon: Utensils, min: 15, tone: 'orange' }
+const SHOP: Record<string, Type> = {
+  newsagent: { type: { fr: 'Presse et snacks', en: 'News & snacks' }, icon: Newspaper, min: 5, tone: 'red' },
+  books: { type: { fr: 'Livres et high-tech', en: 'Books & tech' }, icon: BookOpen, min: 10, tone: 'amber' },
+  clothes: { type: { fr: 'Mode', en: 'Fashion' }, icon: Shirt, min: 15, tone: 'plum' },
+  bag: { type: { fr: 'Maroquinerie', en: 'Bags' }, icon: ShoppingBag, min: 15, tone: 'plum' },
+  gift: { type: { fr: 'Duty free', en: 'Duty free' }, icon: Gift, min: 15, tone: 'rose' },
+  department_store: { type: { fr: 'Duty free', en: 'Duty free' }, icon: Gift, min: 15, tone: 'rose' },
+  supermarket: { type: { fr: 'Alimentation', en: 'Groceries' }, icon: ShoppingBasket, min: 8, tone: 'green' },
+  convenience: { type: { fr: 'Supérette', en: 'Convenience store' }, icon: ShoppingBasket, min: 8, tone: 'green' },
+  pastry: { type: { fr: 'Pâtisserie et chocolat', en: 'Pastry & chocolate' }, icon: Cookie, min: 8, tone: 'brown' },
+  tea: { type: { fr: 'Thé', en: 'Tea' }, icon: Coffee, min: 8, tone: 'brown' },
+  coffee: { type: { fr: 'Café', en: 'Coffee' }, icon: Coffee, min: 8, tone: 'brown' },
+  pharmacy: { type: { fr: 'Pharmacie', en: 'Pharmacy' }, icon: Cross, min: 8, tone: 'green' },
+  bureau_de_change: { type: { fr: 'Bureau de change', en: 'Currency exchange' }, icon: Banknote, min: 8, tone: 'teal' },
+  beauty: { type: { fr: 'Beauté', en: 'Beauty' }, icon: Sparkles, min: 10, tone: 'rose' },
+  perfumery: { type: { fr: 'Beauté et lingerie', en: 'Beauty & lingerie' }, icon: Sparkles, min: 10, tone: 'rose' },
+  jewelry: { type: { fr: 'Bijoux', en: 'Jewellery' }, icon: Gem, min: 10, tone: 'violet' },
+  watches: { type: { fr: 'Montres', en: 'Watches' }, icon: Watch, min: 10, tone: 'violet' },
+  optician: { type: { fr: 'Lunettes de soleil', en: 'Sunglasses' }, icon: Glasses, min: 10, tone: 'sky' },
+  mobile_phone: { type: { fr: 'Téléphonie', en: 'Mobile phones' }, icon: Smartphone, min: 10, tone: 'blue' },
+}
+const OTHER_SHOP: Type = { type: { fr: 'Boutique', en: 'Shop' }, icon: ShoppingBag, min: 10, tone: 'plum' }
+/** First "HH:MM-HH:MM" range of an OSM opening_hours value (weekday hours in practice). */
+const osmHours = (h?: string): [number, number] | undefined => {
+  const m = h?.match(/(\d\d):(\d\d)-(\d\d):(\d\d)/)
+  return m ? [+m[1] * 60 + +m[2], +m[3] * 60 + +m[4]] : undefined
+}
 const OFFERS: L[] = [
   { fr: '-15 % sur le menu', en: '15% off the set menu' },
-  { fr: 'Café offert avec une viennoiserie', en: 'Free coffee with a pastry' },
   { fr: '2e boisson à -50 %', en: 'Second drink half price' },
-  { fr: 'Menu enfant offert', en: 'Free kids’ menu' },
 ]
 
 type TagId = 'seats' | 'usb' | 'takeaway' | 'kids' | 'veggie' | 'baby' | 'pmr' | 'langs' | 'fast'
@@ -67,10 +89,15 @@ export function details(p: Place): Details {
   let d: Details
   switch (p.kind) {
     case 'restaurant': {
-      const f = FOOD[h % FOOD.length]
-      const early = h % 3 === 0
-      d = { name: f.name, subtitle: f.type, icon: f.icon, tone: f.tone, hours: [early ? 300 : 360, h % 5 === 0 ? 1290 : 1350], price: f.price, stayMin: f.min, tags: f.tags,
-        offer: h % 4 === 1 ? { text: OFFERS[(h >>> 3) % OFFERS.length], code: `SULLY-${(p.pid * 37 % 9000) + 1000}` } : undefined }
+      const f = (p.name && FOOD[p.sub ?? '']) || UNNAMED_FOOD
+      d = { name: p.name, subtitle: f.type, icon: f.icon, tone: f.tone, hours: osmHours(p.h), stayMin: f.min, tags: [],
+        offer: p.name && h % 4 === 1 ? { text: OFFERS[(h >>> 3) % OFFERS.length], code: `SULLY-${(p.pid * 37 % 9000) + 1000}` } : undefined }
+      break
+    }
+    case 'shop': {
+      const f = SHOP[p.sub ?? ''] ?? OTHER_SHOP
+      d = { name: p.name, subtitle: f.type, icon: f.icon, tone: f.tone, hours: osmHours(p.h), stayMin: f.min, tags: [],
+        offer: h % 5 === 2 ? { text: { fr: '-10 % dès 30 € d’achat', en: '10% off from €30' }, code: `SULLY-${(p.pid * 37 % 9000) + 1000}` } : undefined }
       break
     }
     case 'toilet':

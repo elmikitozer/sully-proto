@@ -2,12 +2,12 @@ import { useMemo, useRef, useState, useEffect } from 'react'
 import { data, type Poi, type Pt } from './router'
 import { easeInOut, reducedMotion } from './motion'
 
-import { ArrowUpDown, Bus, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { ArrowUpDown, Bus, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, ShoppingBag, Toilet, Utensils, type LucideIcon } from 'lucide-react'
 import { terminalLabels, type Place } from './model'
 import { details } from './details'
 import { t } from './i18n'
 
-const ICON: Record<string, LucideIcon> = { restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, lift: ArrowUpDown }
+const ICON: Record<string, LucideIcon> = { shop: ShoppingBag, restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, lift: ArrowUpDown }
 /** A Lucide icon centred on (0,0) inside the map's SVG, `s` map units wide. */
 const MapIcon = ({ icon: I, s, className }: { icon?: LucideIcon; s: number; className?: string }) =>
   I ? <I x={-s / 2} y={-s / 2} width={s} height={s} strokeWidth={2.4} className={className} aria-hidden /> : null
@@ -28,7 +28,7 @@ interface Props {
 }
 
 // Which pins win when several overlap (lower = kept first).
-const PRIO: Record<string, number> = { security: 0, info: 1, toilet: 2, restaurant: 3, gate: 4, transport: 5 }
+const PRIO: Record<string, number> = { security: 0, info: 1, toilet: 2, restaurant: 3, shop: 4, gate: 5, transport: 6 }
 
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
