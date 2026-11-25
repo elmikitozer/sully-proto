@@ -1,21 +1,22 @@
 import { useState } from 'react'
-import { Bus, Compass, Info, Navigation, Plane, ShieldCheck, ShoppingBag, TicketsPlane, Toilet, Utensils, type LucideIcon } from 'lucide-react'
-import type { Lang, Place, PlaceKind } from './model'
+import { Bus, ConciergeBell, Compass, Info, Navigation, Plane, ShieldCheck, ShoppingBag, TicketsPlane, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { zoneOf, type Lang, type Place, type PlaceKind } from './model'
 import { t, type Key } from './i18n'
 import type { Tab } from './route'
 import { details } from './details'
 
-export const KIND_ICON: Record<PlaceKind | 'stop', LucideIcon> = { toilet: Toilet, restaurant: Utensils, shop: ShoppingBag, info: Info, gate: Plane, security: ShieldCheck, transport: Bus, stop: Utensils }
-export const CAT_KEY: Record<PlaceKind, Key> = { toilet: 'catToilet', restaurant: 'catRestaurant', shop: 'catShop', info: 'catInfo', gate: 'catGate', security: 'catSecurity', transport: 'catTransport' }
-const NAME_KEY: Record<PlaceKind, Key> = { toilet: 'nameToilet', restaurant: 'nameRestaurant', shop: 'nameShop', info: 'nameInfo', gate: 'nameGate', security: 'nameSecurity', transport: 'nameTransport' }
+export const KIND_ICON: Record<PlaceKind | 'stop', LucideIcon> = { toilet: Toilet, restaurant: Utensils, shop: ShoppingBag, info: Info, gate: Plane, security: ShieldCheck, checkin: TicketsPlane, service: ConciergeBell, transport: Bus, stop: Utensils }
+export const CAT_KEY: Record<PlaceKind, Key> = { toilet: 'catToilet', restaurant: 'catRestaurant', shop: 'catShop', info: 'catInfo', gate: 'catGate', security: 'catSecurity', checkin: 'catCheckin', service: 'catService', transport: 'catTransport' }
+const NAME_KEY: Record<PlaceKind, Key> = { toilet: 'nameToilet', restaurant: 'nameRestaurant', shop: 'nameShop', info: 'nameInfo', gate: 'nameGate', security: 'nameSecurity', checkin: 'catCheckin', service: 'catService', transport: 'nameTransport' }
 
 export const placeLabel = (p: Place, lang: Lang) => {
   const d = details(p) // demo names for food outlets, transport type
   if (d.name) return d.name
+  if (d.title) return d.title[lang]
   if (p.kind === 'transport') return d.subtitle[lang]
   return t(lang, NAME_KEY[p.kind], { n: p.name ?? '' }).trim()
 }
-export const placeWhere = (p: Place, lang: Lang) => `${p.terminal} · ${t(lang, 'levelShort', { l: p.l })}`
+export const placeWhere = (p: Place, lang: Lang) => `${p.terminal} · ${t(lang, 'levelShort', { l: p.l })}${zoneOf(p) === 'airside' ? ` · ${t(lang, 'zoneShort')}` : ''}`
 
 /** Light tap feedback where the browser supports it (Android); silent elsewhere. */
 export const haptic = () => { try { navigator.vibrate?.(8) } catch { /* not supported */ } }

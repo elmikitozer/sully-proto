@@ -1,16 +1,16 @@
 // Real photo of a named shop or food outlet, from Google Places (New).
-// GET /api/photo?id=node/123  ->  { url, by }   (id = OpenStreetMap id of a place we list)
+// GET /api/photo?id=a123  ->  { url, by }   (id = a place of our own list, see tools/build_pois.py)
 // Needs the GOOGLE_PLACES_KEY environment variable. Without it, answers 404 and the app
 // falls back to its illustration. Only places from our own list can be looked up, so the
 // key cannot be used as an open proxy.
-import { OSM_PLACES } from '../src/osm-places.js'
+import { PHOTO_PLACES } from '../src/photo-places.js'
 
 interface Photo { name: string; authorAttributions?: { displayName?: string }[] }
 const none = (why: string, status = 404) => Response.json({ error: why }, { status, headers: { 'cache-control': 'no-store' } })
 
 export async function GET(request: Request) {
   const key = process.env.GOOGLE_PLACES_KEY
-  const place = OSM_PLACES[new URL(request.url).searchParams.get('id') ?? '']
+  const place = PHOTO_PLACES[new URL(request.url).searchParams.get('id') ?? '']
   if (!place) return none('unknown_place')
   if (!key) return none('no_key')
   try {

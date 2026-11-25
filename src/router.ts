@@ -1,20 +1,17 @@
 // Multi-level grid router over the Orly floor plans (data from Baptiste's pipeline).
 import raw from './data.json'
-import osm from './osm.json'
+import adp from './pois.json'
 
-export type Cat = 'security' | 'restaurant' | 'toilet' | 'info' | 'gate' | 'transport' | 'lift' | 'shop'
-export interface Poi { c: Cat; l: number; x: number; y: number; i: string; id?: number; name?: string; terminal?: string; sub?: string; h?: string; osm?: string }
+export type Cat = 'security' | 'restaurant' | 'toilet' | 'info' | 'gate' | 'transport' | 'lift' | 'shop' | 'checkin' | 'service'
+export interface Poi { c: Cat; l: number; x: number; y: number; i: string; id?: number; name?: string; terminal?: string; sub?: string; /** Zone given by the airport's plan: p = public, r = restricted (after security). */ z?: 'p' | 'r' }
 interface Lift { s: string; l: number; x: number; y: number; serves: number[] }
 interface LevelData { grid: string; zones: number[][][]; walls: number[][][] }
 interface Data { res: number; minx: number; miny: number; W: number; H: number; levels: Record<string, LevelData>; pois: Poi[]; lifts: Lift[] }
 
 export const data = raw as unknown as Data
-// Real names from OpenStreetMap (see tools/merge_osm.py): gate numbers, shops, named food outlets.
-// They replace the anonymous pictograms they sit on; the rest of the plan is unchanged.
-{
-  const drop = new Set(osm.drop)
-  data.pois = data.pois.filter((_, i) => !drop.has(i)).concat(osm.add as Poi[])
-}
+// Points of interest come from the airport's own interactive plan (see tools/build_pois.py):
+// official names, categories, terminal and public / restricted zone. Only the lifts stay from the floor-plan pipeline.
+data.pois = (adp.pois as Poi[]).concat(data.pois.filter((p) => p.c === 'lift'))
 export const LEVELS = [-1, 0, 1, 2]
 const { W, H, res, minx, miny } = data
 const N = W * H

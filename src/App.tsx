@@ -80,11 +80,11 @@ function walkSteps(path: Pt[], target: string, leg: number, lang: Lang): Step[] 
 function buildSteps(p: Plan, lang: Lang, f: Flight, stopKind?: StopKind): Step[] {
   const steps: Step[] = []
   p.legs.forEach((leg, li) => {
-    const target = leg.kind === 'toSecurity' ? t(lang, 'security') : leg.kind === 'toStop' ? t(lang, (stopKind + 'Place') as never) : `${t(lang, 'gate')} ${f.gate}`
+    const target = leg.kind === 'toSecurity' ? t(lang, 'security') : leg.kind === 'toPassport' ? t(lang, 'passport') : leg.kind === 'toStop' ? t(lang, (stopKind + 'Place') as never) : `${t(lang, 'gate')} ${f.gate}`
     steps.push(...walkSteps(leg.path, target, li, lang))
     const end = leg.path[leg.path.length - 1]
     if (leg.kind === 'toSecurity') steps.push({ kind: 'security', text: t(lang, 'stepSecurity', { n: p.security.name! }), sub: t(lang, 'wait', { n: p.waitMin }), level: end.l, path: [end], leg: li })
-    if (leg.kind === 'toSecurity' && p.passportMin) steps.push({ kind: 'security', text: t(lang, 'stepPassport'), sub: t(lang, 'wait', { n: p.passportMin }), level: end.l, path: [end], leg: li })
+    if (p.passportMin && leg.kind === (p.passport ? 'toPassport' : 'toSecurity')) steps.push({ kind: 'security', text: t(lang, 'stepPassport'), sub: t(lang, 'wait', { n: p.passportMin }), level: end.l, path: [end], leg: li })
     if (leg.kind === 'toStop' && stopKind) steps.push({ kind: 'stop', text: t(lang, 'stepStop', { k: t(lang, (stopKind + 'Place') as never) }), sub: `${STOP_MIN[stopKind]} min`, level: end.l, path: [end], leg: li })
     if (leg.kind === 'toGate') steps.push({ kind: 'gate', text: t(lang, 'stepGate', { g: f.gate }), sub: t(lang, 'arrived'), level: end.l, path: [end], leg: li })
   })
@@ -226,6 +226,7 @@ export default function App() {
 
 function markersOf(p: Plan, startPt: Pt, f: Flight): Marker[] {
   const m: Marker[] = [{ p: startPt, kind: 'start' }, { p: p.security, kind: 'security' }, { p: p.gate, kind: 'gate', label: f.gate }]
+  if (p.passport) m.push({ p: p.passport, kind: 'security' })
   if (p.stop) m.push({ p: p.stop, kind: 'stop' })
   return m
 }
@@ -271,7 +272,7 @@ function Trip({ dir, lang, flight, plan: p, base, boardAt, stopKind, setStopKind
           <li><span className="tl-ico"><Footprints size={14} /></span><div className="muted">{t(lang, 'walk')} · {p.walkMin} min</div></li>
           <li><span className="tl-dot security"><ShieldCheck size={12} /></span><div><b>{t(lang, 'security')} {p.security.name}</b><div className="muted">{t(lang, 'wait', { n: p.waitMin })}</div></div></li>
           {p.passportMin > 0 && <li><span className="tl-dot security"><BookUser size={12} /></span><div><b>{t(lang, 'passport')}</b><div className="muted">{t(lang, 'passportWhy', { n: p.passportMin })}</div></div></li>}
-          {p.stop && stopKind && <li><span className="tl-dot stop"><StopIcon size={12} /></span><div><b>{t(lang, STOP_NAME[stopKind])}</b><div className="muted">{p.stopMin} min</div></div></li>}
+          {p.stop && stopKind && <li><span className="tl-dot stop"><StopIcon size={12} /></span><div><b>{p.stop.name ?? t(lang, STOP_NAME[stopKind])}</b><div className="muted">{p.stopMin} min</div></div></li>}
           <li><span className="tl-dot gate"><Plane size={12} /></span><div><b>{t(lang, 'gate')} {flight.gate}</b></div></li>
         </ol>
         <p className="hint">{t(lang, 'chosenBecause')}{p.alternatives[0] ? ` ${t(lang, 'other')} : ${p.alternatives[0].p.name} (${p.alternatives[0].total} min).` : ''}</p>

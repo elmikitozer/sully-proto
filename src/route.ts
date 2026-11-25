@@ -17,7 +17,7 @@ export interface Route { screen: Screen; code?: string; pid?: number; from?: str
 // Depth drives the slide direction: tabs are level 0, details 1, guidance 2.
 const DEPTH: Record<Screen, number> = { home: 0, explore: 0, myflight: 0, trip: 1, place: 1, nav: 2, placeNav: 2 }
 const STOPS: StopKind[] = ['restaurant', 'toilet', 'info']
-const CATS: PlaceKind[] = ['toilet', 'restaurant', 'shop', 'info', 'gate', 'security', 'transport']
+const CATS: PlaceKind[] = ['toilet', 'restaurant', 'shop', 'info', 'gate', 'security', 'checkin', 'service', 'transport']
 
 export const tabOf = (s: Screen): Tab => (s === 'explore' || s === 'place' || s === 'placeNav' ? 'explore' : s === 'myflight' ? 'myflight' : 'home')
 

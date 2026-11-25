@@ -2,12 +2,12 @@ import { useMemo, useRef, useState, useEffect } from 'react'
 import { data, type Poi, type Pt } from './router'
 import { easeInOut, reducedMotion } from './motion'
 
-import { ArrowUpDown, Bus, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, ShoppingBag, Toilet, Utensils, type LucideIcon } from 'lucide-react'
+import { ArrowUpDown, Bus, ConciergeBell, TicketsPlane, Info, Maximize2, Minus, Plane, Plus, ShieldCheck, ShoppingBag, Toilet, Utensils, type LucideIcon } from 'lucide-react'
 import { terminalLabels, type Place } from './model'
 import { details } from './details'
 import { t } from './i18n'
 
-const ICON: Record<string, LucideIcon> = { shop: ShoppingBag, restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, lift: ArrowUpDown }
+const ICON: Record<string, LucideIcon> = { shop: ShoppingBag, restaurant: Utensils, toilet: Toilet, info: Info, security: ShieldCheck, gate: Plane, transport: Bus, checkin: TicketsPlane, service: ConciergeBell, lift: ArrowUpDown }
 /** A Lucide icon centred on (0,0) inside the map's SVG, `s` map units wide. */
 const MapIcon = ({ icon: I, s, className }: { icon?: LucideIcon; s: number; className?: string }) =>
   I ? <I x={-s / 2} y={-s / 2} width={s} height={s} strokeWidth={2.4} className={className} aria-hidden /> : null
@@ -28,7 +28,7 @@ interface Props {
 }
 
 // Which pins win when several overlap (lower = kept first).
-const PRIO: Record<string, number> = { security: 0, info: 1, toilet: 2, restaurant: 3, shop: 4, gate: 5, transport: 6 }
+const PRIO: Record<string, number> = { security: 0, restaurant: 1, shop: 2, toilet: 3, checkin: 4, gate: 5, transport: 6, info: 7, service: 8 }
 
 const toD = (pts: number[][]) => 'M' + pts.map((p) => `${p[0]},${-p[1]}`).join('L') + 'Z'
 
@@ -180,7 +180,7 @@ export default function MapView({ level, routes, markers, dot, heading, follow, 
   }, [browse?.places, browse?.selected, level, zoomStep])
   const visRef = useRef(vis); visRef.current = vis
 
-  const pois = showPois ? data.pois.filter((p) => p.l === level && ((p.c === 'restaurant' && p.name) || p.c === 'toilet' || p.c === 'info')) : []
+  const pois = showPois ? data.pois.filter((p) => p.l === level && (p.c === 'restaurant' || p.c === 'toilet' || (p.c === 'info' && p.sub === 'desk'))) : []
 
   return (
     <div className="map">

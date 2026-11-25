@@ -10,7 +10,7 @@ interface Photo { url: string; by: string | null }
 const photoCache = new Map<string, Photo | null>()
 /** Real photo of a named outlet (Google Places, via /api/photo). null = none, keep the illustration. */
 function usePhoto(place: Place): Photo | null {
-  const id = place.osm && place.name && (place.kind === 'shop' || place.kind === 'restaurant') ? place.osm : undefined
+  const id = place.name && (place.kind === 'shop' || place.kind === 'restaurant') ? `a${place.pid}` : undefined
   const [photo, setPhoto] = useState<Photo | null>(id ? photoCache.get(id) ?? null : null)
   useEffect(() => {
     setPhoto(id ? photoCache.get(id) ?? null : null)
@@ -57,7 +57,7 @@ export default function PlaceInfo({ place, lang, walkMin, queue, fromLabel, onGo
       {d.tags.length > 0 && (
         <ul className="tags">{d.tags.map((id) => { const T = TAGS[id]; return <li key={id}><T.icon size={14} aria-hidden /> {T.label[lang]}</li> })}</ul>
       )}
-      {place.i === 'osm' && place.kind !== 'gate' && <p className="hint src">{t(lang, 'osmNote')}</p>}
+      <p className="hint src">{t(lang, 'srcNote')}</p>
       {d.offer && (
         <div className="offer">
           <div className="offer-top"><span className="sponsored">{t(lang, 'sponsored')}</span><b>{d.offer.text[lang]}</b></div>

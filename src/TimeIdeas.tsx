@@ -27,7 +27,7 @@ export default function TimeIdeas({ lang, boardAt, totalMin, from, gate, onPlace
   const [what, setWhat] = useState<number | null>(null) // "what if I had…" override
   const minutes = what ?? Math.max(0, free)
   const fromT = useMemo(() => walkTimes(from), [from])
-  const gateT = useMemo(() => walkTimes(gate), [gate])
+  const gateT = useMemo(() => walkTimes(gate, 'airside'), [gate])
   const direct = useMemo(() => { let best = Infinity; for (const p of places) if (p.kind === 'gate' && Math.hypot(p.x - gate.x, p.y - gate.y) < 1) best = fromT.get(p.pid) ?? best; return isFinite(best) ? best : 0 }, [fromT, gate])
   const list = useMemo(() => IDEAS.map((idea) => {
     let best: { p: Place; detour: number; stay: number } | null = null

@@ -22,7 +22,7 @@ Gate numbers, flights and security waiting times are made up. The Metro 14 posit
 
 ## Data sources
 
-- Floor plans and pictograms (toilets, security, food, info desks, lifts): public parisaeroport.fr map, via `prep_data.py`.
-- Gate numbers, shops and named food outlets: © OpenStreetMap contributors (ODbL), `data/osm_orly.csv`, merged by `tools/merge_osm.py` into `src/osm.json`. Community data, may be out of date.
+- Floor plans and lifts: public parisaeroport.fr map, via `prep_data.py`.
+- Every point of interest (gates, security checkpoints, passport control, check-in, shops, food outlets, toilets, services, transport), with its official name, category, terminal and public / restricted zone: the airport's public interactive plan (parisaeroport.fr/planpoi), read on 25 Nov 2026 into `data/adp_orly_poi.txt` and built by `tools/build_pois.py` into `src/pois.json`. Not open data: fine for a student prototype, ask ADP before any public launch. No ADP photo or description text is copied.
 - Flights, queue times and offers are fictional demo data.
 - Photos of named shops and food outlets: Google Places API (New), through `api/photo.ts`. Set `GOOGLE_PLACES_KEY` in the Vercel project; without it the app shows its illustrations.
