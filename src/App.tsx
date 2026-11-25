@@ -4,8 +4,9 @@ import { findFlight, flights, plan, starts, STOP_MIN, WALK, type Flight, type La
 import { t } from './i18n'
 import { easeInOut, reducedMotion } from './motion'
 import type { Pt } from './router'
+import { useRoute } from './route'
+import { load, save } from './storage'
 
-type Screen = 'home' | 'trip' | 'nav'
 interface Step { kind: 'walk' | 'lift' | 'security' | 'stop' | 'gate'; text: string; sub?: string; level: number; path: Pt[]; leg: number }
 
 const hhmm = (d: Date) => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
@@ -43,33 +44,52 @@ const along = (path: Pt[], frac: number): Pt => {
 }
 
 export default function App() {
-  const [lang, setLang] = useState<Lang>('fr')
-  const [screen, setScreenState] = useState<Screen>('home')
-  const [dir, setDir] = useState<'fwd' | 'back'>('fwd')
-  const ORDER: Screen[] = ['home', 'trip', 'nav']
-  const setScreen = (s: Screen) => { setDir(ORDER.indexOf(s) >= ORDER.indexOf(screen) ? 'fwd' : 'back'); setScreenState(s) }
-  const [query, setQuery] = useState('')
+  const [lang, setLangState] = useState<Lang>(() => load<Lang>('lang', navigator.language?.startsWith('fr') ? 'fr' : 'en'))
+  const setLang = (l: Lang) => { setLangState(l); save('lang', l) }
+  useEffect(() => { document.documentElement.lang = lang }, [lang])
+
+  const { route, dir, navigate, back } = useRoute()
+  const [query, setQuery] = useState(() => route.code ?? '')
   const [err, setErr] = useState(false)
-  const [flight, setFlight] = useState<Flight | null>(null)
-  const [startId, setStartId] = useState('m14')
-  const [stopKind, setStopKind] = useState<StopKind | undefined>()
+  const [homeStart, setHomeStart] = useState(() => load('start', 'm14'))
+  const [lastTrip, setLastTrip] = useState(() => load<{ code: string; from: string } | null>('lastTrip', null))
   const [now] = useState(() => new Date())
+
+  // The URL is the source of truth for which flight, start point and stop are shown.
+  const flight = route.code ? findFlight(route.code) ?? null : null
+  const startId = starts.some((s) => s.id === route.from) ? route.from! : homeStart
+  const stopKind = route.stop
+  const screen = route.screen !== 'home' && !flight ? 'home' : route.screen
+
+  // A link to an unknown flight lands on home with the error shown.
+  useEffect(() => {
+    if (route.screen !== 'home' && !flight) { setErr(true); setQuery(route.code ?? ''); navigate({ screen: 'home' }, { replace: true }) }
+  }, [route, flight, navigate])
+  // Remember the trip in progress so home can offer to resume it.
+  useEffect(() => {
+    if (!flight) return
+    const t = { code: flight.code, from: startId }
+    setLastTrip(t); save('lastTrip', t)
+  }, [flight, startId])
 
   const start = starts.find((s) => s.id === startId)!
   const thePlan = useMemo(() => (flight ? plan(start.pt, flight, stopKind) : null), [flight, start, stopKind])
   const basePlan = useMemo(() => (flight ? plan(start.pt, flight) : null), [flight, start])
   const steps = useMemo(() => (thePlan && flight ? buildSteps(thePlan, lang, flight, stopKind) : []), [thePlan, lang, flight, stopKind])
 
-  const submit = (code?: string) => {
+  const submit = (code?: string, from = homeStart) => {
     const f = findFlight(code ?? query)
     if (!f) { setErr(true); return }
-    setErr(false); setFlight(f); setQuery(f.code); setStopKind(undefined); setScreen('trip')
+    setErr(false); setQuery(f.code)
+    navigate({ screen: 'trip', code: f.code, from })
   }
+  const setStopKind = (k?: StopKind) => flight && navigate({ screen: 'trip', code: flight.code, from: startId, stop: k }, { replace: true })
+  const resume = lastTrip && findFlight(lastTrip.code)
 
   return (
     <div className="app">
       <header>
-        <button className="brand" onClick={() => setScreen('home')}>Sully</button>
+        <a className="brand" href="/" onClick={(e) => { e.preventDefault(); navigate({ screen: 'home' }) }}>Sully</a>
         <div className="lang">
           <button className={lang === 'fr' ? 'on' : ''} onClick={() => setLang('fr')}>FR</button>
           <button className={lang === 'en' ? 'on' : ''} onClick={() => setLang('en')}>EN</button>
@@ -85,11 +105,16 @@ export default function App() {
           {err && <p className="err" role="alert">{t(lang, 'notFound')}</p>}
           <label className="field">
             <span>{t(lang, 'from')}</span>
-            <select value={startId} onChange={(e) => setStartId(e.target.value)}>
+            <select value={homeStart} onChange={(e) => { setHomeStart(e.target.value); save('start', e.target.value) }}>
               {starts.map((s) => <option key={s.id} value={s.id}>{s.label[lang]}</option>)}
             </select>
           </label>
           <button className="primary" onClick={() => submit()}>{t(lang, 'go')}</button>
+          {resume && (
+            <button className="resume" onClick={() => submit(resume.code, lastTrip.from)}>
+              <span>{t(lang, 'resume')}</span><b>{resume.code} · {resume.city[lang]}</b><em>{resume.terminal}</em>
+            </button>
+          )}
           <h2>{t(lang, 'demoFlights')}</h2>
           <ul className="flights">
             {flights.map((f) => (
@@ -102,10 +127,10 @@ export default function App() {
         </main>
       )}
       {screen === 'trip' && flight && thePlan && basePlan && (
-        <Trip dir={dir} lang={lang} flight={flight} plan={thePlan} base={basePlan} now={now} stopKind={stopKind} setStopKind={setStopKind} startPt={start.pt} onStart={() => setScreen('nav')} onBack={() => setScreen('home')} />
+        <Trip dir={dir} lang={lang} flight={flight} plan={thePlan} base={basePlan} now={now} stopKind={stopKind} setStopKind={setStopKind} startPt={start.pt} onStart={() => navigate({ ...route, screen: 'nav', code: flight.code, from: startId })} onBack={() => back({ screen: 'home' })} />
       )}
       {screen === 'nav' && flight && thePlan && (
-        <Nav dir={dir} lang={lang} plan={thePlan} steps={steps} startPt={start.pt} flight={flight} onBack={() => setScreen('trip')} />
+        <Nav dir={dir} lang={lang} plan={thePlan} steps={steps} startPt={start.pt} flight={flight} onBack={() => back({ ...route, screen: 'trip', code: flight.code, from: startId })} />
       )}
     </div>
   )

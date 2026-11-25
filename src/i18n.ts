@@ -43,6 +43,7 @@ const T = {
   pause: { fr: 'Pause', en: 'Pause' },
   left: { fr: 'min restantes', en: 'min left' },
   demoNote: { fr: 'Prototype. Position simulée, vols et numéros de porte fictifs, temps d’attente estimés. Plan : données publiques parisaeroport.fr.', en: 'Prototype. Simulated position, fictional flights and gate numbers, estimated queues. Map: public parisaeroport.fr data.' },
+  resume: { fr: 'Reprendre mon trajet', en: 'Resume my trip' },
   arrived: { fr: 'Bon vol !', en: 'Have a good flight!' },
 }
 export type Key = keyof typeof T

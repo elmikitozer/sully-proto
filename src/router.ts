@@ -33,7 +33,7 @@ const li = (lv: number) => LEVELS.indexOf(lv)
 export function snap(lv: number, x: number, y: number): number {
   const g = walk[li(lv)]
   const c0 = toCell(x, y)
-  if (g[c0]) return lv * 0 + li(lv) * N + c0
+  if (g[c0]) return li(lv) * N + c0
   const cx = c0 % W, cy = Math.floor(c0 / W)
   for (let r = 1; r < 40; r++) {
     let best = -1, bd = 1e9
